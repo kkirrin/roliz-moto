@@ -1,0 +1,9 @@
+{
+    "apps": [
+        {
+            "name": "TFRONT",
+            "script": "yarn",
+            "args" : "start"
+        }
+    ]
+}

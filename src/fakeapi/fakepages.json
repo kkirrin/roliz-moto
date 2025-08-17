@@ -1,0 +1,17 @@
+[
+  {
+    id: 0,
+    header: 'testnews',
+    data: hello,
+  },
+  {
+    id: 1,
+    header: 'testnews',
+    data: hello,
+  },
+  {
+    id: 2,
+    header: 'testnews',
+    data: hello,
+  },
+]

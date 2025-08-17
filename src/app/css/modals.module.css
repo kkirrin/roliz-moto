@@ -1,0 +1,170 @@
+.modalsContainer {
+    position: fixed;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999999;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.3);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    min-height: 100svh;
+    min-width: 100svw;
+    transition: all .3s;
+}
+.centerMobalBlock {
+    position: relative;
+    background-color: #FFF;
+    border-radius: 30px;
+    padding: 1%;
+    min-width: 340px;
+    max-width: 440px;
+}
+.centerMobalBlock form > span {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 35px;
+    transition: all .3s;
+    cursor: pointer;
+}
+.centerMobalBlock form label {
+    display: block;
+    color: #626262 !important;
+    font-family: Geologica;
+    font-size: clamp(14px, 0.8vw, 14px);
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-top: 20px;
+}
+.centerMobalBlock > h3:first-child {
+    position: absolute;
+    right: 16px;
+    top: 14px;
+    border-radius: 50%;
+    background: #FECC00;
+    width: clamp(12px, 1.2vw, 24px);
+    height: clamp(12px, 1.2vw, 24px);
+    padding: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: clamp(12px, 1vw, 16px);
+    cursor: pointer;
+}
+.centerMobalBlock button {
+    border-radius: 5px;
+    background: rgba(254, 204, 0, 0.30);
+    color: #262626;
+    text-align: center;
+    font-family: Geologica;
+    font-size:  clamp(12px, 1vw, 16px);
+    font-style: normal;
+    font-weight: 600;
+    width: 100%;
+    border: none;
+    min-height: 50px;
+    line-height: 131.25%;
+    cursor: pointer;
+    transition: all .3s;
+}
+.centerMobalBlock button:hover {
+    background: rgba(254, 204, 0, 1);
+}
+.centerMobalBlock form > h3 {
+    color: #262626;
+    text-align: center;
+    font-family: Geologica;
+    font-size: clamp(12px, 1.5vw, 25px);
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    text-align: center;
+}
+.centerMobalBlock form > p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.centerMobalBlock form div {
+    position: relative;
+}
+.centerMobalBlock form div svg {
+    position: absolute;
+    bottom: 50%;
+    transform: translateY(50%);
+    right: 10px;
+    cursor: pointer;
+}
+.centerMobalBlock strong {
+    cursor: pointer;
+    text-align: center;
+    margin-left: 1%;
+}
+.modalsContainer > h3 {
+    position: absolute;
+    right: 50px;
+    top: 40px;
+    color: #fff;
+    cursor: pointer;
+}
+.avtiveModal {
+    opacity: 1;
+}
+.nonAvtiveModal {
+    z-index: -1;
+    opacity: 0;
+}
+
+@media screen and (max-width: 498px) {
+    .centerMobalBlock form > h3 {
+        color: #262626;
+        text-align: center;
+        font-family: Geologica;
+        font-size: clamp(22px, 1.5vw, 25px);
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+        text-align: center;
+    }
+    .centerMobalBlock {
+        position: relative;
+        background-color: #FFF;
+        border-radius: 11px;
+        padding: 6%;
+        min-width: 315px;
+    }
+    .centerMobalBlock button {
+        border-radius: 5px;
+        background: rgba(254, 204, 0, 0.30);
+        color: #262626;
+        text-align: center;
+        font-family: Geologica;
+        font-size: clamp(16px, 1vw, 16px);
+        font-style: normal;
+        font-weight: 600;
+        width: 100%;
+        border: none;
+        min-height: 50px;
+        line-height: 131.25%;
+        cursor: pointer;
+        transition: all .3s;
+    }
+    .centerMobalBlock > h3:first-child {
+        position: absolute;
+        right: 12px;
+        top: 12px;
+        border-radius: 50%;
+        background: #FECC00;
+        width: clamp(16px, 1.2vw, 24px);
+        height: clamp(16px, 1.2vw, 24px);
+        padding: 2px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: clamp(12px, 1vw, 16px);
+        cursor: pointer;
+    }
+}

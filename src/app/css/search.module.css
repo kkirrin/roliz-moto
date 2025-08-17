@@ -1,0 +1,201 @@
+.searchContainer {
+    position: relative;
+    margin-left: 4%;
+    height: max-content;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 30%;
+    min-width: 200px;
+    margin-right: auto;
+}
+.searchForm {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+.searchForm input {
+    font-size: clamp(12px, 0.7vw, 18px);
+    height: 100%;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    margin: auto;
+    border: none;
+    border-radius: 10px;
+    padding-left: 3%;
+    width: 100%;
+    font-weight: 300;
+    transition: all 0.4s;
+}
+.searchForm input:focus {
+    outline: 2px solid #FFCA18;
+}
+.searchIcon {
+    position: absolute;
+    width: 5%;
+    height: 40px;
+    left: 92%;
+}
+.searchResultsContainer {
+    position: absolute;
+    animation: opacity 1s 1;
+    top: 67px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    z-index: 9999999;
+}
+.resultItem {
+    display: flex;
+    flex-wrap: nowrap;
+    font-size: 0.7vw;
+    color: #333;
+    text-decoration: none;
+    flex-direction: row;
+    align-items: center;
+    min-height: 50px;
+    transition: all .3s;
+    padding: 6px;
+    border-radius: 6px;
+}
+.resultItem:not(:first-child) {
+    margin-top: 10px;
+}
+.resultItem h3 {
+    width: 70%;
+}
+.resultItem p {
+    width: 30%;
+    text-align: right;
+}
+.resultItem:hover {
+    background-color: #FFCA18;
+}
+@keyframes opacity {
+    0% { opacity: 0 }
+    100% { opacity: 1}
+}
+
+@media screen and (max-width: 968px) {
+    .searchContainer {
+        margin-right: 9px;
+    }
+    .searchForm input {
+        font-size: clamp(12px, 0.9vw, 18px);
+        height: 100%;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        margin: auto;
+        border: none;
+        border-radius: 10px;
+        padding-left: 3%;
+        width: 100%;
+        font-weight: 300;
+        transition: all 0.4s;
+    }
+}
+
+@media screen and (max-width: 498px) {
+    .inputMobileContainer {
+        min-width: 100vw;
+        position: fixed;
+        z-index: 99999;
+        left: 0;
+        transition: all 0.3s ease-in-out;
+        display: grid;
+        background: rgba(0, 0, 0, 0.3);
+        padding: 10px 0 10px 0;
+        height: 86svh;
+        -webkit-backdrop-filter: blur(2px);
+        backdrop-filter: blur(2px);
+        grid-template-columns: 100%;
+        grid-template-rows: 40px auto;
+    }
+    .inputMobileContainer input {
+        width: 92%;
+        border: none;
+        height: 40px;
+        padding-left: 6px;
+        margin: auto;
+    }
+    .showInputMobile {
+        top: 87px;
+    }
+    .hideInputMobile {
+        top: -100svh;
+    }
+    .searchContainer {
+        position: relative;
+        margin-left: 9px;
+        height: max-content;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        width: 45px;
+        height: 45px;
+        min-width: 32px;
+        margin-right: 0;
+        cursor: pointer;
+        background-color: #fff;
+        border-radius: 27%;
+        padding: 6px;
+    }
+    .searchForm input {
+        font-size: clamp(12px,2.6vw,20px) !important;
+        height: 30px;
+        padding-top: 7px;
+        padding-bottom: 7px;
+        margin: auto;
+        border: none;
+        border-radius: 8px;
+        padding-left: 18%;
+        width: 100%;
+        padding-right: 6px;
+    }
+
+    .searchForm input::placeholder {
+        color: transparent;
+    }
+
+    .searchIcon {
+        position: absolute;
+        width: 55%;
+        height: 40px;
+        left: 21%;
+    }
+    .searchResultsContainer {
+        position: relative;
+        animation: opacity 1s 1;
+        top: -10px;
+        padding: 5vw;
+        background-color: #fff;
+        border-radius: 6px;
+        z-index: 9999999;
+        width: 83vw;
+        left: 0;
+        margin: auto;
+        max-height: 67svh;
+        overflow: scroll;
+    }
+    .resultItem h3 {
+        width: 70%;
+        font-size: 14px;
+    }
+    .resultItem {
+        display: flex;
+        flex-wrap: nowrap;
+        font-size: 3.4vw;
+        color: #333;
+        text-decoration: none;
+        flex-direction: row;
+    }
+}
+
+@media screen and (min-width: 1500px) {
+    .searchForm input{
+        padding-left: 3%;
+        font-size: clamp(12px, 0.9vw, 18px);
+    }
+  }

@@ -1,0 +1,70 @@
+.filtersBlock {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    min-height: 100px;
+    border-bottom: 1px solid #CDCDCD;
+}
+.filtersBlock h4 {
+    color: #262626;
+    font-family: Geologica;
+    font-size: clamp(12px, 1vw, 16px);
+    font-style: normal;
+    font-weight: 400;
+    line-height: 131.25%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.sameFilter {
+    display: flex;
+    flex-direction: column;
+}
+.checkRow {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+.checkRow *:nth-child(2) {
+    margin-left: 5px;
+    color: #626262;
+    font-family: Geologica;
+    font-size: clamp(12px, 1vw, 16px);
+    font-style: normal;
+    font-weight: 250;
+    line-height: 131.25%;
+}
+.filtersBlock > * {
+    width: 100%;
+}
+.filtersBlock select {
+    width: 100%;
+    border-radius: 10px;
+    border: none;
+    background-color: #fff;
+    padding: 15px 10px;
+}
+.checkItem {
+    background: rgba(0,0,0,0);
+}
+
+@media screen and (max-width: 498px) {
+    .checkRow :nth-child(2) {
+        margin-left: 5px;
+        color: #626262;
+        font-family: Geologica;
+        font-size: clamp(14px, 1vw, 16px);
+        font-style: normal;
+        font-weight: 250;
+        line-height: 131.25%;
+    }
+    .filtersBlock h4 {
+        color: #262626;
+        font-family: Geologica;
+        font-size: clamp(13px, 1vw, 16px);
+        font-style: normal;
+        font-weight: 400;
+        line-height: 131.25%;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+}

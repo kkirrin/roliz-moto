@@ -1,0 +1,306 @@
+.wordName {
+    min-width: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+}
+.mBlockCabinet {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    margin-top: 100px;
+}
+.listOfOrders {
+    display: grid;
+    grid-template-columns: 40% 40%;
+    gap: 3%;
+    margin-top: 20px;
+}
+.listOfOrders > * {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 10% 10% 70%;
+    gap: 4%;
+    background-color: #fff;
+    height: max-content;
+    padding: clamp(5px, 3%, 20px);
+    border-radius: 6px;
+}
+.listOfOrders > * > *:last-child {
+    margin-bottom: clamp(5px, 3%, 20px);
+}
+.listOfOrders > * > *:nth-child(2){
+    height: max-content;
+}
+.oneOrder {
+    min-height: 400px;
+}
+.rowButtons {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.rowButtons button {
+    border: none;
+    padding: 5px 18px;
+    border-radius: 6px;
+    color: #FFF;
+
+    font-family: Geologica;
+    font-size: clamp(12px, 1vw, 16px);
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    cursor: pointer;
+    transition: all .3s;
+}
+.rowButtons button:not(:first-child) {
+    margin-left: 15px;
+}
+.oneOrder > button {
+    height: 40px;
+    margin-bottom: -20px !important;
+    border-radius: 5px;
+    background: #FECC00;
+    border: none;
+    color: #262626;
+    text-align: center;
+    font-family: Geologica;
+    font-size: clamp(12px, 1vw, 16px);
+    font-style: normal;
+    font-weight: 600;
+    line-height: 21px; /* 131.25% */
+    cursor: pointer;
+    transition: all .3s;
+}
+.oneOrder > button:hover {
+    scale: 1.05;
+}
+.listOfOrders > h2 {
+    color: #262626;
+    font-family: Geologica;
+    font-size: clamp(16px, 1.4vw, 20px);
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+.row {
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+.row  p {
+    font-family: Geologica;
+    font-size: clamp(12px, 1vw, 16px);
+    font-style: normal;
+    font-weight: 300;
+    line-height: 24px; /* 150% */
+}
+.row p:nth-child(odd) {
+    color: #ACACAC;
+}
+.listOfOrders > * > *:first-child {
+    display: grid;
+    grid-template-columns: 70% 30%;
+}
+.listOfOrders > * > *:first-child > *:last-child {
+    text-align: right;
+}
+.lBlockCabinet {
+    width: clamp(150px, 10vw, 200px);
+}
+.lBlockCabinet .avatarBlock {
+    margin-right: 10%;
+    border-radius: 10px;
+    width: max-content;
+    height: 38px;
+    max-width: 90%;
+    padding: 5px 10px;
+    max-height: 35px;
+    background-color: #262626;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+.lBlockCabinet nav {
+    width: 100%;
+}
+.lBlockCabinet nav ul {
+    list-style-type: none;
+}
+.lBlockCabinet nav ul li {
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: all .3s;
+    width: max-content;
+}
+.lBlockCabinet nav ul li:hover {
+    scale: 1.05;
+    background-color: #FFCA18;
+}
+.lBlockCabinet nav ul li:first-child {
+    margin-top: 20px;
+}
+.lBlockCabinet nav ul li:not(:first-child) {
+    margin-top: 10px;
+}
+.lBlockCabinet nav ul li:last-child {
+    opacity: 0.6;
+}
+.rBlockCabinet {
+    width: clamp(250px, 71vw, 1358px);
+}
+.upEditableElement {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.rowContent {
+    position: relative;
+    display: grid;
+    grid-template-columns: 26% 26% 26%;
+    gap: 4%;
+    width: 100%;
+}
+.upEditableElement {
+    color: #626262;
+    font-family: Geologica;
+    font-size: clamp(12px, 1vw, 14px);
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+.downEditableElement input {
+    width: 100%;
+    font-size: clamp(12px, 1vw, 14px);
+    min-height: 40px;
+    border-radius: 6px;
+    border: 1px solid #292929;
+    padding-left: 10px;
+}
+.downEditableElement {
+    min-height: 40px;
+}
+.oneEditebleElement:last-child {
+    margin-top: 50px;
+}
+.rowContent > * {
+    min-width: 35%;
+}
+@media screen and (max-width: 940px) {
+
+}
+@media screen and (max-width: 798px) {
+    .rowButtons button {
+        border: none;
+        padding: 5px 18px;
+        border-radius: 6px;
+        color: #FFF;
+        font-family: Geologica;
+        font-size: clamp(12px, 1vw, 16px);
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        cursor: pointer;
+        transition: all .3s;
+        width: 47%;
+    }
+    .listOfOrders {
+        display: grid;
+        grid-template-columns: 98%;
+        grid-gap: 3%;
+        gap: 3%;
+        margin-top: 20px;
+    }
+    .listOfOrders > * > :first-child {
+        display: grid;
+        grid-template-columns: 59% 41%;
+    }
+    .lBlockCabinet {
+        width: clamp(300px, 93vw, 498px);
+        display: grid;
+        grid-template-columns: 30% 70%;
+    }
+    .lBlockCabinet .avatarBlock {
+        margin-right: 0;
+        border-radius: 10px;
+        width: 52%;
+        height: 90%;
+        max-width: 90%;
+        padding: 5px 10px;
+        max-height: 200px;
+        background-color: #262626;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s;
+    }
+    .lBlockCabinet nav ul li:first-child {
+        margin-top: 0px;
+    }
+    .lBlockCabinet nav ul li:last-child {
+        color: rgb(98, 98, 98);
+        position: absolute;
+        right: 3%;
+        top: 121px;
+    }
+    .rBlockCabinet {
+        width: 100%;
+        margin-top: 60px;
+    }
+}
+
+@media screen and (max-width: 498px) {
+    .mBlockCabinet {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        margin-top: 100px;
+    }
+    .rowContent {
+        position: relative;
+        display: grid;
+        grid-template-columns: 98%;
+        gap: 2%;
+        width: 100%;
+        margin-top: 42px;
+    }
+    .rBlockCabinet {
+        width: 100%;
+        margin-top: 30px;
+    }
+    .upEditableElement {
+        color: #626262;
+        font-family: Geologica;
+        font-size: clamp(12px, 1vw, 14px);
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
+    .downEditableElement input {
+        width: 100%;
+        font-size: clamp(12px, 1vw, 14px);
+        min-height: 40px;
+        border-radius: 6px;
+        border: 1px solid #292929;
+        padding-left: 10px;
+    }
+}
+
+/* МИНИМАЛЬНЫЙ ЭКРАН */
+@media screen and (min-width: 1500px) {
+
+}
+
+@media screen and (min-width: 798px) {
+
+}
+
+@media screen and (min-width: 498px) {
+
+}

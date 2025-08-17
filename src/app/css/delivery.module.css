@@ -1,0 +1,92 @@
+.orderBlock h3 {
+    margin-top: 20px;
+}
+.orderBlock:last-child {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 50%;
+}
+.orderInputsContainer {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 340px;
+}
+.orderBlock:last-child .orderRow {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    width: 45%;
+    font-size: 1vw;
+}
+.orderBlock:not(:first-child) {
+    margin-top: 40px;
+}
+.orderBlock:last-child .orderRow span {
+    margin-left: 30px;
+}
+.orderBlock:last-child input {
+    font-size: 1vw;
+    height: 50px;
+    border-radius: 90px;
+    border: 1px solid #FFF;
+    background: #FFF;
+    padding-left: 30px;
+}
+.orderRow:nth-child(2) {
+    margin-top: 20px;
+}
+.orderRow:not(:nth-child(2)) {
+    margin-top: 20px;
+}
+@media screen and (max-width: 498px) {
+    .buttonOrder {
+        width: 100%;
+        border: none;
+        text-align: center;
+        font-size: 5vw;
+        font-weight: 600;
+        border-radius: 90px;
+        background: var(--orange, #FFCA18);
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        height: 30vw;
+        max-height: 56px;
+        align-items: center;
+        margin-top: 20px;
+        cursor: pointer;
+        transition: all .3s;
+    }
+    .orderBlock:last-child {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        width: 100%;
+    }
+    .orderBlock:last-child .orderRow {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        width: 45%;
+        font-size: 4vw;
+    }
+    .orderBlock:last-child input {
+        font-size: 3vw;
+        height: 50px;
+        border-radius: 90px;
+        border: 1px solid #FFF;
+        background: #FFF;
+        padding-left: 12px;
+    }
+    .orderBlock:last-child .orderRow span {
+        margin-left: 12px;
+    }
+}
+
+@media screen and (min-width: 1500px) {
+    .orderBlock:last-child input {
+      font-size: 18px;
+    }
+  }

@@ -1,0 +1,67 @@
+.salesContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: nowrap;
+    width: 100%;
+    min-height: 70px;
+    margin-top: 40px;
+    background: linear-gradient(90deg, #70FE00 -10.67%, #FECC00 23.53%, #FECC00 53%, #FE0000 143.43%);
+    overflow: hidden;
+}
+.salesContainer marquee {
+    width: 100%;
+    white-space: nowrap;
+}
+.salesContainer > section {
+    width: 80%;
+    margin: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+.oneSale {
+    min-width: max-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all .4s;
+    padding: 10px;
+    text-transform: uppercase;
+}
+.oneSale svg:first-child {
+    margin-right: 25px;
+}
+.oneSale svg:last-child {
+    margin-left: 25px;
+}
+.oneSale h3 {
+    transition: all .3s;
+}
+.oneSale:hover h3 {
+    scale: 1.2;
+}
+
+@media screen and (max-width: 940px) {
+
+}
+@media screen and (max-width: 798px) {
+
+}
+
+@media screen and (max-width: 498px) {
+
+}
+
+/* МИНИМАЛЬНЫЙ ЭКРАН */
+@media screen and (min-width: 1500px) {
+
+}
+
+@media screen and (min-width: 798px) {
+
+}
+
+@media screen and (min-width: 498px) {
+
+}
