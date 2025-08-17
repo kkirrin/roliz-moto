@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
+    "@types/node": "^24.3.0",
+    "@types/react": "^18.1.10",
     "bcrypt": "^5.1.1",
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.12",
@@ -24,6 +26,7 @@
     "react-redux": "^8.1.2",
     "react-swiper": "^0.1.5",
     "swiper": "^11.2.8",
+    "typescript": "^5.9.2",
     "uuid": "^11.0.5"
   },
   "devDependencies": {

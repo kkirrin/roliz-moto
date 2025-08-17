@@ -1,13 +1,16 @@
 "use client";
 import React from "react";
 import { useEffect, useState } from "react";
+
+import TestComponent from './TestComponent'
 import Image from "next/image";
+import { Forms } from "@/app/components/Forms";
+
 
 import styles from "@/app/css/slider.module.css";
 
 import { useStater } from "@/hooks/useStater";
 
-import { Forms } from "@/app/components/Forms";
 import { Loader } from "@/app/components/micro/Loader";
 
 import { useGetSlidersQuery } from "@/redux/api/pages.api";
@@ -82,7 +85,7 @@ export const Slider = ({}) => {
                   <div className={`${styles.sliderBg}`}>
                     <Image
                       unoptimized
-                      alt={slide.attributes.alt}
+                      alt={slide.attributes.alt ?? ''}
                       src={`${process.env.NEXT_PUBLIC_PROTOCOL}://${process.env.NEXT_PUBLIC_URL_API}${slide.attributes.src.data.attributes.url}`}
                       fill
                     />
@@ -98,6 +101,8 @@ export const Slider = ({}) => {
         <Loader />
       )}
       <SliderController slides={slides} setSelectSlide={setSelectSlide} />
+
+      <TestComponent />
     </section>
   );
 };

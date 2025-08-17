@@ -88,7 +88,6 @@ const Delivery = forwardRef(function (props, ref) {
                         <div
                           key={`secondCheckBoxRefsKeys_${index}`}
                           className={`${styles.orderRow}`}
-                          key={item.type + index}
                         >
                           <input
                             type={item.type}
@@ -108,7 +107,6 @@ const Delivery = forwardRef(function (props, ref) {
                         <div
                           key={`secondInputsRefsKeys_${index}`}
                           className={`${styles.orderRow}`}
-                          key={item.type + index}
                         >
                           <span>
                             {variant.title}
