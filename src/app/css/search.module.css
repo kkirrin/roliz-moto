@@ -62,6 +62,7 @@
     z-index: 10;
     max-height: 40vh;
     overflow-y: auto;
+    width: 100%;
 }
 
 .resultItem {
