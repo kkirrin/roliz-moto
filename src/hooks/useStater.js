@@ -15,51 +15,52 @@ export const useMain = () => {
 };
 
 export const useStater = (select) => {
-  const state = useSelector((state) => state);
+  // Вызываем все useSelector в начале для соблюдения правил хуков
+  const pages = useSelector((state) => state.pages);
+  const menu = useSelector((state) => state.menu);
+  const slides = useSelector((state) => state.slides);
+  const partners = useSelector((state) => state.partners);
+  const service = useSelector((state) => state.service);
+  const products = useSelector((state) => state.products);
+  const category = useSelector((state) => state.category);
+  const bestsales = useSelector((state) => state.bestsales);
+  const cart = useSelector((state) => state.cart);
+  const user = useSelector((state) => state.user);
+  const deliveriesTerms = useSelector((state) => state.deliveriesTerms);
 
+  // Возвращаем нужную часть state
   switch (select) {
     case "pages": //Страницы
-      const pages = state.pages;
       return pages;
 
     case "menu": //Навигация
-      const menu = state.menu;
       return menu;
 
     case "slides": //Слайдер
-      const slides = state.slides;
       return slides;
 
     case "partners": //Партнеры
-      const partners = state.partners;
       return partners;
 
     case "services": //Услуги
-      const service = state.service;
       return service;
 
     case "products": //Товары
-      const products = state.products;
       return products;
 
     case "category":
-      const category = state.category;
       return category;
 
     case "bestsales": //Самые продаваемые
-      const bestsales = state.bestsales;
       return bestsales;
 
     case "cart": //Корзина
-      const cart = state.cart;
       return cart;
 
     case "user": //Пользователь
-      const user = state.user;
       return user;
 
     case "deliveriesTerms": //Способы доставки и оплаты
-      const { deliveriesTerms } = state;
       return deliveriesTerms;
 
     default:
