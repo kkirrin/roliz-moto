@@ -97,12 +97,7 @@
 
 /* Стили для страницы результатов поиска */
 .searchResultsSection {
-    min-height: 60vh;
-    background-color: #f8f9fa;
-}
-
-.searchResultsSection .container {
-    max-width: 1200px;
+    min-height: 40vh;
 }
 
 .searchResultsSection h1 {

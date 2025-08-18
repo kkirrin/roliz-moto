@@ -30,7 +30,7 @@ function SearchResultsContent() {
                 let tempLetter = `${tempText[0]}`.toUpperCase()
                 tempText = tempLetter + tempText.slice(1)
 
-                const fetchSearch = await fetch(`${process.env.NEXT_PUBLIC_PROTOCOL}://${process.env.NEXT_PUBLIC_SEARCH}?filters[$and][0][stock][$gte]=1&filters[$and][1][title][$startsWith]=${tempText.replaceAll(" ", "")}&sort[0]=title:asc`, {
+                const fetchSearch = await fetch(`${process.env.NEXT_PUBLIC_PROTOCOL}://${process.env.NEXT_PUBLIC_SEARCH}?filters[$and][0][stock][$gte]=1&filters[$and][1][title][$startsWith]=${tempText.replaceAll(" ", "")}&sort[0]=title:asc&populate=*`, {
                     headers: {
                         "Authorization": `Bearer ${process.env.NEXT_PUBLIC_JWT_KEY}`
                     }
@@ -82,7 +82,7 @@ function SearchResultsContent() {
                             Найдено товаров: {dataList.length}
                         </p>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-[30px]">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                             {dataList.map((item) => (
                                 <ProductCard
                                     key={item.id}
