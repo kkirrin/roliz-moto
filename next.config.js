@@ -6,13 +6,6 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   images: {
-    // domains: [
-    //   "89.104.70.149",
-    //   "localhost",
-    //   "127.0.0.1",
-    //   "roliz.ru",
-    //   "roliz-moto.ru",
-    // ], 
     remotePatterns: [
       {
         protocol: 'http',
@@ -32,14 +25,11 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'roliz.ru',
-        port: '1338'
       },
       {
         protocol: 'https',
         hostname: 'roliz-moto.ru',
-        port: '1338'
       },
-
     ],
   },
 

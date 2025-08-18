@@ -12,11 +12,11 @@ import { Loader } from "@/app/components/micro/Loader";
 
 const imageData = [, "/noImage.svg"];
 
-export default function Page({}) {
+export default function Page({ }) {
   const { isLoading, error, data } = useGetAboutAsQuery();
   const router = useRouter();
 
-  useEffect(() => {}, [data]);
+  useEffect(() => { }, [data]);
 
   return (
     <>
@@ -53,7 +53,7 @@ export default function Page({}) {
           )}
         </section>
 
-        <p className={`${styles.fullText}`}>
+        <div className={`${styles.fullText}`}>
           {isLoading ? (
             <Loader />
           ) : data ? (
@@ -66,7 +66,7 @@ export default function Page({}) {
           ) : (
             " Ошибка получения данных. Проверьте интернет"
           )}
-        </p>
+        </div>
       </main>
     </>
   );
