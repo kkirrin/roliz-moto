@@ -95,6 +95,52 @@
     background-color: #FFCA18;
 }
 
+/* Стили для страницы результатов поиска */
+.searchResultsSection {
+    min-height: 60vh;
+    background-color: #f8f9fa;
+}
+
+.searchResultsSection .container {
+    max-width: 1200px;
+}
+
+.searchResultsSection h1 {
+    color: #262626;
+    font-family: Geologica, sans-serif;
+    font-weight: 600;
+}
+
+.searchResultsSection .grid {
+    display: grid;
+    gap: 1.5rem;
+}
+
+/* Адаптивная сетка */
+@media (min-width: 640px) {
+    .searchResultsSection .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 768px) {
+    .searchResultsSection .grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .searchResultsSection .grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (min-width: 1280px) {
+    .searchResultsSection .grid {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
 @keyframes opacity {
     0% {
         opacity: 0
