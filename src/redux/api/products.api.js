@@ -50,14 +50,7 @@ export const productsApi = api.injectEndpoints({
 
         return {
           mode: "cors",
-          url: `/products/?populate=*${categoryFilters}
-          &filters[stock][$notNull]=true&filters[stock][$ne]=0
-          &filters[price][$gt]=0
-          &sort[0]=${sortParam}`,
-          // url: `/products/?populate=*&pagination[page]=${page}&pagination[pageSize]=${pageSize}${categoryFilters}
-          // &filters[stock][$notNull]=true&filters[stock][$ne]=0
-          // &filters[price][$gt]=0
-          // &sort[0]=${sortParam}`,
+          url: `/products/?populate=*&pagination[page]=${page}&pagination[pageSize]=${pageSize}${categoryFilters}&filters[stock][$notNull]=true&filters[stock][$ne]=0&filters[price][$gt]=0&sort[0]=${sortParam}`,
           method: "GET",
         };
       },
