@@ -3,10 +3,12 @@ import Link from "next/link";
 import styles from "@/app/css/header.module.css";
 import { useMain, useStater } from "@/hooks/useStater";
 import { useActions } from "@/hooks/useActions";
+import { usePathname } from "next/navigation";
 
 export const NavigationBar = ({ place = "header", burgerSetter = null }) => {
   const menu = useStater("menu");
   const { mobile } = useMain("main");
+  const pathname = usePathname();
   const { toggleModal } = useActions();
   const closedBurger = () => {
     if (typeof burgerSetter === "function") {
@@ -29,18 +31,19 @@ export const NavigationBar = ({ place = "header", burgerSetter = null }) => {
       {/* главное меню */}
       {menu
         ? menu.map((item, index) => {
-            return (
-              <Link
-                onClick={
-                  typeof burgerSetter === "function" ? closedBurger : null
-                }
-                href={item.href}
-                key={`navmenu_${index}`}
-              >
-                {item.name}
-              </Link>
-            );
-          })
+          return (
+            <Link
+              onClick={
+                typeof burgerSetter === "function" ? closedBurger : null
+              }
+              href={item.href}
+              key={`navmenu_${index}`}
+              className={pathname === item.href ? styles.active_link : ""}
+            >
+              {item.name}
+            </Link>
+          );
+        })
         : null}
       {mobile ? (
         <>

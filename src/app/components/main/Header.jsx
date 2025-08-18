@@ -16,7 +16,7 @@ import { ProfileIcon } from "@/app/components/user/User";
 import { useGetCategoriesQuery } from "@/redux/api/categories.api";
 import NavCatalogue from "../micro/NavCatalogue";
 
-export const Header = ({}) => {
+export const Header = ({ }) => {
   const state = useStater("pages");
   const { widthScreen, mobile } = useMain("main");
   const { setScreenSize } = useActions();
