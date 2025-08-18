@@ -29,13 +29,13 @@ body {
   color: theme("colors.black");
 }
 
-body > * {
+body>* {
   width: 93vw;
   max-width: 1280px;
   margin: 0 auto;
 }
 
-body > main {
+body>main {
   display: flex;
   flex-direction: column;
   min-height: 600px;
@@ -115,14 +115,17 @@ input:checked {
   width: 5px;
   background-color: #000;
 }
+
 ::-webkit-scrollbar-thumb {
   background-color: theme("colors.yellow.default");
 }
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
 /* Firefox */
 input[type="number"] {
   -moz-appearance: textfield;
@@ -143,7 +146,8 @@ input[type="number"] {
 /* Стилизация стандартных стрелок Swiper */
 .swiper-button-next,
 .swiper-button-prev {
-  @apply text-yellow-default; /* Цвет стрелок */
+  @apply text-yellow-default;
+  /* Цвет стрелок */
   /* Удаляем дефолтные стили позиционирования Swiper */
   /* И позиционируем их с помощью Tailwind классов на родительском элементе Swiper контейнера в JSX */
   /* В JSX мы добавили padding по бокам, чтобы стрелки были за пределами видимой области слайдов */
@@ -152,14 +156,16 @@ input[type="number"] {
 /* Видимость стрелок: скрыты на мобильных, видны на lg и выше */
 .swiper-button-next,
 .swiper-button-prev {
-    @apply hidden lg:flex; /* Скрываем на мобильных, показываем на lg+ и делаем их flex для центрирования содержимого */
-    /* Swiper добавляет SVG внутри стрелок, display: flex поможет их выровнять */
+  @apply hidden lg:flex;
+  /* Скрываем на мобильных, показываем на lg+ и делаем их flex для центрирования содержимого */
+  /* Swiper добавляет SVG внутри стрелок, display: flex поможет их выровнять */
 }
 
 /* Отключение дефолтных размеров стрелок, если нужно задать свои */
 .swiper-button-next:after,
 .swiper-button-prev:after {
-    content: ''; /* Убираем дефолтное содержимое (стрелка в виде символа) */
+  content: '';
+  /* Убираем дефолтное содержимое (стрелка в виде символа) */
 }
 
 /* Если вы хотите использовать свои SVG или Image для стрелок внутри .swiper-button-next/.swiper-button-prev,
@@ -170,11 +176,13 @@ input[type="number"] {
 
 /* Стилизация точек пагинации (видны на мобильных, скрыты на md+) */
 .swiper-pagination-bullet {
-  @apply bg-gray-light opacity-50; /* Цвет неактивной точки */
+  @apply bg-gray-light opacity-50;
+  /* Цвет неактивной точки */
 }
 
 .swiper-pagination-bullet-active {
-  @apply bg-yellow-default opacity-100; /* Цвет активной точки */
+  @apply bg-yellow-default opacity-100;
+  /* Цвет активной точки */
 }
 
 /* Позиционирование пагинации (по умолчанию внизу по центру, если не задано иное) */

@@ -7,10 +7,34 @@ import { setSideCart } from "@/redux/reducers/sideReducer";
 
 import { v4 as uuidv4 } from "uuid";
 
-import { useCreateCustomerQuery } from "@/redux/api/users.api";
 import { useActions } from "@/hooks/useActions";
 import styles from "@/app/css/forms.module.css";
 import { useCustomers, useStater } from "@/hooks/useStater";
+
+const handlePhoneInput = (e) => {
+  // Удаляем все нецифровые символы
+  let value = e.target.value.replace(/\D/g, '');
+
+  // Если ввод начинается не с 7, добавляем +7
+  if (!value.startsWith('7') && value.length > 0) {
+    value = '7' + value;
+  }
+
+  // Ограничиваем длину (1 для 7 + 10 цифр)
+  if (value.length > 11) {
+    value = value.substring(0, 11);
+  }
+
+  // Форматируем значение
+  if (value.length > 1) {
+    e.target.value = `+7${value.substring(1)}`;
+  } else if (value.length === 1) {
+    e.target.value = '+7';
+  } else {
+    e.target.value = '';
+  }
+};
+
 
 export const Forms = ({ customer = {}, place = "main", idItems = 0 }) => {
   const formRef = useRef();
@@ -464,6 +488,7 @@ const OrderForm = ({ place = "", setPlace = (f) => f, idItems = 0 }) => {
               name="Phone"
               placeholder="Телефон"
               defaultValue={customer.tel || ""}
+              onInput={handlePhoneInput}
               onClick={() => (formRef.current[1].value = customer.tel)}
             />
             <button
@@ -855,7 +880,7 @@ export const ConsultForm = ({ place = "", setPlace = (f) => f }) => {
         {!infoMessage && (
           <>
             <h2 className="text-[28px]/8 xl:text-[55px] md:text-3xl xl:leading-[1] font-semibold mb-4">
-              Получите консультацию
+              Задайте нам вопрос
             </h2>
             <p className="text-xs lg:text-lg mb-8">
               Оставьте контакты и наш менеджер
@@ -877,8 +902,15 @@ export const ConsultForm = ({ place = "", setPlace = (f) => f }) => {
               <input
                 type="tel"
                 name="tel"
+                onInput={handlePhoneInput}
                 placeholder="Введите телефон..."
                 className="p-3 md:p-4 rounded-lg bg-gray-dark text-white font-light placeholder-gray-light border-none focus:outline-none"
+                required
+              />
+              <textarea
+                name="message"
+                placeholder="Введите сообщение..."
+                className="p-3 md:p-4 text-[24px] rounded-lg bg-gray-dark text-white font-light placeholder-gray-light border-none focus:outline-none"
                 required
               />
               <button
