@@ -30,7 +30,7 @@ export const MapComponent = ({ coordinates, center }: MapComponentProps) => {
         <YMaps query={{ apikey: process.env.NEXT_PUBLIC_YANDEX_KEY, load: 'package.full' }}>
             <div className={styles.map}>
                 <Map
-                    defaultState={{ center: mapCenter, zoom: 12 }}
+                    state={{ center: mapCenter, zoom: 12 }}
                     style={{ height: "100%" }}
                     modules={['geoObject.addon.balloon', 'geoObject.addon.hint']}
                 >
