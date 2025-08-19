@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { Loader } from "./Loader";
-import { useGetCategoriesQuery } from "@/redux/api/categories.api";
-import styles from "@/app/css/header.module.css";
-import DropdownMenu from "./DropdownMenu";
+import { useGetMainCategoriesQuery } from "@/redux/api/main-categories.api";
 
 function NavCatalogue() {
-  const { isLoading, data } = useGetCategoriesQuery();
+  const { isLoading, data } = useGetMainCategoriesQuery();
   const [activeCategoryId, setActiveCategoryId] = useState(null);
   // const isEquip =  data.id
 
@@ -16,7 +14,7 @@ function NavCatalogue() {
     <div>
       <div className="grid grid-cols-2 gap-x-4 gap-y-3 md:grid-cols-4 md:gap-x-3 md:gap-y-0">
         {typeof data != "undefined" && data.data != "undefined"
-          ? data.data.map((item) => {
+          ? data?.data?.map((item) => {
               if (!item.attributes.parent.data) {
                 const hasChilds =
                   item.attributes.childs &&

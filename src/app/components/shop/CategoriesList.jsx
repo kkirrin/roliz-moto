@@ -8,6 +8,7 @@ import { useGetCategoriesQuery } from "@/redux/api/categories.api";
 
 const CategoriesList = () => {
   const { isLoading, data } = useGetCategoriesQuery();
+  console.log(data);
   const params = useParams();
   const id = params?.slug?.[0] || null;
 
