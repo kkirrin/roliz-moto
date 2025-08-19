@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  viewMode: 'grid',
+  viewMode: 'list',
 };
 
 const viewSlice = createSlice({
