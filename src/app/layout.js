@@ -3,14 +3,14 @@
 import "@/app/css/globals.css";
 import { Inter } from "next/font/google";
 import { Geologica } from 'next/font/google'
-
+import React, { useState } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 const geologica = Geologica({ 
   subsets: ['latin'],
   weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
   display: 'swap'
- }) 
+}) 
 
 //Redux
 import { ReduxWrapper } from "@/app/ReduxWrapper";
@@ -18,7 +18,6 @@ import { ReduxWrapper } from "@/app/ReduxWrapper";
 import { Header } from "@/app/components/main/Header";
 import { Footer } from "@/app/components/main/Footer";
 import Modals from "@/app/components/Modals";
-import React, { useState } from "react";
 import FloatingConsultButton from "@/app/components/FloatingConsultButton";
 import Modal from "@/app/components/Modal";
 import { ConsultForm } from "@/app/components/Forms";
@@ -68,3 +67,4 @@ export default function RootLayout({ children }) {
     </ReduxWrapper>
   );
 }
+

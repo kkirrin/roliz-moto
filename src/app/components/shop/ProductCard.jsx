@@ -67,7 +67,10 @@ export const ProductCard = ({ item, viewMode }) => {
   };
 
   const renderImage = (src, alt) => (
-    <img
+    <Image
+      unoptimized
+      width={500}
+      height={500}
       className="rounded-lg transform hover:scale-110 transition-all"
       src={src}
       alt={alt || "Изображение продукта"}

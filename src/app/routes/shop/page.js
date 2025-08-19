@@ -126,40 +126,21 @@ export default function Page() {
 
         <div className="ml-10 w-full">
           {/* <div className={stylesShop.shopBlock}> */}
-          {viewMode === "grid" && (
-            <div
-              data-category="catalogue"
-              className="flex flex-col gap-10 md:grid md:grid-cols-3 xl:gap-4 items-center"
-              // className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-3 xl:gap-3 items-center"
-            >
-              <Pagination
-                categories={[]}
-                pageNumber={pageNumber}
-                setPageNumber={setPageNumber}
-                hasViewMode={false}
-              />
-            </div>
-          )}
-          {viewMode === "list" && (
-            <div data-category="catalogue" className="flex flex-col gap-6">
-              <Pagination
-                categories={[]}
-                pageNumber={pageNumber}
-                setPageNumber={setPageNumber}
-                hasViewMode={true}
-              />
-            </div>
-          )}
-          {viewMode === "table" && (
-            <div data-category="catalogue" className="flex flex-col gap-6">
-              <Pagination
-                categories={[]}
-                pageNumber={pageNumber}
-                setPageNumber={setPageNumber}
-                hasViewMode={true}
-              />
-            </div>
-          )}
+          <div 
+            data-category="catalogue"
+            className={
+              viewMode === "grid" 
+                ? "flex flex-col gap-10 md:grid md:grid-cols-3 xl:gap-4 items-center" 
+                : "flex flex-col gap-6"
+            }
+          >
+            <Pagination
+              categories={[]}
+              pageNumber={pageNumber}
+              setPageNumber={setPageNumber}
+              hasViewMode={viewMode !== "grid"}
+            />
+          </div>
         </div>
       </section>
     </main>
