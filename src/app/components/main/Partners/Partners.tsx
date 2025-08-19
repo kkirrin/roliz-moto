@@ -45,6 +45,44 @@ async function getUserLocation(lat: number, lon: number) {
     }
 }
 
+// функция для расчета расстояния между двумя точками на сфере (формула гаверсинуса)
+function calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
+    const R = 6371; // радиус Земли в километрах
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c; // расстояние в километрах
+}
+
+// функция для поиска ближайшего магазина
+function findNearestStore(userLat: number, userLon: number, stores: ICoordinates[]): ICoordinates | null {
+    if (!stores || stores.length === 0) return null;
+
+    let nearestStore = stores[0];
+    let minDistance = calculateDistance(userLat, userLon, stores[0].coordinates[0], stores[0].coordinates[1]);
+
+    for (let i = 1; i < stores.length; i++) {
+        const distance = calculateDistance(
+            userLat,
+            userLon,
+            stores[i].coordinates[0],
+            stores[i].coordinates[1]
+        );
+
+        if (distance < minDistance) {
+            minDistance = distance;
+            nearestStore = stores[i];
+        }
+    }
+
+    return nearestStore;
+}
+
+
 export const Partners = () => {
     // состояние для хранения координат партнеров
     const [coordinates, setCoordinates] = useState<ICoordinates[]>([]);
@@ -92,6 +130,18 @@ export const Partners = () => {
             address: userLocation.address.city,
             state: userLocation.address.state
         });
+
+        // Находим ближайший магазин и центрируем карту на нем
+        const nearestStore = findNearestStore(
+            location.coordinates.lat,
+            location.coordinates.lng,
+            coordinates
+        );
+
+        if (nearestStore) {
+            setCenter([nearestStore.coordinates[0], nearestStore.coordinates[1]]);
+            alert(`Ближайший магазин: ${nearestStore.name} (${nearestStore.address})`);
+        }
     }
 
     // Функция для обработки изменения выбора магазина
@@ -141,13 +191,6 @@ export const Partners = () => {
             </div>
 
             <MapComponent coordinates={coordinates} center={center} />
-
-            {/* {location.loaded && (
-                <div>
-                    <p>Latitude: {location.coordinates.lat}</p>
-                    <p>Longitude: {location.coordinates.lng}</p>
-                </div>
-            )} */}
         </section>
     );
 };

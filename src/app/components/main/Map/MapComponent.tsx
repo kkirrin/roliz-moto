@@ -24,8 +24,6 @@ export const MapComponent = ({ coordinates, center }: MapComponentProps) => {
         setMapCenter(center);
     }, [center]);
 
-    console.log('mapCenter', mapCenter);
-
     return (
         <YMaps query={{ apikey: process.env.NEXT_PUBLIC_YANDEX_KEY, load: 'package.full' }}>
             <div className={styles.map}>
