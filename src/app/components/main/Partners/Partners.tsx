@@ -63,15 +63,9 @@ export const Partners = () => {
     });
 
     // состояние для хранения координать центра карты
-    const [center, setCenter] = useState({
-        lat: 0,
-        lng: 0
-    });
+    const [center, setCenter] = useState<[number, number]>([43.811423, 131.950684]);
 
-    console.log('Координаты центра карты', center);
-
-    useEffect(() => { setCoordinates(coordinatesData) }, [coordinates]);
-
+    // первая отрисовка страницы
     useEffect(() => {
         if (!("geolocation" in navigator)) return;
 
@@ -82,6 +76,8 @@ export const Partners = () => {
             });
         });
     }, []);
+
+    useEffect(() => { setCoordinates(coordinatesData) }, [coordinates]);
 
     // функция обработчик нажатия на кнопку и получение координат пользователя
     const handleButtonClick = async () => {
@@ -97,6 +93,17 @@ export const Partners = () => {
             state: userLocation.address.state
         });
     }
+
+    // Функция для обработки изменения выбора магазина
+    const handleStoreChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        const selectedStoreName = event.target.value;
+        if (selectedStoreName) {
+            const selectedStore = coordinates.find(store => store.name === selectedStoreName);
+            if (selectedStore) {
+                setCenter([selectedStore.coordinates[0], selectedStore.coordinates[1]]);
+            }
+        }
+    };
 
     return (
         <section className={styles.section}>
@@ -116,29 +123,31 @@ export const Partners = () => {
                 )}
             </div>
             <div className="flex items-center gap-4">
-                <select className={styles.button} name="" id="">
+                <select
+                    className={styles.button}
+                    onChange={handleStoreChange}
+                    defaultValue=""
+                >
                     <option value="">Выбрать магазин вручную</option>
                     {coordinates.map((item) => (
                         <option
-                            onClick={() => {
-                                setCenter({
-                                    lat: item.coordinates[0],
-                                    lng: item.coordinates[1]
-                                });
-                            }}
-                            key={item.name} value={item.name}>{item.name}</option>
+                            key={item.name}
+                            value={item.name}
+                        >
+                            {item.name}
+                        </option>
                     ))}
                 </select>
             </div>
 
-            <MapComponent coordinates={coordinates} />
+            <MapComponent coordinates={coordinates} center={center} />
 
-            {location.loaded && (
+            {/* {location.loaded && (
                 <div>
                     <p>Latitude: {location.coordinates.lat}</p>
                     <p>Longitude: {location.coordinates.lng}</p>
                 </div>
-            )}
+            )} */}
         </section>
     );
 };

@@ -13,19 +13,24 @@ interface ICoordinates {
 
 interface MapComponentProps {
     coordinates: ICoordinates[];
+    center: [number, number];
 }
 
-export const MapComponent = ({ coordinates }: MapComponentProps) => {
+export const MapComponent = ({ coordinates, center }: MapComponentProps) => {
     const [activePortal, setActivePortal] = useState(false);
+    const [mapCenter, setMapCenter] = useState<[number, number]>(center);
 
-    // TODO: сделать динамический центр
-    const center: [number, number] = [43.811423, 131.950684];
+    useEffect(() => {
+        setMapCenter(center);
+    }, [center]);
+
+    console.log('mapCenter', mapCenter);
 
     return (
         <YMaps query={{ apikey: process.env.NEXT_PUBLIC_YANDEX_KEY, load: 'package.full' }}>
             <div className={styles.map}>
                 <Map
-                    defaultState={{ center, zoom: 12 }}
+                    defaultState={{ center: mapCenter, zoom: 12 }}
                     style={{ height: "100%" }}
                     modules={['geoObject.addon.balloon', 'geoObject.addon.hint']}
                 >
@@ -57,6 +62,6 @@ export const MapComponent = ({ coordinates }: MapComponentProps) => {
                     ))}
                 </Map>
             </div>
-        </YMaps>
+        </YMaps >
     )
 }
