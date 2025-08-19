@@ -100,19 +100,19 @@ export const Slider = ({ }) => {
       ) : (
         <Loader />
       )}
-      <SliderController slides={slides} setSelectSlide={setSelectSlide} />
+      <SliderController slides={slides} setSelectSlide={setSelectSlide} data={data} />
 
-      <TestComponent />
+      {/* <TestComponent /> */}
     </section>
   );
 };
 
-const SliderController = ({ slides, setSelectSlide = (f) => f }) => {
+const SliderController = ({ slides, setSelectSlide = (f) => f, data }) => {
   return (
     <div className="w-full h-7 xl:h-10 absolute bottom-0 flex justify-center">
-      {slides
-        ? slides.map((slide, index) => {
-          if (index > slides.length - 2) return;
+      {data?.data
+        ? data?.data.map((slide, index) => {
+          // if (index > slides.length - data.data.length) return;
           return (
             <div
               onClick={() => {
