@@ -4,11 +4,12 @@ import Image from "next/image";
 import { useGetOptPageQuery } from "@/redux/api/pages.api";
 import { Loader } from "@/app/components/micro/Loader";
 import styles from "@/app/css/mainpage.module.css";
+import { Partners } from "@/app/components/main/Partners/Partners";
 
-export default function Page({}) {
+export default function Page({ }) {
   const { isLoading, error, data } = useGetOptPageQuery();
 
-  useEffect(() => {}, [data]);
+  useEffect(() => { }, [data]);
 
   return (
     <>
@@ -62,6 +63,7 @@ export default function Page({}) {
             " Ошибка получения данных"
           )}
         </div>
+        <Partners />
       </main>
     </>
   );
