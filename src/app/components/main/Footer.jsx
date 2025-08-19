@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useGetContactsQuery } from "@/redux/api/contacts.api";
-import { useGetCategoriesQuery } from "@/redux/api/categories.api";
+import { useGetMainCategoriesQuery } from "@/redux/api/main-categories.api";
 import styles from "@/app/css/footer.module.css";
 import { ProductRow } from "@/app/components/shop/ProductRow";
 import { CallBack } from "@/app/components/micro/CallBack";
@@ -12,7 +12,7 @@ export const Footer = ({}) => {
   const { isLoading: contactsLoading, data: contactsData } =
     useGetContactsQuery();
   const { isLoading: categoriesLoading, data: categoriesData } =
-    useGetCategoriesQuery();
+    useGetMainCategoriesQuery();
 
   const date = new Date();
   const year = date.getFullYear();
