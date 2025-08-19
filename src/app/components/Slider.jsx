@@ -74,11 +74,13 @@ export const Slider = ({ }) => {
                     {slide.attributes.desc}
                   </p>
 
-                  {/* <button className="font-semibold bg-yellow-default hover:bg-yellow-dark rounded-lg py-3 px-12 w-fit transition-all">
-                    <Link href={`${slide.attributes.href}`}>
-                      Выбрать в каталоге
-                    </Link>
-                  </button> */}
+                  {slide.attributes.isButtonVisible && (
+                    <button className="font-semibold bg-yellow-default hover:bg-yellow-dark rounded-lg py-3 px-12 w-fit transition-all">
+                      <Link href={`${slide.attributes.href}`}>
+                        Выбрать в каталоге
+                      </Link>
+                    </button>
+                  )}
                 </div>
 
                 <div className={`${styles.sliderBg}`}>
@@ -98,19 +100,19 @@ export const Slider = ({ }) => {
       ) : (
         <Loader />
       )}
-      <SliderController slides={slides} setSelectSlide={setSelectSlide} />
+      <SliderController slides={slides} setSelectSlide={setSelectSlide} data={data} />
 
-      <TestComponent />
+      {/* <TestComponent /> */}
     </section>
   );
 };
 
-const SliderController = ({ slides, setSelectSlide = (f) => f }) => {
+const SliderController = ({ slides, setSelectSlide = (f) => f, data }) => {
   return (
     <div className="w-full h-7 xl:h-10 absolute bottom-0 flex justify-center">
-      {slides
-        ? slides.map((slide, index) => {
-          if (index > slides.length - 2) return;
+      {data?.data
+        ? data?.data.map((slide, index) => {
+          // if (index > slides.length - data.data.length) return;
           return (
             <div
               onClick={() => {
