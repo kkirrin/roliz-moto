@@ -24,9 +24,15 @@ const coordinatesData: ICoordinates[] = [
         time: "Пн-Пт 09:00-18:00",
         coordinates: [43.811423, 131.950684]
     },
+    {
+        name: "Магазин в Питере",
+        address: "г. Санкт-Петербург ул. Ленина 10",
+        time: "Пн-Пт 09:00-18:00",
+        coordinates: [60.000000, 30.000000]
+    }
 ]
 
-// функция получает координаты и возвращает объект с адресом
+// функция принимает координаты юзера и возвращает объект с адресом
 async function getUserLocation(lat: number, lon: number) {
     try {
         const response = await fetch(
@@ -40,19 +46,31 @@ async function getUserLocation(lat: number, lon: number) {
 }
 
 export const Partners = () => {
-    const [coordinates, setCoordinates] = useState<ICoordinates[]>([]); // состояние для хранения координат партнеров
+    // состояние для хранения координат партнеров
+    const [coordinates, setCoordinates] = useState<ICoordinates[]>([]);
+
+    // состояние для хранения координат и адреса пользователя полученых от API
     const [userLocation, setUserLocation] = useState({
         coordinates: { lat: 0, lng: 0 },
         address: "",
         state: ''
-    }); // состояние для хранения координат и адреса пользователя
+    });
 
-    useEffect(() => { setCoordinates(coordinatesData) }, [coordinates]);
-
+    // состояние для хранения координат пользователя полученых от браузера
     const [location, setLocation] = useState({
         loaded: false,
         coordinates: { lat: 0, lng: 0 },
     });
+
+    // состояние для хранения координать центра карты
+    const [center, setCenter] = useState({
+        lat: 0,
+        lng: 0
+    });
+
+    console.log('Координаты центра карты', center);
+
+    useEffect(() => { setCoordinates(coordinatesData) }, [coordinates]);
 
     useEffect(() => {
         if (!("geolocation" in navigator)) return;
@@ -67,6 +85,11 @@ export const Partners = () => {
 
     // функция обработчик нажатия на кнопку и получение координат пользователя
     const handleButtonClick = async () => {
+        if (!location.loaded) {
+            alert("Геолокация не поддерживается вашим браузером или не включена");
+            return;
+        };
+
         const userLocation = await getUserLocation(location.coordinates.lat, location.coordinates.lng);
         setUserLocation({
             coordinates: { lat: userLocation.lat, lng: userLocation.lon },
@@ -80,20 +103,33 @@ export const Partners = () => {
             <h2 className={styles.title}>Наши партнеры</h2>
             <p>Ознакомьтесь с нашими партнерами и найдите ближайший к вам магазин</p>
 
-            <button
-                onClick={() => handleButtonClick()}
-                className={styles.button}
-            >
-                Найти ближайший магазин
-            </button>
+            <div className="flex items-center gap-4">
+                <button
+                    onClick={() => handleButtonClick()}
+                    className={styles.button}
+                >
+                    {location.loaded ? "Найти ближайший магазин" : "Геолокация не включена"}
+                </button>
 
-            {userLocation?.address && (
-                <div>
-                    <p>Вы находитесь в месте: </p>
-                    <p>Город: {userLocation.address}</p>
-                    <p>Регион/область: {userLocation.state}</p>
-                </div>
-            )}
+                {userLocation?.address && (
+                    <p>Определенна локация: {userLocation.state}, {userLocation.address}</p>
+                )}
+            </div>
+            <div className="flex items-center gap-4">
+                <select className={styles.button} name="" id="">
+                    <option value="">Выбрать магазин вручную</option>
+                    {coordinates.map((item) => (
+                        <option
+                            onClick={() => {
+                                setCenter({
+                                    lat: item.coordinates[0],
+                                    lng: item.coordinates[1]
+                                });
+                            }}
+                            key={item.name} value={item.name}>{item.name}</option>
+                    ))}
+                </select>
+            </div>
 
             <MapComponent coordinates={coordinates} />
 

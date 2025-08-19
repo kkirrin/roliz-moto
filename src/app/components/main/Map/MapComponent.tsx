@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { YMaps, Map, Placemark } from '@pbe/react-yandex-maps';
+import styles from './style.module.css';
 
 interface ICoordinates {
     name: string;
@@ -22,7 +23,7 @@ export const MapComponent = ({ coordinates }: MapComponentProps) => {
 
     return (
         <YMaps query={{ apikey: process.env.NEXT_PUBLIC_YANDEX_KEY, load: 'package.full' }}>
-            <div style={{ width: "100%", height: "350px" }}>
+            <div className={styles.map}>
                 <Map
                     defaultState={{ center, zoom: 12 }}
                     style={{ height: "100%" }}
