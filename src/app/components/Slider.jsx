@@ -54,6 +54,7 @@ export const Slider = ({ }) => {
       {!isLoading && data ? (
         data?.data ? (
           data.data.map((slide, index) => {
+            console.log('Image URL:', `${process.env.NEXT_PUBLIC_PROTOCOL}://${process.env.NEXT_PUBLIC_URL_API}${slide.attributes.src.data.attributes.url}`);
             return (
               <article
                 style={
@@ -85,10 +86,11 @@ export const Slider = ({ }) => {
 
                 <div className={`${styles.sliderBg}`}>
                   <Image
-                    unoptimized
-                    alt={slide.attributes.alt ?? ''}
+                    alt={slide.attributes.alt ?? 'image'}
                     src={`${process.env.NEXT_PUBLIC_PROTOCOL}://${process.env.NEXT_PUBLIC_URL_API}${slide.attributes.src.data.attributes.url}`}
-                    fill
+                    width={1400}
+                    height={500}
+                    priority
                   />
                 </div>
               </article>

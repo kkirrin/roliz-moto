@@ -16,7 +16,7 @@
     width: 100%;
     min-width: 100%;
     transition: all 1s;
-    min-height: 500px;
+    min-height: clamp(18.75rem, 4.464rem + 29.762vw, 31.25rem);
 }
 
 .dotContainer {
