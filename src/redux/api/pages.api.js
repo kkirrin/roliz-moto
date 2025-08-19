@@ -72,6 +72,17 @@ export const warrantyApi = api.injectEndpoints({
   }),
 });
 
+export const partnersApi = api.injectEndpoints({
+  endpoints: (builder) => ({
+    getPartners: builder.query({
+      query: () => ({
+        mode: "cors",
+        url: "/spisok-partnerov?populate=*",
+        method: "GET",
+      }),
+    }),
+  }),
+});
 
 export const {
   useGetSlidersQuery,
@@ -80,5 +91,6 @@ export const {
   useGetAboutAsQuery,
   useGetOptPageQuery,
   useGetDeliveryQuery,
-  useGetWarrantyQuery
+  useGetWarrantyQuery,
+  useGetPartnersQuery
 } = api;

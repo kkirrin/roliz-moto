@@ -1,18 +1,25 @@
 "use client";
 import React, { Suspense, useEffect } from "react";
 import Image from "next/image";
-import { useGetOptPageQuery } from "@/redux/api/pages.api";
+import { useGetOptPageQuery, useGetPartnersQuery } from "@/redux/api/pages.api";
 import { Loader } from "@/app/components/micro/Loader";
 import styles from "@/app/css/mainpage.module.css";
 import { Partners } from "@/app/components/main/Partners/Partners";
 
+
+
 export default function Page({ }) {
   const { isLoading, error, data } = useGetOptPageQuery();
+  const { isLoadingPartners, errorPartners, dataPartners } = useGetPartnersQuery();
+
+  console.log('dataPartners', dataPartners);
 
   useEffect(() => { }, [data]);
+  useEffect(() => { }, [dataPartners]);
 
   return (
     <>
+
       <main
         className={`${styles.main} ${styles.contentpage} ${styles.contentpageOpt}`}
       >
@@ -63,7 +70,10 @@ export default function Page({ }) {
             " Ошибка получения данных"
           )}
         </div>
+
+
         <Partners />
+
       </main>
     </>
   );

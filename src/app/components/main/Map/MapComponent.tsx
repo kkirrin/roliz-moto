@@ -1,5 +1,8 @@
 'use client'
 
+// https://habr.com/ru/articles/677330/ Placemark в react-yandex-maps
+// https://pbe-react-yandex-maps.vercel.app/api/map/ документация по react-yandex-maps
+
 import React, { useEffect, useState } from 'react'
 import { YMaps, Map, Placemark } from '@pbe/react-yandex-maps';
 import styles from './style.module.css';
