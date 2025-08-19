@@ -74,11 +74,13 @@ export const Slider = ({ }) => {
                     {slide.attributes.desc}
                   </p>
 
-                  {/* <button className="font-semibold bg-yellow-default hover:bg-yellow-dark rounded-lg py-3 px-12 w-fit transition-all">
-                    <Link href={`${slide.attributes.href}`}>
-                      Выбрать в каталоге
-                    </Link>
-                  </button> */}
+                  {slide.attributes.isButtonVisible && (
+                    <button className="font-semibold bg-yellow-default hover:bg-yellow-dark rounded-lg py-3 px-12 w-fit transition-all">
+                      <Link href={`${slide.attributes.href}`}>
+                        Выбрать в каталоге
+                      </Link>
+                    </button>
+                  )}
                 </div>
 
                 <div className={`${styles.sliderBg}`}>
