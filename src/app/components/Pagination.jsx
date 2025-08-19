@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useMemo, useCallback, useRef } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useInView } from "react-intersection-observer";
 import { useFilters } from "@/hooks/useStater";
 import { useSelector } from "react-redux";
@@ -21,7 +21,6 @@ AnimatedProductCard.displayName = 'AnimatedProductCard';
 
 
 const Pagination = ({
-  // Переименовываем пропсы для ясности
   pageNumber = 1,
   setPageNumber = (f) => f,
   categories = [0],
@@ -33,16 +32,14 @@ const Pagination = ({
   const [allProducts, setAllProducts] = useState([]);
   const [hasMoreProducts, setHasMoreProducts] = useState(true);
 
-  // Количество товаров на странице
   const itemsPerPage = 6;
 
   const { ref: loadMoreRef, inView } = useInView({
     threshold: 0,
-    rootMargin: '800px 0px', // Загружаем заранее
+    rootMargin: '800px 0px',
   });
 
-  // --- ЛОГИКА ФИЛЬТРОВ И СОРТИРОВКИ ---
-  // (Без существенных изменений)
+  // Логика фильтров и сортировки (без изменений)
   const initialCategory = useMemo(() => {
     if (slug && slug[0] === "91") return [92, 88];
     return slug && !filters[0]?.values?.[0] ? [slug[0]] : categories;
@@ -53,7 +50,6 @@ const Pagination = ({
     return Array.isArray(filters[0].values) ? filters[0].values : Array.from(filters[0].values);
   }, [filters[0]?.values, initialCategory]);
 
-  // --- ИЗМЕНЕНИЕ: Используем pageNumber из пропсов напрямую ---
   const queryParams = useMemo(() => ({
     page: pageNumber,
     pageSize: itemsPerPage,
@@ -66,29 +62,28 @@ const Pagination = ({
     refetchOnFocus: false,
   });
 
-  // --- КЛЮЧЕВОЕ ИЗМЕНЕНИЕ: Логика сброса списка ---
-  // Этот useEffect теперь реагирует на изменение фильтров И на сброс pageNumber до 1
+  // --- ИЗМЕНЕНИЕ №1: Убираем преждевременную очистку ---
+  // Вместо очистки списка, мы просто сбрасываем флаг 'hasMoreProducts',
+  // чтобы пагинация могла начаться заново для нового списка.
   useEffect(() => {
-    // Если изменились фильтры или сортировка, родительский компонент
-    // должен сбросить pageNumber на 1. Мы здесь просто реагируем на это.
-    if (pageNumber === 1) {
-      setAllProducts([]);
-      setHasMoreProducts(true); // Сбрасываем флаг, чтобы можно было снова загружать
-    }
-  }, [categoryFilter, sortingMode, pageNumber]); // pageNumber добавлен в зависимости
+    setHasMoreProducts(true);
+  }, [categoryFilter, sortingMode]);
 
 
-  // --- ОБРАБОТКА НОВЫХ ДАННЫХ ---
+  // --- ОБРАБОТКА НОВЫХ ДАННЫХ (логика замены/добавления) ---
   useEffect(() => {
+    // Ждем, пока данные действительно придут
     if (!data?.data) return;
 
     const newProducts = data.data;
 
-    // Если это первая страница, заменяем товары.
-    // Иначе - добавляем, избегая дубликатов.
+    // Если это первая страница (т.е. фильтры изменились),
+    // мы ПОЛНОСТЬЮ ЗАМЕНЯЕМ старый список новым.
+    // Это и есть ключ к решению проблемы "мерцания".
     if (pageNumber === 1) {
       setAllProducts(newProducts);
     } else {
+      // Иначе, как и раньше, добавляем новые товары к существующим, избегая дубликатов.
       setAllProducts(prev => {
         const existingIds = new Set(prev.map(p => p.id));
         const uniqueNewProducts = newProducts.filter(p => !existingIds.has(p.id));
@@ -98,20 +93,19 @@ const Pagination = ({
 
     setHasMoreProducts(newProducts.length === itemsPerPage);
     
-  }, [data, pageNumber, itemsPerPage]); // Добавляем pageNumber для надежности
+  }, [data, pageNumber, itemsPerPage]); // Зависимости те же
 
 
-  // --- ЛОГИКА ПОДГРУЗКИ ---
+  // --- ЛОГИКА ПОДГРУЗКИ (без изменений) ---
   useEffect(() => {
-    // Если триггер видим, не идет загрузка и есть еще товары - запрашиваем следующую страницу
     if (inView && !isFetching && hasMoreProducts) {
-      // Вызываем сеттер из родительского компонента
       setPageNumber(prevPage => prevPage + 1);
     }
   }, [inView, isFetching, hasMoreProducts, setPageNumber]);
 
-
-  if (isLoading && pageNumber === 1) return <Loader />;
+  // --- ИЗМЕНЕНИЕ №2: Улучшенное условие для полноэкранного лоадера ---
+  // Показываем его только при САМОЙ ПЕРВОЙ загрузке, когда на экране еще ничего нет.
+  if (isLoading && allProducts.length === 0) return <Loader />;
   if (allProducts.length === 0 && !isLoading) return <p>Товары не найдены</p>;
 
   return (
@@ -130,7 +124,6 @@ const Pagination = ({
         <AnimatedProductCard key={product.id} item={product} />
       ))}
 
-      {/* Индикатор загрузки и триггер */}
       <div
         ref={loadMoreRef}
         style={{
@@ -141,10 +134,14 @@ const Pagination = ({
           alignItems: 'center',
         }}
       >
+        {/*
+          Этот лоадер будет появляться при подгрузке следующих страниц И
+          при смене фильтров (пока старые товары еще на экране).
+          Это отличный UX-индикатор.
+        */}
         {isFetching && <Loader />}
       </div>
 
-      {/* Индикатор окончания списка */}
       {!hasMoreProducts && allProducts.length > 0 && (
         <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '20px', color: '#666' }}>
           Все товары загружены ({allProducts.length} шт.)
