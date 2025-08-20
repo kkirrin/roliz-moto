@@ -2,12 +2,12 @@
 import React from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
-import { useGetCategoriesQuery } from "@/redux/api/categories.api";
+import { useGetMainCategoriesQuery } from "@/redux/api/main-categories.api";
 import { getCategoryPath } from "@/app/utils/getCategoryTitle";
 
 export default function Breadcrumbs() {
   const { slug } = useParams();
-  const { data, isLoading } = useGetCategoriesQuery();
+  const { data, isLoading } = useGetMainCategoriesQuery();
 
   const categoryId = slug?.[0];
 
