@@ -9,6 +9,19 @@
     background: linear-gradient(142deg, rgba(0, 0, 0, 0.39) 0%, rgba(0, 0, 0, 0.00) 100%), lightgray -2.779px -40.945px / 100.373% 130.723% no-repeat;
 }
 
+.section,
+.sliderItem {
+    min-height: clamp(18.75rem, 4.464rem + 29.762vw, 31.25rem);
+    border-radius: 20px;
+    background-color: #c8c7c7;
+}
+
+.sliderItem img {
+   display: block;
+   margin: 0;
+   inset: 2px 0px !important;
+}
+
 .sliderItem {
     position: relative;
     display: flex;
@@ -16,7 +29,6 @@
     width: 100%;
     min-width: 100%;
     transition: all 1s;
-    min-height: clamp(18.75rem, 4.464rem + 29.762vw, 31.25rem);
 }
 
 .dotContainer {
@@ -80,12 +92,6 @@
 .sliderItem h2 {
     color: #fff;
 }
-
-.sliderItem h2 {}
-
-.sliderItem p {}
-
-.textSlider {}
 
 .textSlider button * {
     color: #FECC00 !important;

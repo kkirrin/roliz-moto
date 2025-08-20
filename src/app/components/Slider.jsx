@@ -50,11 +50,11 @@ export const Slider = ({ }) => {
   };
 
   return (
-    <section className="flex flex-row flex-nowrap relative overflow-hidden my-4 rounded-[17px] bg-[linear-gradient(142deg,rgba(0,0,0,0.39)_0%,rgba(0,0,0,0.00)_100%),lightgray_-2.779px_-40.945px/100.373%_130.723%_no-repeat]">
+    <section className={`${styles.section} flex flex-row flex-nowrap relative overflow-hidden my-4 rounded-[17px] bg-[linear-gradient(142deg,rgba(0,0,0,0.39)_0%,rgba(0,0,0,0.00)_100%),lightgray_-2.779px_-40.945px/100.373%_130.723%_no-repeat]`}>
       {!isLoading && data ? (
         data?.data ? (
           data.data.map((slide, index) => {
-            console.log('Image URL:', `${process.env.NEXT_PUBLIC_PROTOCOL}://${process.env.NEXT_PUBLIC_URL_API}${slide.attributes.src.data.attributes.url}`);
+
             return (
               <article
                 style={
@@ -84,14 +84,15 @@ export const Slider = ({ }) => {
                   )}
                 </div>
 
-                <div className={`${styles.sliderBg}`}>
-                  <Image
-                    alt={slide.attributes.alt ?? 'image'}
-                    src={`${process.env.NEXT_PUBLIC_PROTOCOL}://${process.env.NEXT_PUBLIC_URL_API}${slide.attributes.src.data.attributes.url}`}
-                    width={1400}
-                    height={500}
+                <div className = {`${styles.sliderBg}`}>
+                  <Image 
+                    unoptimized alt="image" 
+                    src = {`${process.env.NEXT_PUBLIC_PROTOCOL}://${process.env.NEXT_PUBLIC_URL_API}${slide.attributes.src.data.attributes.url}`}
+                    blurDataURL={`${process.env.NEXT_PUBLIC_PROTOCOL}://${process.env.NEXT_PUBLIC_URL_API}${slide.attributes.src.data.attributes.url}`}
+                    placeholder="blur"
+                    quality={75}
                     priority
-                  />
+                    fill />
                 </div>
               </article>
             );
