@@ -10,8 +10,6 @@ import formatDate from "@/app/utils/formatDate";
 function SingleNewsPage({ params }) {
   const { data, isLoading } = useGetNewsIdQuery(params.id);
 
-  console.log("data news ID", data);
-
   if (isLoading) {
     return <div>Загрузка новостей...</div>;
   }

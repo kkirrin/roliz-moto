@@ -1,0 +1,4 @@
+.newsItem img {
+    height: 250px;
+    object-fit: contain;
+}

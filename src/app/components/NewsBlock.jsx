@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useGetNewsQuery } from "@/redux/api/news.api";
 import formatDate from "../utils/formatDate";
+import styles from "@/app/css/news.module.css";
 
 function NewsBlock() {
   const { data, isLoading } = useGetNewsQuery();
@@ -107,14 +108,14 @@ function NewsBlock() {
       {/* Используем flexbox и overflow-hidden/scroll для свайпа на мобильных */}
       {/* На md и выше grid будет работать как обычная сетка */}
       <div className="flex md:grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 pb-4 scrollbar-hide">
+
         {visibleNewsItems.map((newsItem) => (
           <Link
             href={`/routes/pages/news/${newsItem.id}`}
             key={newsItem.id}
             className="min-w-[280px] sm:min-w-0"
           >
-            <article className="overflow-hidden flex flex-col h-full rounded-xl">
-              {/* Image */}
+            <article className={`${styles.newsItem} overflow-hidden flex flex-col h-full rounded-xl`}>
               <div className="relative w-full">
                 <img
                   src={`${process.env.NEXT_PUBLIC_PROTOCOL}://${process.env.NEXT_PUBLIC_URL_FRONT}${newsItem.attributes.image.data.attributes.url}`}
@@ -140,7 +141,7 @@ function NewsBlock() {
                 </div>
 
                 {/* Date */}
-                <span className="text-base font-light text-gray-light mt-4">
+                <span className="text-base font-light text-gray-light mt-4 mb-4">
                   {formatDate(
                     newsItem.attributes.date || newsItem.attributes.publishedAt
                   )}
