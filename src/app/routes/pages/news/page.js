@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useGetNewsQuery } from "@/redux/api/news.api";
 import formatDate from "@/app/utils/formatDate";
+import styles from "@/app/css/news.module.css";
 
 function NewsListPage() {
   const { data, isLoading } = useGetNewsQuery();
@@ -73,13 +74,13 @@ function NewsListPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {visibleNewsItems.map((newsItem) => (
           <Link href={`/routes/pages/news/${newsItem.id}`} key={newsItem.id}>
-            <article className="overflow-hidden flex flex-col h-full rounded-xl">
+            <article className={`${styles.newsItem} overflow-hidden flex flex-col h-full rounded-xl`}>
               {/* Image */}
               <div className="relative w-full">
                 <img
                   src={`${process.env.NEXT_PUBLIC_PROTOCOL}://${process.env.NEXT_PUBLIC_URL_FRONT}${newsItem.attributes.image.data.attributes.url}`}
                   alt={newsItem.attributes.title}
-                  className="object-cover transition-transform duration-300 hover:scale-105 w-full h-auto rounded-xl"
+                  className={`${styles.newsItemImg} object-cover transition-transform duration-300 hover:scale-105 w-full h-auto rounded-xl`}
                 />
               </div>
 

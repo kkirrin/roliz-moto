@@ -1,0 +1,8 @@
+.navCatalogue {
+    min-height: 200px;
+}
+
+.navCatalogueItem {
+    background-color: #c8c7c7;
+    border-radius: 20px;
+}
