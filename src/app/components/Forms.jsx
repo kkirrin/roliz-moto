@@ -510,11 +510,12 @@ export default OrderForm;
 
 const AuthForm = ({ place = "", setPlace = (f) => f }) => {
   const formRef = useRef();
+  const router = useRouter();
 
   const { auth, removeAll, toggleModal } = useActions();
 
-  const [infoMessage, setInfoMessage] = useState(""),
-    [showPass, setShowPass] = useState(false);
+  const [infoMessage, setInfoMessage] = useState("");
+  const [showPass, setShowPass] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -526,6 +527,7 @@ const AuthForm = ({ place = "", setPlace = (f) => f }) => {
     if (!validateResult) return false;
 
     dataForm.append("to", process.env.NEXT_PUBLIC_MAIL_FOR_ORDERS);
+    
     //Отправка данных
     const request = await fetch(
       `${process.env.NEXT_PUBLIC_PROTOCOL}://${process.env.NEXT_PUBLIC_AUTH}`,
@@ -541,11 +543,20 @@ const AuthForm = ({ place = "", setPlace = (f) => f }) => {
         setInfoMessage("Ошибка авторизации. Неверный логин или пароль.");
       } else if (result.data.status == "success") {
         setInfoMessage("Авторизация успешна!");
+        
+        // Авторизуем пользователя
+        auth(result.data.userdata[0]);
+        
         setTimeout(() => {
           toggleModal();
           setInfoMessage("");
+          
+          // Проверяем, если пользователь на странице партнеров и теперь имеет доступ
+          if (window.location.pathname.includes('/partners')) {
+            // Перезагружаем страницу для обновления состояния
+            window.location.reload();
+          }
         }, 1000);
-        auth(result.data.userdata[0]);
       }
     }
   };
@@ -600,7 +611,8 @@ const AuthForm = ({ place = "", setPlace = (f) => f }) => {
                 strokeLinejoin="round"
               />
             </svg>
-          </div>
+            </div>
+           
           <span
             style={{ textAlign: "center", display: "block", margin: "auto" }}
           >
@@ -612,7 +624,8 @@ const AuthForm = ({ place = "", setPlace = (f) => f }) => {
             }}
           >
             Забыли пароль?
-          </span>
+            </span>
+          
           <button onClick={(f) => f} type="submit">
             Отправить
           </button>
@@ -622,6 +635,8 @@ const AuthForm = ({ place = "", setPlace = (f) => f }) => {
   );
 };
 
+// ... existing code ...
+
 const RegForm = ({ place = "", setPlace = (f) => f }) => {
   const formRef = useRef();
 
@@ -629,11 +644,25 @@ const RegForm = ({ place = "", setPlace = (f) => f }) => {
   const { toggleModal } = useActions();
 
   const [infoMessage, setInfoMessage] = useState("");
+  // Добавляем состояние для чекбокса
+  const [typeCustomer, setTypeCustomer] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const dataForm = new FormData(formRef.current);
+    console.log(typeCustomer);
+    // Убираем старую логику и добавляем только если чекбокс отмечен
+    if (typeCustomer) {
+      dataForm.append("typeCustomer", true);
+    }
+    // Если чекбокс НЕ отмечен, НЕ добавляем typeCustomer вообще
+
+    console.log(dataForm);
+    for (let [key, value] of dataForm.entries()) {
+      console.log(`${key}: ${value}`);
+    }
+
     dataForm.append("to", process.env.NEXT_PUBLIC_MAIL_FOR_ORDERS);
 
     const validateResult = validateForms(dataForm, formRef);
@@ -651,9 +680,11 @@ const RegForm = ({ place = "", setPlace = (f) => f }) => {
         body: dataForm,
       }
     );
+    
     if (await request.ok) {
       const result = await request.json();
-      //console.log(result)
+      console.log("Server response:", result);
+      
       if (result.data.status == "error") {
         setInfoMessage(
           result.data?.message ? result.data?.message : "Неизвестная ошибка"
@@ -665,8 +696,11 @@ const RegForm = ({ place = "", setPlace = (f) => f }) => {
         }, 2000);
         auth(result.data.userdata[0]);
       }
+    } else {
+      setInfoMessage("Ошибка при отправке запроса");
     }
   };
+
   return (
     <form
       className={`${styles.formOrder} ${styles.formRegistration}`}
@@ -684,21 +718,42 @@ const RegForm = ({ place = "", setPlace = (f) => f }) => {
           Войдите
         </strong>
       </p>
+      
       <label htmlFor="tel">Телефон</label>
-      <input type="tel" name="tel" placeholder="" />
+      <input type="tel" name="tel" placeholder="" required />
+      
       <label htmlFor="email">Электронная почта</label>
-      <input type="email" name="email" placeholder="" />
+      <input type="email" name="email" placeholder="" required />
+      
       <label htmlFor="name">ФИО</label>
-      <input type="name" name="name" placeholder="" />
+      <input type="text" name="name" placeholder="" required />
+      
       <label htmlFor="password">Придумайте пароль</label>
-      <input type="password" name="password" placeholder="" />
+      <input type="password" name="password" placeholder="" required />
+
+      <div className="flex items-center gap-2">
+        <input 
+          type="checkbox" 
+          id="forPartners"
+          name="typeCustomer" 
+          checked={typeCustomer}
+          onChange={(e) => {
+            setTypeCustomer(e.target.checked);
+            console.log("Partner checkbox:", e.target.checked);
+          }} 
+        />
+        <label htmlFor="typeCustomer">Оптовый покупатель</label>
+      </div>
+      
       <span>{infoMessage}</span>
-      <button onClick={(f) => f} type="submit">
+      <button type="submit">
         Отправить
       </button>
     </form>
   );
 };
+
+// ... existing code ...
 
 const RecForm = ({ place = "", setPlace = (f) => f }) => {
   const formRef = useRef();

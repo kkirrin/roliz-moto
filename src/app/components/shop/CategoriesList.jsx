@@ -6,13 +6,39 @@ import { useParams } from "next/navigation";
 import { Loader } from "@/app/components/micro/Loader";
 import { useGetCategoriesQuery } from "@/redux/api/categories.api";
 
-const CategoriesList = () => {
+const CategoriesList = ({ forPartners = false, partnerCategories = [] }) => {
   const { isLoading, data } = useGetCategoriesQuery();
-  console.log(data);
   const params = useParams();
   const id = params?.slug?.[0] || null;
 
-  // объект текущей категории
+  // Если это для партнеров, показываем специальные категории
+  if (forPartners) {
+    if (isLoading) return <Loader />;
+
+    if (!partnerCategories || partnerCategories.length === 0) {
+      return (
+        <div className="text-center py-4">
+          <p className="text-gray-500">Категории для партнеров не найдены</p>
+        </div>
+      );
+    }
+
+    return (
+      <div className="flex flex-wrap gap-3">
+        {partnerCategories.map((category) => (
+          <Link
+            key={`partner_cat_${category.id}`}
+            href={`/routes/shop/${category.id}`}
+            className="py-2 px-4 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition-all duration-300"
+          >
+            <p>{category.name}</p>
+          </Link>
+        ))}
+      </div>
+    );
+  }
+
+  // Оригинальная логика для обычных категорий
   const category = data?.data?.find((item) => item.id == id);
 
   if (isLoading) return <Loader />;

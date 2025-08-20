@@ -15,7 +15,7 @@ const roundPrice = (price) => {
   return price;
 };
 
-export const ProductCard = ({ item, viewMode }) => {
+export const ProductCard = ({ item, viewMode, forPartners }) => {
   const [showFullDescription, setShowFullDescription] = useState(false);
 
   const globalViewMode = useSelector((state) => state.view.viewMode);
@@ -55,15 +55,17 @@ export const ProductCard = ({ item, viewMode }) => {
   const { addToCart } = useActions();
   const customer = useCustomers();
 
+  console.log(customer);
+
   const handleAddToCart = (productToAdd) => {
     if (!productToAdd) return;
-    const makeMutableProduct = { ...productToAdd };
-    makeMutableProduct.quantityForBuy = quantity;
-    addToCart(makeMutableProduct);
-    setTextToCart("Добавлено!");
-    setTimeout(() => {
-      setTextToCart("Добавить еще?");
-    }, 1000);
+      const makeMutableProduct = { ...productToAdd };
+      makeMutableProduct.quantityForBuy = quantity;
+      addToCart(makeMutableProduct);
+      setTextToCart("Добавлено!");
+      setTimeout(() => {
+        setTextToCart("Добавить еще?");
+      }, 1000);
   };
 
   const renderImage = (src, alt) => (
@@ -79,6 +81,18 @@ export const ProductCard = ({ item, viewMode }) => {
 
   return (
     <Suspense fallback={<div>Загрузка...</div>}>
+      {customer.type === "Оптовый покупатель" && (
+        <div className="absolute top-0 right-0 flex items-center gap-2">
+          <Image src="/icon/partners.svg" alt="Оптовый покупатель" width={20} height={20} />
+          <p className="text-sm font-bold">Оптовый покупатель</p>
+          {product.priceOpt && (
+            <p className="text-sm font-bold">
+              {Number(roundPrice(product.priceOpt)).toLocaleString("ru-RU")} ₽
+            </p>
+          )}
+        </div>
+      )}
+
       {/* GRID VIEW */}
       {effectiveViewMode === "grid" && product && (
         <article className="relative min-w-[195px] lg:min-w-[300px] flex flex-col h-full transition-all duration-300 ease-in select-none cursor-pointer">
@@ -97,11 +111,12 @@ export const ProductCard = ({ item, viewMode }) => {
               )}
             </div>
 
+         
             <h3 className={`${styles.productCardTitle}`}>{product.title}</h3>
             <p className={styles.price}>
               {product.priceOpt &&
               customer.authStatus &&
-              customer.type === "Оптовый покупатель"
+                customer.type === "Оптовый покупатель"
                 ? Number(roundPrice(product.priceOpt)).toLocaleString("ru-RU")
                 : Number(roundPrice(product.price)).toLocaleString(
                     "ru-RU"
@@ -182,7 +197,9 @@ export const ProductCard = ({ item, viewMode }) => {
             </div>
             <div className="py-6 h-full flex flex-col items-start justify-between ">
               <p className="text-2xl font-bold">
-                {roundPrice(product.price)} ₽
+                {customer.type === "Оптовый покупатель"
+                  ? roundPrice(product.priceOpt)
+                  : roundPrice(product.price)} ₽
               </p>
 
               <div className="grid grid-cols-2 gap-2 justify-between w-full ">
@@ -276,7 +293,10 @@ export const ProductCard = ({ item, viewMode }) => {
               </div>
               {/* price */}
               <p className="text-sm xl:text-xl font-bold justify-self-center">
-                {roundPrice(product.price)} ₽
+                {customer.type === true
+                  ? roundPrice(product.priceOpt)
+                  : roundPrice(product.price)}{" "}
+                ₽
               </p>
               {/* quantity */}
               <div className="w-full py-2 border rounded-md flex justify-around items-center">

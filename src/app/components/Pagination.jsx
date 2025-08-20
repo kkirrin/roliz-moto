@@ -10,10 +10,10 @@ import { ProductCard } from "@/app/components/shop/ProductCard";
 import { Loader } from "@/app/components/micro/Loader";
 
 // HOC для анимации (без изменений)
-const AnimatedProductCard = React.memo(({ item }) => {
+const AnimatedProductCard = React.memo(({ item, forPartners }) => {
   return (
     <div className="product-card-wrapper">
-      <ProductCard item={item} />
+      <ProductCard item={item} forPartners={forPartners} />
     </div>
   );
 });
@@ -24,6 +24,7 @@ const Pagination = ({
   pageNumber = 1,
   setPageNumber = (f) => f,
   categories = [0],
+  forPartners = false,
 }) => {
   const { slug } = useParams();
   const filters = useFilters();
@@ -128,7 +129,7 @@ const Pagination = ({
       `}</style>
       
       {allProducts.map((product) => (
-        <AnimatedProductCard key={product.id} item={product} />
+        <AnimatedProductCard key={product.id} item={product} forPartners={forPartners} />
       ))}
 
       <div

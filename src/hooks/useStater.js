@@ -27,6 +27,7 @@ export const useStater = (select) => {
   const cart = useSelector((state) => state.cart);
   const user = useSelector((state) => state.user);
   const deliveriesTerms = useSelector((state) => state.deliveriesTerms);
+  const forPartners = useSelector((state) => state.forPartners);
 
   // Возвращаем нужную часть state
   switch (select) {
@@ -62,6 +63,9 @@ export const useStater = (select) => {
 
     case "deliveriesTerms": //Способы доставки и оплаты
       return deliveriesTerms;
+
+    case "forPartners": //Для партнеров
+      return forPartners;
 
     default:
       //console.log('Неопознанный вызов состояния');

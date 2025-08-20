@@ -26,6 +26,11 @@ const initialState = [
     href: "/routes/pages/warranty",
     loader: false,
   },
+  {
+    name: "Для партнеров",
+    href: "/routes/pages/partners",
+    loader: false,
+  },
 ];
 
 export const navSlice = createSlice({
