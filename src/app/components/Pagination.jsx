@@ -28,6 +28,7 @@ const Pagination = ({
   const { slug } = useParams();
   const filters = useFilters();
   const sortingMode = useSelector((state) => state.sorting.sortingMode);
+  
 
   const [allProducts, setAllProducts] = useState([]);
   const [hasMoreProducts, setHasMoreProducts] = useState(true);
@@ -68,6 +69,12 @@ const Pagination = ({
   useEffect(() => {
     setHasMoreProducts(true);
   }, [categoryFilter, sortingMode]);
+
+  useEffect(() => {
+    setPageNumber(1);
+    setAllProducts([]);
+    setHasMoreProducts(true);
+}, [sortingMode, setPageNumber]);
 
 
   // --- ОБРАБОТКА НОВЫХ ДАННЫХ (логика замены/добавления) ---

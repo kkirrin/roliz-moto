@@ -6,11 +6,11 @@ import { NavigationBar } from "@/app/components/micro/Navigation";
 import { Cart } from "@/app/components/shop/Cart2";
 import Socials from "@/app/components/micro/Socials";
 import NavCategories from "./NavCategories";
-import { useGetCategoriesQuery } from "@/redux/api/categories.api";
+import { useGetMainCategoriesQuery } from "@/redux/api/main-categories.api";
 
 const BurgerMenu = () => {
   const [open, setOpen] = useState(false);
-  const { data, isLoading } = useGetCategoriesQuery();
+  const { data, isLoading } = useGetMainCategoriesQuery();
 
   useEffect(() => {
     if (!window) return;

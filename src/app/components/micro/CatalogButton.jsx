@@ -5,14 +5,14 @@ import { useStater } from "@/hooks/useStater";
 import styles from "@/app/css/header.module.css";
 import Image from "next/image";
 import Link from "next/link";
-import { useGetCategoriesQuery } from "@/redux/api/categories.api";
+import { useGetMainCategoriesQuery } from "@/redux/api/main-categories.api";
 import NavCategories from "./NavCategories";
 
 const CatalogButton = ({}) => {
   const [status, setStatus] = useState(false);
   const { mobile } = useStater("main");
 
-  const { isLoading, error, data } = useGetCategoriesQuery();
+  const { isLoading, error, data } = useGetMainCategoriesQuery();
 
   // console.log("data cat", data);
 

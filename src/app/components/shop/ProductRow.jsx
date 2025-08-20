@@ -5,8 +5,8 @@ import Image from "next/image";
 import styles from "@/app/css/shop.module.css";
 import { ProductCard } from "@/app/components/shop/ProductCard";
 import { Loader } from "@/app/components/micro/Loader";
-import { useGetCategoriesQuery } from "@/redux/api/categories.api";
 import { useGetProductOnPageQuery } from "@/redux/api/products.api";
+import { useGetMainCategoriesQuery } from "@/redux/api/main-categories.api";
 
 export const ProductRow = React.memo(
   ({ category = 0, place = "main", bestSales }) => {
@@ -69,7 +69,7 @@ export const ProductRow = React.memo(
 );
 
 const LoadingCategory = React.memo(({ category, bestSales }) => {
-  const { isLoading, data } = useGetCategoriesQuery();
+  const { isLoading, data } = useGetMainCategoriesQuery();
 
   const categoryName = React.useMemo(() => {
     if (bestSales) return "Популярные товары";
