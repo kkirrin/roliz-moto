@@ -29,12 +29,36 @@ export default function Page() {
     }
   })();
 
+  const { toggleModal } = useActions();
+
+
   const { mobile } = useMain("main");
-  const { getDataProducts } = useActions();
-  const [categoryFilter, setCategoryFilter] = useState(-1);
   const [showFilters, setShowFilters] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
+  const [forPartners, setForPartners] = useState(false);
   const filters = useFilters();
+    // Получаем данные пользователя
+  const customer = useSelector((state) => state.customer?.customer);
+  const isAuthenticated = useSelector((state) => state.customer?.isAuthenticated);
+
+
+  useEffect(() => {
+    if (forPartners) {
+      // Если пользователь не авторизован
+      if (!isAuthenticated || !customer) {
+        toggleModal("modals_auth");
+        setForPartners(false); // Возвращаем в обычный режим
+        return;
+      }
+
+      // Если пользователь не имеет статус "Оптовый покупатель"
+      if (customer.type !== "Оптовый покупатель") {
+        toggleModal("modals_auth");
+        setForPartners(false); // Возвращаем в обычный режим
+        return;
+      }
+    }
+  }, [forPartners, isAuthenticated, customer, toggleModal]);
 
   useEffect(() => {
     if (!isLoading && data) {
@@ -47,11 +71,39 @@ export default function Page() {
     <main className={`${styles.main} ${stylesShop.shopPage}`}>
       <Breadcrumbs />
 
-      <h1 className="text-[40px] font-semibold">{categoryName}</h1>
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-[40px] font-semibold">{categoryName}</h1>
+        
+        {/* Кнопка переключения режима */}
+        <div className="flex items-center gap-4">
+          {forPartners && (
+            <div className="flex items-center gap-2 px-3 py-2 bg-blue-100 text-blue-800 rounded-lg">
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+              </svg>
+              <span className="text-sm font-medium">Режим для партнеров</span>
+            </div>
+          )}
+          
+          <button 
+            onClick={() => setForPartners(!forPartners)}
+            className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+              forPartners 
+                ? 'bg-gray-600 text-white hover:bg-gray-700' 
+                : 'bg-blue-600 text-white hover:bg-blue-700'
+            }`}
+          >
+            {forPartners ? 'Обычный режим' : 'Оптовым покупателям'}
+          </button>
+        </div>
+      </div>
 
       <section className={stylesShop.rowCats}>
-        <CategoriesList />
+        <CategoriesList 
+          forPartners={forPartners} 
+        />
       </section>
+      
       <Sorting />
 
       <section className={stylesShop.shopContainer}>
@@ -125,7 +177,6 @@ export default function Page() {
         </div>
 
         <div className="ml-10 w-full">
-          {/* <div className={stylesShop.shopBlock}> */}
           <div 
             data-category="catalogue"
             className={
@@ -135,10 +186,9 @@ export default function Page() {
             }
           >
             <Pagination
-              categories={[]}
               pageNumber={pageNumber}
               setPageNumber={setPageNumber}
-              hasViewMode={viewMode !== "grid"}
+              forPartners={forPartners}
             />
           </div>
         </div>
