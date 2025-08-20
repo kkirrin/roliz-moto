@@ -120,7 +120,7 @@ function NewsBlock() {
                 <img
                   src={`${process.env.NEXT_PUBLIC_PROTOCOL}://${process.env.NEXT_PUBLIC_URL_FRONT}${newsItem.attributes.image.data.attributes.url}`}
                   alt={newsItem.attributes.title}
-                  className="object-cover transition-transform duration-300 hover:scale-105 w-full h-auto rounded-xl"
+                  className={`${styles.newsItemImg} object-cover transition-transform duration-300 hover:scale-105 w-full h-auto rounded-xl`}
                 />
               </div>
 

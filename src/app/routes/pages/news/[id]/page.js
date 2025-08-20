@@ -5,10 +5,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { useGetNewsIdQuery } from "@/redux/api/news.api";
 import formatDate from "@/app/utils/formatDate";
+import styles from "@/app/css/news.module.css";
 
 
 function SingleNewsPage({ params }) {
-  const { data, isLoading } = useGetNewsIdQuery(params.id);
+  const resolvedParams = React.use(params);
+  const { data, isLoading } = useGetNewsIdQuery(resolvedParams.id);
 
   if (isLoading) {
     return <div>Загрузка новостей...</div>;
@@ -58,7 +60,7 @@ function SingleNewsPage({ params }) {
             src={`${process.env.NEXT_PUBLIC_PROTOCOL}://${process.env.NEXT_PUBLIC_URL_FRONT}${newsData.image.data.attributes.url}`}
             // src={newsData.image.data.attributes.url}
             alt={newsData.title}
-            className="object-cover w-full h-full"
+            className={`${styles.newsItemImg} object-cover w-full h-full`}
           />
         ) : (
           <div className="w-full h-full bg-gray-light flex items-center justify-center">
