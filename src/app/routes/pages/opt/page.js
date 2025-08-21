@@ -1,7 +1,7 @@
 "use client";
 import React, { Suspense, useEffect } from "react";
 import Image from "next/image";
-import { useGetOptPageQuery, useGetPartnersQuery } from "@/redux/api/pages.api";
+import { useGetOptPageQuery } from "@/redux/api/pages.api";
 import { Loader } from "@/app/components/micro/Loader";
 import styles from "@/app/css/mainpage.module.css";
 import { Partners } from "@/app/components/main/Partners/Partners";
