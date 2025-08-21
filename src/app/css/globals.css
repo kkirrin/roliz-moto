@@ -259,3 +259,9 @@ input[type="number"] {
     width: auto !important;
   }
 }
+
+
+.popup-modal {
+  width: 100vw !important;
+  max-width: 100vw !important;
+}

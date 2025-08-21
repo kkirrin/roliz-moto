@@ -3,6 +3,22 @@
 import React, { useEffect } from "react";
 
 function Modal({ isOpen, onClose, children }) {
+
+  // закрывает по esc
+  useEffect(() => {
+    const handleEsc = (e) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    };
+    if (isOpen) {
+      document.addEventListener("keydown", handleEsc);
+    } else {
+      document.removeEventListener("keydown", handleEsc);
+    }
+  }, [isOpen, onClose]);
+
+  // закрывает по клику на overlay
   useEffect(() => {
     if (isOpen) {
       document.documentElement.classList.add("lock");
@@ -15,7 +31,7 @@ function Modal({ isOpen, onClose, children }) {
 
   return (
     <div
-      className="fixed w-full inset-0 bg-black bg-opacity-50 z-[999] flex justify-center items-center"
+      className="fixed w-full inset-0 bg-black bg-opacity-50 z-[999] flex justify-center items-center popup-modal"
       onClick={onClose} // Close modal when clicking on the overlay
     >
       <div
