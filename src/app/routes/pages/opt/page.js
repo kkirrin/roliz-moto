@@ -1,19 +1,15 @@
 "use client";
 import React, { Suspense, useEffect } from "react";
 import Image from "next/image";
-import { useGetOptPageQuery, useGetPartnersQuery } from "@/redux/api/pages.api";
+import { useGetOptPageQuery } from "@/redux/api/pages.api";
 import { Loader } from "@/app/components/micro/Loader";
 import styles from "@/app/css/mainpage.module.css";
 import { Partners } from "@/app/components/main/Partners/Partners";
 
 export default function Page({ }) {
   const { isLoading, error, data } = useGetOptPageQuery();
-  const { isLoading: isLoadingPartners, error: errorPartners, data: dataPartners } = useGetPartnersQuery();
 
   useEffect(() => { }, [data]);
-  useEffect(() => { }, [dataPartners]);
-
-  console.log('dataPartners', dataPartners);
 
   return (
     <main
@@ -67,9 +63,7 @@ export default function Page({ }) {
         )}
       </div>
 
-
       <Partners />
-
     </main>
   );
 }

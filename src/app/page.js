@@ -63,8 +63,9 @@ export default function Home() {
           <BigNavButtons />
         </div>
         <NewsBlock />
-
-        <ConsultForm />
+        <div className="my-16">
+          <ConsultForm />
+        </div>
         {/* <ProductRow category={process.env.NEXT_PUBLIC_HEAD_ID} place="" /> */}
         {/* <YouTubeBlock /> */}
         {/* <ProductRow category={process.env.NEXT_PUBLIC_VELO_ID} place="" /> */}
