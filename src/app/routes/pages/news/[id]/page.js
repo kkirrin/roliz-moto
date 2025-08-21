@@ -60,7 +60,7 @@ function SingleNewsPage({ params }) {
             src={`${process.env.NEXT_PUBLIC_PROTOCOL}://${process.env.NEXT_PUBLIC_URL_FRONT}${newsData.image.data.attributes.url}`}
             // src={newsData.image.data.attributes.url}
             alt={newsData.title}
-            className={`${styles.newsItemImg} object-cover w-full h-full`}
+            className={`object-cover w-full h-full`}
           />
         ) : (
           <div className="w-full h-full bg-gray-light flex items-center justify-center">

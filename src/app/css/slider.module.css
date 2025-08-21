@@ -11,15 +11,15 @@
 
 .section,
 .sliderItem {
-    min-height: clamp(18.75rem, 4.464rem + 29.762vw, 31.25rem);
+    min-height: clamp(18.75rem, 12.054rem + 17.857vw, 28.125rem);
     border-radius: 20px;
     background-color: #c8c7c7;
 }
 
 .sliderItem img {
-   display: block;
-   margin: 0;
-   inset: 2px 0px !important;
+    display: block;
+    margin: 0;
+    inset: 2px 0px !important;
 }
 
 .sliderItem {

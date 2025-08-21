@@ -37,11 +37,9 @@ export const Cart = ({ inBurger = false }) => {
 
   useEffect(() => {
     if (sideCart) {
-      document.body.style.overflow = "hidden";
-      document.body.style.maxHeight = "100svh";
+      document.documentElement.classList.add("lock");
     } else {
-      document.body.style.overflow = "visible";
-      document.body.style.maxHeight = "max-content";
+      document.documentElement.classList.remove("lock");
     }
   }, [sideCart]);
 

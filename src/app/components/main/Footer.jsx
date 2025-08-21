@@ -48,7 +48,7 @@ export const Footer = ({ }) => {
         </div>
       </div>
 
-      <div className="flex">
+      <div className="flex gap-5">
         <div className="flex flex-col gap-3">
           <h5>Roliz.Ru</h5>
           <p className="text-xs font-light !text-gray-light">
@@ -58,10 +58,10 @@ export const Footer = ({ }) => {
           <a
             target="_blank"
             href={`https://www.google.com/maps/place/${!contactsLoading
-                ? typeof contactsData != "undefined" && contactsData.data
-                  ? contactsData.data[0].attributes.MainAdress
-                  : null
+              ? typeof contactsData != "undefined" && contactsData.data
+                ? contactsData.data[0].attributes.MainAdress
                 : null
+              : null
               }`}
             className="text-sm !text-gray-light"
           >
@@ -72,10 +72,10 @@ export const Footer = ({ }) => {
           <a
             target="_blank"
             href={`https://www.google.com/maps/place/${!contactsLoading
-                ? typeof contactsData != "undefined" && contactsData.data
-                  ? contactsData.data[0].attributes.OfficeUssur
-                  : null
+              ? typeof contactsData != "undefined" && contactsData.data
+                ? contactsData.data[0].attributes.OfficeUssur
                 : null
+              : null
               }`}
             className="text-sm !text-gray-light"
           >
@@ -140,14 +140,15 @@ export const Footer = ({ }) => {
         </div>
       </div>
 
-      <div className="flex flex-col !md:flex-row gap-5 justify-between text-sm my-16">
+      <div className="flex flex-col !md:flex-row gap-2 justify-between text-sm my-16">
         <div className=''>
           <p>
-            <span>ООО Roliz © {year}</span>
+            <span>ООО Roliz © {year} </span>
             все права защищены
           </p>
         </div>
         <Link href="/routes/political">Политика конфиденциальности</Link>
+        <Link href="https://inside360.ru/" target="_blank" className="inside_link" >Разработки сайта <span>INSIDE360</span></Link>
       </div>
       <Cookies />
     </footer>
