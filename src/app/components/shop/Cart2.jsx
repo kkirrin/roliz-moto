@@ -153,6 +153,20 @@ export const Cart = ({ inBurger = false }) => {
     }
   };
 
+  // закрывает по клику на esc
+  useEffect(() => {
+    const handleEsc = (e) => {
+      if (e.key === "Escape") {
+        toggleSideCart();
+      }
+    };
+    if (sideCart) {
+      document.addEventListener("keydown", handleEsc);
+    } else {
+      document.removeEventListener("keydown", handleEsc);
+    }
+  }, [sideCart, toggleSideCart]);
+
   return (
     <>
       <div
@@ -276,16 +290,15 @@ export const Cart = ({ inBurger = false }) => {
         </div>
       )} */}
       <section
-        className={`${styles.sideCartContainer} ${
-          sideCart ? styles.showSideCart : styles.hideSideCart
-        }`}
+        className={`${styles.sideCartContainer} ${sideCart ? styles.showSideCart : styles.hideSideCart
+          }`}
       >
         <SideContent inBurger={inBurger} />
       </section>
       <div
-        className={`${styles.darkSideBackground} ${
-          sideCart ? styles.actBack : styles.disBack
-        }`}
+        onClick={() => !mobile && toggleSideCart()}
+        className={`${styles.darkSideBackground} ${sideCart ? styles.actBack : styles.disBack
+          }`}
       ></div>
     </>
   );
@@ -433,7 +446,7 @@ export const SideContent = ({ inBurger = false }) => {
     setForDelete([]);
   };
 
-  useEffect(() => {}, [cart, forDelete]);
+  useEffect(() => { }, [cart, forDelete]);
   useEffect(() => {
     toDelete();
   }, [selectAll]);
@@ -704,9 +717,9 @@ const SingleItem = ({
 
   if (!product) return null;
 
-  useEffect(() => {}, [quantity]);
+  useEffect(() => { }, [quantity]);
 
-  useEffect(() => {}, [selectAll]);
+  useEffect(() => { }, [selectAll]);
 
   return (
     <article
@@ -776,7 +789,7 @@ const SingleItem = ({
   );
 };
 
-const PriceCard = ({}) => {
+const PriceCard = ({ }) => {
   //Инициализация количества, веса и суммы
   let tempTotalSum = 0;
   let tempTotalWeight = 0;
@@ -790,8 +803,8 @@ const PriceCard = ({}) => {
   const cart = useStater("cart");
   const customer = useCustomers();
 
-  useEffect(() => {}, [cart]);
-  useEffect(() => {}, [totalSum, totalProducts]);
+  useEffect(() => { }, [cart]);
+  useEffect(() => { }, [totalSum, totalProducts]);
 
   useEffect(() => {
     cart.forEach((item, index) => {

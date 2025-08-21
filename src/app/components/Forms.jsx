@@ -922,7 +922,7 @@ export const ConsultForm = ({ place = "", setPlace = (f) => f }) => {
 
   return (
     <section
-      className={`relative min-h-[568px] my-16 lg:my-[100px] md:min-h-auto p-10 md:pt-8 md:px-14 rounded-xl overflow-hidden bg-[url('/images/consult-bg.png')] md:[url('/images/consult-bg-mobile.png')] bg-cover bg-center bg-no-repeat flex flex-col`}
+      className={`relative min-h-[568px] md:min-h-auto p-10 md:pt-8 md:px-14 rounded-xl overflow-hidden bg-[url('/images/consult-bg.png')] md:[url('/images/consult-bg-mobile.png')] bg-cover bg-center bg-no-repeat flex flex-col`}
     >
       <div className="relative z-10 max-w-md w-full text-white-default">
         {infoMessage && (

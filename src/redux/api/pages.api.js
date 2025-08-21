@@ -84,6 +84,18 @@ export const partnersApi = api.injectEndpoints({
   }),
 });
 
+export const policyApi = api.injectEndpoints({
+  endpoints: (builder) => ({
+    getPolicy: builder.query({
+      query: () => ({
+        mode: "cors",
+        url: "/stranicza-politika-konfidenczialnosti?populate=*",
+        method: "GET",
+      }),
+    }),
+  }),
+});
+
 export const {
   useGetSlidersQuery,
   useGetServicesQuery,
@@ -92,5 +104,6 @@ export const {
   useGetOptPageQuery,
   useGetDeliveryQuery,
   useGetWarrantyQuery,
-  useGetPartnersQuery
+  useGetPartnersQuery,
+  useGetPolicyQuery
 } = api;
