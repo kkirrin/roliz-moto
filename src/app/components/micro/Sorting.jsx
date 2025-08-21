@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { setViewMode } from "@/redux/reducers/viewReducer";
 import { setSortingMode } from "@/redux/reducers/sortingReducer";
 import useIsWideScreen from "@/app/utils/isWideScreen";
+import Image from "next/image";
 
-const Sorting = () => {
+const Sorting = ({ forPartners = false }) => {
   const dispatch = useDispatch();
   const sorting = useSelector((state) => state.sorting.sortingMode);
   const [isOpen, setIsOpen] = useState(false);
@@ -13,6 +14,16 @@ const Sorting = () => {
   if (!isWideScreen) {
     dispatch(setViewMode("grid"));
   }
+
+  useEffect(() => {
+    if (forPartners) {
+      dispatch(setViewMode("mini-table"));
+      handleViewChange("mini-table")
+    } else {
+      dispatch(setViewMode("grid"));
+      handleViewChange("grid")
+    }
+  }, [forPartners]);
 
   // const view = useSelector((state) => state.view.viewMode);
 
@@ -28,6 +39,8 @@ const Sorting = () => {
   useEffect(() => {}, [sorting]);
 
   return (
+    <>
+
     <div className="flex py-3 justify-between">
       <div className="relative">
         <div
@@ -39,10 +52,11 @@ const Sorting = () => {
             : sorting === "desc"
             ? "По убыванию цены"
             : "По алфавиту"}
-          <img
+          <Image
             src="/blackArrow.svg"
             alt="иконка стрелка"
             width={10}
+            height={10}
             className="absolute top-2 right-5"
           />
         </div>
@@ -70,36 +84,42 @@ const Sorting = () => {
         )}
       </div>
 
-      {/* режимы просмотра */}
-      {isWideScreen && (
-        <div className="flex justify-between gap-5">
-          <button
-            onClick={() => handleViewChange("grid")}
-            className={` hover:opacity-80 ${
-              viewMode === "grid" ? "filter invert" : ""
-            }`}
-          >
-            <img src="/icon/grid.svg" alt="иконка плитка" width={15} />
-          </button>
-          <button
-            onClick={() => handleViewChange("list")}
-            className={` hover:opacity-80 ${
-              viewMode === "list" ? "filter invert" : ""
-            }`}
-          >
-            <img src="/icon/list.svg" alt="иконка список" width={15} />
-          </button>
-          <button
-            onClick={() => handleViewChange("table")}
-            className={` hover:opacity-80 ${
-              viewMode === "table" ? "filter invert" : ""
-            }`}
-          >
-            <img src="/icon/table.svg" alt="иконка таблица" width={15} />
-          </button>
-        </div>
+        {/* режимы просмотра */}
+        {forPartners ? (
+          <>
+          </>
+          ) : (
+              isWideScreen && (
+              <div className="flex justify-between gap-5">
+                <button
+                  onClick={() => handleViewChange("grid")}
+                  className={` hover:opacity-80 ${
+                    viewMode === "grid" ? "filter invert" : ""
+                  }`}
+                >
+                  <Image src="/icon/grid.svg" alt="иконка плитка" width={15} height={15} />
+                </button>
+                <button
+                  onClick={() => handleViewChange("list")}
+                  className={` hover:opacity-80 ${  
+                    viewMode === "list" ? "filter invert" : ""
+                  }`}
+                >
+                  <Image src="/icon/list.svg" alt="иконка список" width={15} height={15} />
+                </button>
+                <button
+                  onClick={() => handleViewChange("table")}
+                  className={` hover:opacity-80 ${
+                    viewMode === "table" ? "filter invert" : ""
+                  }`}
+                >
+                  <Image src="/icon/table.svg" alt="иконка таблица" width={15} height={15} />
+                </button>
+              </div>
+              )
       )}
     </div>
+    </>
   );
 };
 

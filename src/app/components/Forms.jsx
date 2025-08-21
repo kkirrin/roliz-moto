@@ -644,26 +644,25 @@ const RegForm = ({ place = "", setPlace = (f) => f }) => {
   const { toggleModal } = useActions();
 
   const [infoMessage, setInfoMessage] = useState("");
-  // Добавляем состояние для чекбокса
   const [typeCustomer, setTypeCustomer] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const dataForm = new FormData(formRef.current);
-    console.log(typeCustomer);
-    // Убираем старую логику и добавляем только если чекбокс отмечен
+    
+    // Удаляем значение чекбокса из FormData, так как оно отправляет "on"
+    dataForm.delete("typeCustomer");
+    
+    // Добавляем правильное значение только если чекбокс отмечен
     if (typeCustomer) {
       dataForm.append("typeCustomer", true);
     }
-    // Если чекбокс НЕ отмечен, НЕ добавляем typeCustomer вообще
 
-    console.log(dataForm);
+    console.log("FormData contents:");
     for (let [key, value] of dataForm.entries()) {
       console.log(`${key}: ${value}`);
     }
-
-    dataForm.append("to", process.env.NEXT_PUBLIC_MAIL_FOR_ORDERS);
 
     const validateResult = validateForms(dataForm, formRef);
 
@@ -731,7 +730,7 @@ const RegForm = ({ place = "", setPlace = (f) => f }) => {
       <label htmlFor="password">Придумайте пароль</label>
       <input type="password" name="password" placeholder="" required />
 
-      <div className="flex items-center gap-2">
+      <div className={styles.checkbox_partner}>
         <input 
           type="checkbox" 
           id="forPartners"
@@ -739,10 +738,9 @@ const RegForm = ({ place = "", setPlace = (f) => f }) => {
           checked={typeCustomer}
           onChange={(e) => {
             setTypeCustomer(e.target.checked);
-            console.log("Partner checkbox:", e.target.checked);
           }} 
         />
-        <label htmlFor="typeCustomer">Оптовый покупатель</label>
+        <label htmlFor="forPartners">Оптовый покупатель</label>
       </div>
       
       <span>{infoMessage}</span>

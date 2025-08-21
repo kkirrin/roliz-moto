@@ -45,6 +45,32 @@
     width: 94.3%;
     background-color: rgba(0,0,0,0);
 }
+.checkbox_partner {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+.checkbox_partner label {
+    font-size: 1.2vw;
+    font-weight: 400;
+    color: #fff;
+
+    margin-top: 0 !important;
+}
+.checkbox_partner input {
+    width: 1.2vw;
+    height: 1.2vw;
+    border-radius: 5px;
+    border: 1px solid #626262;
+}
+.checkbox_partner input:checked {
+    background-color: #FFCA18;
+}
+.checkbox_partner input:checked + label {
+    color: #000;
+}
 .formOrder input:nth-child(2){
     margin-top: 10px !important;
 }

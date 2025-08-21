@@ -14,6 +14,7 @@ import Pagination from "@/app/components/Pagination";
 import Breadcrumbs from "@/app/components/micro/Breadcrumbs";
 import Sorting from "@/app/components/micro/Sorting";
 import { Loader } from "@/app/components/micro/Loader";
+import { useCustomers } from "@/hooks/useStater";
 
 export default function Page() {
   const pathname = usePathname();
@@ -38,14 +39,12 @@ export default function Page() {
   const [forPartners, setForPartners] = useState(false);
   const filters = useFilters();
     // Получаем данные пользователя
-  const customer = useSelector((state) => state.customer?.customer);
-  const isAuthenticated = useSelector((state) => state.customer?.isAuthenticated);
-
+  const customer = useCustomers();
 
   useEffect(() => {
     if (forPartners) {
       // Если пользователь не авторизован
-      if (!isAuthenticated || !customer) {
+      if (customer.type !== "Оптовый покупатель") {
         toggleModal("modals_auth");
         setForPartners(false); // Возвращаем в обычный режим
         return;
@@ -58,7 +57,7 @@ export default function Page() {
         return;
       }
     }
-  }, [forPartners, isAuthenticated, customer, toggleModal]);
+  }, [forPartners, customer, toggleModal]);
 
   useEffect(() => {
     if (!isLoading && data) {
@@ -104,7 +103,7 @@ export default function Page() {
         />
       </section>
       
-      <Sorting />
+      <Sorting forPartners={forPartners}/>
 
       <section className={stylesShop.shopContainer}>
         <div className={stylesShop.filtersContainer}>
@@ -175,23 +174,35 @@ export default function Page() {
             <h3>По какой-то причине фильтры отсутствуют</h3>
           )}
         </div>
-
-        <div className="ml-10 w-full">
-          <div 
-            data-category="catalogue"
-            className={
-              viewMode === "grid" 
-                ? "flex flex-col gap-10 md:grid md:grid-cols-3 xl:gap-4 items-center" 
-                : "flex flex-col gap-6"
-            }
-          >
-            <Pagination
-              pageNumber={pageNumber}
-              setPageNumber={setPageNumber}
-              forPartners={forPartners}
-            />
-          </div>
-        </div>
+        {forPartners ? (
+           <div 
+                data-category="catalogue"
+                className="flex flex-col gap-6"
+              >
+                <Pagination
+                  pageNumber={pageNumber}
+                  setPageNumber={setPageNumber}
+                  forPartners={forPartners}
+                />
+              </div>
+        ) : (
+            <div className="ml-10 w-full">
+              <div 
+                data-category="catalogue"
+                className={
+                  viewMode === "grid" 
+                    ? "flex flex-col gap-10 md:grid md:grid-cols-3 xl:gap-4 items-center" 
+                    : "flex flex-col gap-6"
+                }
+              >
+                <Pagination
+                  pageNumber={pageNumber}
+                  setPageNumber={setPageNumber}
+                  forPartners={forPartners}
+                />
+              </div>
+            </div>
+          )}
       </section>
     </main>
   );

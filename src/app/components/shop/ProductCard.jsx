@@ -55,7 +55,7 @@ export const ProductCard = ({ item, viewMode, forPartners }) => {
   const { addToCart } = useActions();
   const customer = useCustomers();
 
-  console.log(customer);
+  // console.log(customer);
 
   const handleAddToCart = (productToAdd) => {
     if (!productToAdd) return;
@@ -79,20 +79,31 @@ export const ProductCard = ({ item, viewMode, forPartners }) => {
     />
   );
 
+
+
+  const handleQuantityChange = (e) => {
+    const value = parseInt(e.target.value) || 1;
+    
+    // Ограничиваем количество товара
+    if (value < 1) {
+      setQuantity(1);
+    } else if (value > product.stock) {
+      setQuantity(product.stock);
+    } else {
+      setQuantity(value);
+    }
+  };
+
+  // Функция для обработки потери фокуса (валидация)
+  const handleQuantityBlur = () => {
+    if (quantity < 1) {
+      setQuantity(1);
+    }
+  };
+
+
   return (
     <Suspense fallback={<div>Загрузка...</div>}>
-      {customer.type === "Оптовый покупатель" && (
-        <div className="absolute top-0 right-0 flex items-center gap-2">
-          <Image src="/icon/partners.svg" alt="Оптовый покупатель" width={20} height={20} />
-          <p className="text-sm font-bold">Оптовый покупатель</p>
-          {product.priceOpt && (
-            <p className="text-sm font-bold">
-              {Number(roundPrice(product.priceOpt)).toLocaleString("ru-RU")} ₽
-            </p>
-          )}
-        </div>
-      )}
-
       {/* GRID VIEW */}
       {effectiveViewMode === "grid" && product && (
         <article className="relative min-w-[195px] lg:min-w-[300px] flex flex-col h-full transition-all duration-300 ease-in select-none cursor-pointer">
@@ -116,7 +127,7 @@ export const ProductCard = ({ item, viewMode, forPartners }) => {
             <p className={styles.price}>
               {product.priceOpt &&
               customer.authStatus &&
-                customer.type === "Оптовый покупатель"
+                customer.type === "Оптовый покупатель" && forPartners
                 ? Number(roundPrice(product.priceOpt)).toLocaleString("ru-RU")
                 : Number(roundPrice(product.price)).toLocaleString(
                     "ru-RU"
@@ -197,7 +208,7 @@ export const ProductCard = ({ item, viewMode, forPartners }) => {
             </div>
             <div className="py-6 h-full flex flex-col items-start justify-between ">
               <p className="text-2xl font-bold">
-                {customer.type === "Оптовый покупатель"
+                {customer.type === "Оптовый покупатель" && forPartners
                   ? roundPrice(product.priceOpt)
                   : roundPrice(product.price)} ₽
               </p>
@@ -293,7 +304,7 @@ export const ProductCard = ({ item, viewMode, forPartners }) => {
               </div>
               {/* price */}
               <p className="text-sm xl:text-xl font-bold justify-self-center">
-                {customer.type === true
+                {customer.type === "Оптовый покупатель" && forPartners
                   ? roundPrice(product.priceOpt)
                   : roundPrice(product.price)}{" "}
                 ₽
@@ -319,6 +330,95 @@ export const ProductCard = ({ item, viewMode, forPartners }) => {
                     height={10}
                   />
                 </button>
+              </div>
+              {/* add to cart */}
+              <button
+                onClick={() => handleAddToCart(product)}
+                className="w-full py-[11px] text-sm xl:text-base rounded-md bg-yellow-default hover:transition-all"
+              >
+                {textToCart}
+              </button>
+            </div>
+          </article>
+        </>
+      )}
+      
+      {/* MINI-TABLE VIEW */}
+      {effectiveViewMode === "mini-table" && product && (
+        <>
+          <article className="flex h-full">
+            <div className=" grid grid-cols-[10%_50%_auto_12%_12%] items-start gap-3 w-full p-6 transition-all duration-300 ease-in">
+              {/* image */}
+              <div className="">
+                <Link
+                  href={product ? `/routes/shop/products/${product.id}` : "#"}
+                >
+                  {renderImage(
+                    product.image && Array.isArray(product.image)
+                      ? `${process.env.NEXT_PUBLIC_PROTOCOL}://${process.env.NEXT_PUBLIC_URL_API}${product.image[0]}`
+                      : `${process.env.NEXT_PUBLIC_PROTOCOL}://${
+                          process.env.NEXT_PUBLIC_URL_FRONT
+                        }${product.image || "/noImage.jpg"}`,
+                    product.title
+                  )}
+                </Link>
+              </div>
+              {/* title & description */}
+              <div className="flex-grow flex-col gap-8 w-auto h-full flex ">
+                <Link
+                  href={product ? `/routes/shop/products/${product.id}` : "#"}
+                >
+                  <h3 className="text-2xl font-bold">{product.title}</h3>
+                </Link>
+
+                <div className="w-full text-sm xl:text-base flex flex-col self-start items-start">
+                  {product.description ? (
+                    <>
+                      <p>
+                        {showFullDescription
+                          ? product.description
+                          : `${product.description.substring(
+                              0,
+                              Math.min(product.description.length, 200)
+                            )}...`}
+                      </p>
+                      {product.description.length > 200 && (
+                        <button
+                          className="mt-1 text-gray-light text-xs xl:text-base"
+                          onClick={() =>
+                            setShowFullDescription(!showFullDescription)
+                          }
+                        >
+                          {showFullDescription ? "Скрыть" : "Показать больше"}
+                        </button>
+                      )}
+                    </>
+                  ) : (
+                    <p>Нет данных о продукте</p>
+                  )}
+                </div>
+              </div>
+              {/* price */}
+              <p className="text-sm xl:text-xl font-bold justify-self-center">
+                {customer.type === "Оптовый покупатель" && forPartners
+                  ? roundPrice(product.priceOpt)
+                  : roundPrice(product.price)}{" "}
+                ₽
+              </p>
+              {/* quantity */}
+              <div className="w-full py-2 border rounded-md flex justify-around items-center">
+
+                <input
+                  type="number"
+                  min="1"
+                  max={product.stock}
+                  value={quantity}
+                  onChange={handleQuantityChange}
+                  onBlur={handleQuantityBlur}
+                  style={{ backgroundColor : 'inherit'}}
+                  className=" w-12 h-6 text-center border-none bg-transparent focus:outline-none text-sm font-medium"
+                />
+          
               </div>
               {/* add to cart */}
               <button

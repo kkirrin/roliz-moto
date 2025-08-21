@@ -14,6 +14,8 @@ import Breadcrumbs from "@/app/components/micro/Breadcrumbs";
 import { getCategoryPath } from "@/app/utils/getCategoryTitle";
 import Sorting from "@/app/components/micro/Sorting";
 import { Loader } from "@/app/components/micro/Loader";
+import { useActions } from "@/hooks/useActions";
+import { useCustomers } from "@/hooks/useStater";
 
 export default function Page({}) {
   const [showFilters, setShowFilters] = useState(false);
@@ -22,11 +24,14 @@ export default function Page({}) {
   const { mobile } = useMain("main");
   const { slug } = useParams();
   const { isLoading, data } = useGetCategoriesQuery();
-
+  const { toggleModal } = useActions();
   const { viewMode } = useSelector((state) => state.view);
   const [pageNumber, setPageNumber] = useState(1);
-
+  const [forPartners, setForPartners] = useState(false);
   const categoryPath = getCategoryPath(data?.data, slug[0]);
+
+  const customer = useCustomers();
+  const isAuthenticated = useSelector((state) => state.customer?.isAuthenticated);
 
   useEffect(() => {
     if (!isLoading) {
@@ -47,15 +52,64 @@ export default function Page({}) {
     }
   }, [data]);
 
+
+  useEffect(() => {
+    if (forPartners) {
+      // Если пользователь не авторизован
+      if (customer.type !== "Оптовый покупатель") {
+        toggleModal("modals_auth");
+        setForPartners(false); // Возвращаем в обычный режим
+        return;
+      }
+
+      // Если пользователь не имеет статус "Оптовый покупатель"
+      if (customer.type !== "Оптовый покупатель") {
+        toggleModal("modals_auth");
+        setForPartners(false); // Возвращаем в обычный режим
+        return;
+      }
+    }
+  }, [forPartners, customer, toggleModal]);
+
   if (isLoading) return <Loader />;
 
   return (
     <>
       <main className={`${styles.main} ${stylesShop.shopPage}`}>
         <Breadcrumbs />
-        <h1 id="shop-container" className="text-[40px] font-semibold">
-          {categoryPath.breadcrumbs[categoryPath.breadcrumbs.length - 1]}
-        </h1>
+          <div className="flex items-center justify-between mb-6">
+
+          <h1 id="shop-container" className="text-[40px] font-semibold">
+            {categoryPath.breadcrumbs[categoryPath.breadcrumbs.length - 1]}
+          </h1>
+
+           {/* Кнопка переключения режима */}
+          <div className="flex items-center gap-4">
+            {forPartners && (
+              <div className="flex items-center gap-2 px-3 py-2 bg-blue-100 text-blue-800 rounded-lg">
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                <span className="text-sm font-medium">Режим для партнеров</span>
+              </div>
+            )}
+            
+            <button 
+              onClick={() => {
+                setForPartners(!forPartners);
+                console.log(forPartners);
+              }}
+              className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                forPartners 
+                  ? 'bg-gray-600 text-white hover:bg-gray-700' 
+                  : 'bg-blue-600 text-white hover:bg-blue-700'
+              }`}
+            >
+            {forPartners ? 'Обычный режим' : 'Оптовым покупателям'}
+          </button>
+          </div>
+        </div>
+
         <section
           className="flex gap-3 overflow-x-auto flex-nowrap w-full pb-4 [&::-webkit-scrollbar]:rounded-full
             [&::-webkit-scrollbar-thumb]:rounded-full
@@ -63,7 +117,7 @@ export default function Page({}) {
         >
           <CategoriesList />
         </section>
-        <Sorting />
+        <Sorting forPartners={forPartners}/>
         <section className={stylesShop.shopContainer}>
           <div className={`${stylesShop.filtersContainer}`}>
             {filters ? (
@@ -142,41 +196,37 @@ export default function Page({}) {
               <h3>По какой-то причине фильтры отстутствуют</h3>
             )}
           </div>
-          <div className="w-full">
-            {viewMode === "grid" && (
-              <div
+
+            {forPartners ? (
+              <div 
                 data-category="catalogue"
-                className="flex flex-col gap-10 md:grid md:grid-cols-3 xl:gap-4 items-center"
+                className="flex flex-col gap-6"
               >
                 <Pagination
-                  categories={categoriesPag}
                   pageNumber={pageNumber}
                   setPageNumber={setPageNumber}
-                  hasViewMode={false}
+                  forPartners={forPartners}
                 />
               </div>
-            )}
-            {viewMode === "list" && (
-              <div data-category="catalogue" className="flex flex-col gap-6">
-                <Pagination
-                  categories={categoriesPag}
-                  pageNumber={pageNumber}
-                  setPageNumber={setPageNumber}
-                  hasViewMode={true}
-                />
+              ) : (
+              <div className="ml-10 w-full">
+                <div 
+                  data-category="catalogue"
+                  className={
+                    viewMode === "grid" 
+                      ? "flex flex-col gap-10 md:grid md:grid-cols-3 xl:gap-4 items-center" 
+                      : "flex flex-col gap-6"
+                  }
+                >
+                  <Pagination
+                    pageNumber={pageNumber}
+                    setPageNumber={setPageNumber}
+                    forPartners={forPartners}
+                  />
+                </div>
               </div>
-            )}
-            {viewMode === "table" && (
-              <div data-category="catalogue" className="flex flex-col gap-6">
-                <Pagination
-                  categories={categoriesPag}
-                  pageNumber={pageNumber}
-                  setPageNumber={setPageNumber}
-                  hasViewMode={true}
-                />
-              </div>
-            )}
-          </div>{" "}
+          )}
+          
         </section>
       </main>
     </>
