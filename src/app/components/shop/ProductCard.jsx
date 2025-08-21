@@ -87,8 +87,8 @@ export const ProductCard = ({ item, viewMode, forPartners }) => {
     // Ограничиваем количество товара
     if (value < 1) {
       setQuantity(1);
-    } else if (value > product.stock) {
-      setQuantity(product.stock);
+    } else if (value > 1000) {
+      setQuantity(1000);
     } else {
       setQuantity(value);
     }
@@ -347,10 +347,11 @@ export const ProductCard = ({ item, viewMode, forPartners }) => {
       {effectiveViewMode === "mini-table" && product && (
         <>
           <article className="flex h-full">
-            <div className=" grid grid-cols-[10%_50%_auto_12%_12%] items-start gap-3 w-full p-6 transition-all duration-300 ease-in">
+            <div className=" grid grid-cols-[10%_50%_auto_12%_12%] items-start gap-3 w-full p-[10px] transition-all duration-300 ease-in">
               {/* image */}
               <div className="">
                 <Link
+                  target="_blank"
                   href={product ? `/routes/shop/products/${product.id}` : "#"}
                 >
                   {renderImage(
@@ -366,6 +367,7 @@ export const ProductCard = ({ item, viewMode, forPartners }) => {
               {/* title & description */}
               <div className="flex-grow flex-col gap-8 w-auto h-full flex ">
                 <Link
+                  target="_blank"
                   href={product ? `/routes/shop/products/${product.id}` : "#"}
                 >
                   <h3 className="text-2xl font-bold">{product.title}</h3>
@@ -410,8 +412,8 @@ export const ProductCard = ({ item, viewMode, forPartners }) => {
 
                 <input
                   type="number"
-                  min="1"
-                  max={product.stock}
+                  min="0"
+                  max={1000}
                   value={quantity}
                   onChange={handleQuantityChange}
                   onBlur={handleQuantityBlur}

@@ -28,7 +28,7 @@ const initialState = [
   },
   {
     name: "Для партнеров",
-    href: "/routes/pages/partners",
+    href: "/routes/shop",
     loader: false,
   },
 ];

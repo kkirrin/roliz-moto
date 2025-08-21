@@ -40,6 +40,11 @@ export default function Page() {
   const filters = useFilters();
     // Получаем данные пользователя
   const customer = useCustomers();
+  const isAuthenticated = customer?.authStatus;
+
+
+  console.log(isAuthenticated)
+
 
   useEffect(() => {
     if (forPartners) {
@@ -86,7 +91,7 @@ export default function Page() {
           
           <button 
             onClick={() => setForPartners(!forPartners)}
-            className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+            className={`px-4 py-2 font-medium transition-all duration-200  flex gap-3 bg-yellow-default p-[13px] rounded-[10px] lg:px-7 lg:py-3 lg:rounded-xl${
               forPartners 
                 ? 'bg-gray-600 text-white hover:bg-gray-700' 
                 : 'bg-blue-600 text-white hover:bg-blue-700'
