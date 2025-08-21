@@ -84,10 +84,10 @@ export const Slider = ({ }) => {
                   )}
                 </div>
 
-                <div className = {`${styles.sliderBg}`}>
-                  <Image 
-                    unoptimized alt="image" 
-                    src = {`${process.env.NEXT_PUBLIC_PROTOCOL}://${process.env.NEXT_PUBLIC_URL_API}${slide.attributes.src.data.attributes.url}`}
+                <div className={`${styles.sliderBg}`}>
+                  <Image
+                    unoptimized alt="image"
+                    src={`${process.env.NEXT_PUBLIC_PROTOCOL}://${process.env.NEXT_PUBLIC_URL_API}${slide.attributes.src.data.attributes.url}`}
                     blurDataURL={`${process.env.NEXT_PUBLIC_PROTOCOL}://${process.env.NEXT_PUBLIC_URL_API}${slide.attributes.src.data.attributes.url}`}
                     placeholder="blur"
                     quality={75}
@@ -113,7 +113,7 @@ export const Slider = ({ }) => {
 const SliderController = ({ slides, setSelectSlide = (f) => f, data }) => {
   return (
     <div className="w-full h-7 xl:h-10 absolute bottom-0 flex justify-center">
-      {data?.data
+      {data?.data && data?.data.length > 1
         ? data?.data.map((slide, index) => {
           // if (index > slides.length - data.data.length) return;
           return (

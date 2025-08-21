@@ -9,11 +9,11 @@ import { useActions } from "@/hooks/useActions";
 
 import styles from "@/app/css/mainpage.module.css";
 
-const BigNavButtons = ({}) => {
-  useEffect(() => {});
+const BigNavButtons = ({ }) => {
+  useEffect(() => { });
 
   return (
-    <section className="grid grid-rows-2 pt-10 md:grid-cols-2 md:grid-rows-1 gap-y-5 md:gap-y-0 md:gap-x-3 text-white-default text-lg lg:text-[34px] ">
+    <section className="grid grid-rows-2 pt-10 md:grid-cols-2 md:grid-rows-1 gap-y-5 md:gap-y-0 md:gap-x-3 text-white-default text-lg lg:text-[34px] p-4">
       <Link href={`/routes/pages/opt`}>
         <article className="relative flex flex-col gap-3 lg:gap-7 bg-[url('/images/opt.png')] bg-cover bg-center rounded-2xl p-6 min-h-[260px] lg:min-h-[430px] ">
           <div className="flex justify-between uppercase ">
@@ -35,19 +35,19 @@ const BigNavButtons = ({}) => {
             <ul className="text-white text-[10px] font-normal leading-[1.2] lg:text-lg lg:leading-[1] space-y-3 lg:space-y-5">
               <li className="grid grid-cols-[16px_125px] gap-3">
                 <div className="inline-flex items-center justify-center w-4 h-4 lg:w-5 lg:h-5">
-                  <img src="/icon/check-black.svg" className="w-full h-full"/>
+                  <img src="/icon/check-black.svg" className="w-full h-full" />
                 </div>
                 <p>Выгодные предложения по ценам на товары</p>
               </li>
               <li className="grid grid-cols-[16px_125px] gap-3">
                 <div className="inline-flex items-center justify-center w-4 h-4 lg:w-5 lg:h-5">
-                  <img src="/icon/check-black.svg" className="w-full h-full"/>
+                  <img src="/icon/check-black.svg" className="w-full h-full" />
                 </div>
                 <p>Персональный менеджер</p>
               </li>
               <li className="grid grid-cols-[16px_125px] gap-3">
                 <div className="inline-flex items-center justify-center w-4 h-4 lg:w-5 lg:h-5">
-                  <img src="/icon/check-black.svg" className="w-full h-full"/>
+                  <img src="/icon/check-black.svg" className="w-full h-full" />
                 </div>
                 <p>Бесперебойные поставки товаров</p>
               </li>
@@ -55,7 +55,7 @@ const BigNavButtons = ({}) => {
           </div>
         </article>
       </Link>
-      <Link href={`/routes/pages/opt`}>
+      <Link href={`/routes/pages/delivery`}>
         <article className="relative flex flex-col gap-3 lg:gap-7 bg-[url('/images/delivery.png')] bg-cover bg-center rounded-2xl p-6 min-h-[260px] lg:min-h-[430px] ">
           <div className="flex justify-between uppercase ">
             <h3 className=" ">Доставка</h3>

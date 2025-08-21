@@ -394,6 +394,9 @@
 
 .darkBlock {
   background: #262626;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  border-radius: 20px;
 }
 
 .fullWidth>section {
