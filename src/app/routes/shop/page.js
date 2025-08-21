@@ -4,8 +4,8 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useFilters, useMain } from "@/hooks/useStater";
 import { useActions } from "@/hooks/useActions";
-import { usePathname } from "next/navigation";
-import { useGetCategoriesQuery } from "@/redux/api/categories.api";
+import { usePathname, useSearchParams } from "next/navigation";
+import { useGetMainCategoriesQuery } from "@/redux/api/main-categories.api";
 import styles from "@/app/css/mainpage.module.css";
 import stylesShop from "@/app/css/shop.module.css";
 import Filters from "@/app/components/shop/Filters";
@@ -18,11 +18,13 @@ import { useCustomers } from "@/hooks/useStater";
 
 export default function Page() {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+
 
   const { viewMode } = useSelector((state) => state.view);
   const sortingMode = useSelector((state) => state.sorting);
 
-  const { isLoading, data } = useGetCategoriesQuery();
+  const { isLoading, data } = useGetMainCategoriesQuery();
 
   const categoryName = (() => {
     if (pathname.endsWith("/shop")) {
@@ -30,23 +32,47 @@ export default function Page() {
     }
   })();
 
-  const { toggleModal } = useActions();
-
 
   const { mobile } = useMain("main");
   const [showFilters, setShowFilters] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
   const [forPartners, setForPartners] = useState(false);
+  const { toggleModal } = useActions();
+
   const filters = useFilters();
     // Получаем данные пользователя
   const customer = useCustomers();
   const isAuthenticated = customer?.authStatus;
 
-
-  console.log(isAuthenticated)
+  // useEffect(() => {
+  //   const urlForPartners = searchParams.get('forPartners');
+    
+  //   if (urlForPartners === 'true' && forPartners) {
+  //     // Проверяем доступ
+  //     console.log(customer?.type)
+  //     if (customer?.type === "Оптовый покупатель") {
+  //       setForPartners(true);
+  //       console.log("Автоматически включен режим для партнеров");
+        
+        
+  //       // Убираем параметр из URL после обработки
+  //       const newUrl = new URL(window.location);
+  //       newUrl.searchParams.delete('forPartners');
+  //       window.history.replaceState({}, '', newUrl);
+      
+  //     } else {
+  //       // Если нет доступа, убираем параметр из URL
+  //       const newUrl = new URL(window.location);
+  //       newUrl.searchParams.delete('forPartners');
+  //       window.history.replaceState({}, '', newUrl);
+  //     }
+  //   }
+  // }, [searchParams, forPartners, customer?.type]);
 
 
   useEffect(() => {
+    const urlForPartners = searchParams.get('forPartners');
+
     if (forPartners) {
       // Если пользователь не авторизован
       if (customer.type !== "Оптовый покупатель") {
@@ -62,7 +88,11 @@ export default function Page() {
         return;
       }
     }
-  }, [forPartners, customer, toggleModal]);
+
+    if(urlForPartners === 'true' && forPartners) {
+      setForPartners(true);
+    }
+  }, [forPartners, customer, toggleModal, searchParams]);
 
   useEffect(() => {
     if (!isLoading && data) {
@@ -103,9 +133,7 @@ export default function Page() {
       </div>
 
       <section className={stylesShop.rowCats}>
-        <CategoriesList 
-          forPartners={forPartners} 
-        />
+        <CategoriesList categoryList={data} />
       </section>
       
       <Sorting forPartners={forPartners}/>

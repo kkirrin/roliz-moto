@@ -346,7 +346,7 @@ export const ProductCard = ({ item, viewMode, forPartners }) => {
       {/* MINI-TABLE VIEW */}
       {effectiveViewMode === "mini-table" && product && (
         <>
-          <article className="flex h-full">
+          <article className="flex h-full w-full">
             <div className=" grid grid-cols-[10%_50%_auto_12%_12%] items-start gap-3 w-full p-[10px] transition-all duration-300 ease-in">
               {/* image */}
               <div className="">
@@ -354,14 +354,17 @@ export const ProductCard = ({ item, viewMode, forPartners }) => {
                   target="_blank"
                   href={product ? `/routes/shop/products/${product.id}` : "#"}
                 >
-                  {renderImage(
-                    product.image && Array.isArray(product.image)
+                  <div className="w-20 h-20">
+
+                    {renderImage(
+                      product.image && Array.isArray(product.image)
                       ? `${process.env.NEXT_PUBLIC_PROTOCOL}://${process.env.NEXT_PUBLIC_URL_API}${product.image[0]}`
                       : `${process.env.NEXT_PUBLIC_PROTOCOL}://${
-                          process.env.NEXT_PUBLIC_URL_FRONT
-                        }${product.image || "/noImage.jpg"}`,
-                    product.title
-                  )}
+                        process.env.NEXT_PUBLIC_URL_FRONT
+                      }${product.image || "/noImage.jpg"}`,
+                      product.title
+                    )}
+                  </div>
                 </Link>
               </div>
               {/* title & description */}
