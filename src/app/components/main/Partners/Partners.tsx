@@ -47,6 +47,7 @@ async function getUserLocation(lat: number, lon: number) {
         return data;
     } catch (error) {
         console.error(error);
+        return null;
     }
 }
 
@@ -131,11 +132,16 @@ export const Partners = () => {
         };
 
         const userLocation = await getUserLocation(location.coordinates.lat, location.coordinates.lng);
-        setUserLocation({
-            coordinates: { lat: userLocation.lat, lng: userLocation.lon },
-            address: userLocation.address.city,
-            state: userLocation.address.state
-        });
+        if (userLocation === null) {
+            alert("Ошибка при получении координат пользователя, выберите магазин вручную");
+            return;
+        } else {
+            setUserLocation({
+                coordinates: { lat: userLocation.lat, lng: userLocation.lon },
+                address: userLocation.address.city,
+                state: userLocation.address.state
+            });
+        };
 
         // Находим ближайший магазин и центрируем карту на нем
         const nearestStore = findNearestStore(
