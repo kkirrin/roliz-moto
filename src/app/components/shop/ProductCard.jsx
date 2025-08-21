@@ -373,10 +373,10 @@ export const ProductCard = ({ item, viewMode, forPartners }) => {
                   target="_blank"
                   href={product ? `/routes/shop/products/${product.id}` : "#"}
                 >
-                  <h3 className="text-2xl font-bold">{product.title}</h3>
+                  <h3 className="text-xl font-bold">{product.title}</h3>
                 </Link>
 
-                <div className="w-full text-sm xl:text-base flex flex-col self-start items-start">
+                <div className="w-full text-sm flex flex-col self-start items-start">
                   {product.description ? (
                     <>
                       <p>
@@ -404,7 +404,7 @@ export const ProductCard = ({ item, viewMode, forPartners }) => {
                 </div>
               </div>
               {/* price */}
-              <p className="text-sm xl:text-xl font-bold justify-self-center">
+              <p className="text-sm font-bold justify-self-center">
                 {customer.type === "Оптовый покупатель" && forPartners
                   ? roundPrice(product.priceOpt)
                   : roundPrice(product.price)}{" "}
@@ -428,7 +428,7 @@ export const ProductCard = ({ item, viewMode, forPartners }) => {
               {/* add to cart */}
               <button
                 onClick={() => handleAddToCart(product)}
-                className="w-full py-[11px] text-sm xl:text-base rounded-md bg-yellow-default hover:transition-all"
+                className="w-full py-[11px] text-sm rounded-md bg-yellow-default hover:transition-all"
               >
                 {textToCart}
               </button>

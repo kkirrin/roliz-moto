@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { useSelector } from "react-redux";
 import { useFilters, useMain } from "@/hooks/useStater";
 import { useActions } from "@/hooks/useActions";
@@ -16,10 +16,9 @@ import Sorting from "@/app/components/micro/Sorting";
 import { Loader } from "@/app/components/micro/Loader";
 import { useCustomers } from "@/hooks/useStater";
 
-export default function Page() {
+function ShopPage() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-
 
   const { viewMode } = useSelector((state) => state.view);
   const sortingMode = useSelector((state) => state.sorting);
@@ -238,5 +237,13 @@ export default function Page() {
           )}
       </section>
     </main>
+  );
+}
+
+export default function Page() {
+  return (
+    <Suspense fallback={<Loader />}>
+      <ShopPage />
+    </Suspense>
   );
 }
