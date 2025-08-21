@@ -7,8 +7,9 @@ import styles from "@/app/css/footer.module.css";
 import { ProductRow } from "@/app/components/shop/ProductRow";
 import { CallBack } from "@/app/components/micro/CallBack";
 import Socials from "@/app/components/micro/Socials";
+import Cookies from "./Cookies/Cookies";
 
-export const Footer = ({}) => {
+export const Footer = ({ }) => {
   const { isLoading: contactsLoading, data: contactsData } =
     useGetContactsQuery();
   const { isLoading: categoriesLoading, data: categoriesData } =
@@ -17,7 +18,7 @@ export const Footer = ({}) => {
   const date = new Date();
   const year = date.getFullYear();
 
-  useEffect(() => {}, [contactsData]);
+  useEffect(() => { }, [contactsData]);
 
   return (
     <footer className={`pt-10 ${styles.footerContainer}`}>
@@ -56,13 +57,12 @@ export const Footer = ({}) => {
           </p>
           <a
             target="_blank"
-            href={`https://www.google.com/maps/place/${
-              !contactsLoading
+            href={`https://www.google.com/maps/place/${!contactsLoading
                 ? typeof contactsData != "undefined" && contactsData.data
                   ? contactsData.data[0].attributes.MainAdress
                   : null
                 : null
-            }`}
+              }`}
             className="text-sm !text-gray-light"
           >
             {typeof contactsData != "undefined" && contactsData.data
@@ -71,13 +71,12 @@ export const Footer = ({}) => {
           </a>
           <a
             target="_blank"
-            href={`https://www.google.com/maps/place/${
-              !contactsLoading
+            href={`https://www.google.com/maps/place/${!contactsLoading
                 ? typeof contactsData != "undefined" && contactsData.data
                   ? contactsData.data[0].attributes.OfficeUssur
                   : null
                 : null
-            }`}
+              }`}
             className="text-sm !text-gray-light"
           >
             {typeof contactsData != "undefined" && contactsData.data
@@ -120,20 +119,20 @@ export const Footer = ({}) => {
               {!categoriesLoading
                 ? typeof categoriesData != "undefined" && categoriesData.data
                   ? categoriesData.data.map((item) => {
-                      if (!item.attributes.parent.data) {
-                        return (
-                          <li key={item.id}>
-                            <Link
-                              href={`/routes/shop/${item.id}`}
-                              className="!text-gray-light font-light cursor-pointer hover:transition-all 
+                    if (!item.attributes.parent.data) {
+                      return (
+                        <li key={item.id}>
+                          <Link
+                            href={`/routes/shop/${item.id}`}
+                            className="!text-gray-light font-light cursor-pointer hover:transition-all 
                               group"
-                            >
-                              {item.attributes.name}
-                            </Link>
-                          </li>
-                        );
-                      }
-                    })
+                          >
+                            {item.attributes.name}
+                          </Link>
+                        </li>
+                      );
+                    }
+                  })
                   : null
                 : null}
             </ul>
@@ -148,8 +147,9 @@ export const Footer = ({}) => {
             все права защищены
           </p>
         </div>
-          <Link href="/routes/political">Политика конфиденциальности</Link>
+        <Link href="/routes/political">Политика конфиденциальности</Link>
       </div>
+      <Cookies />
     </footer>
   );
 };
