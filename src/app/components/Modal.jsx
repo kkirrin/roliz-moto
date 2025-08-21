@@ -5,13 +5,10 @@ import React, { useEffect } from "react";
 function Modal({ isOpen, onClose, children }) {
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = "hidden"; // Disable scrolling when modal is open
+      document.documentElement.classList.add("lock");
     } else {
-      document.body.style.overflow = "unset"; // Re-enable scrolling when modal is closed
+      document.documentElement.classList.remove("lock");
     }
-    return () => {
-      document.body.style.overflow = "unset"; // Clean up on unmount
-    };
   }, [isOpen]);
 
   if (!isOpen) return null;
