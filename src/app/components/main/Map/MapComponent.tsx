@@ -11,6 +11,7 @@ interface ICoordinates {
     name: string;
     coordinates: [number, number];
     address: string;
+    city: string;
     time: string;
 }
 
@@ -35,7 +36,7 @@ export const MapComponent = ({ coordinates, center }: MapComponentProps) => {
                     style={{ height: "100%" }}
                     modules={['geoObject.addon.balloon', 'geoObject.addon.hint']}
                 >
-                    {coordinates.map((item, index) => (
+                    {coordinates?.map((item, index) => (
                         <Placemark
                             key={index}
                             defaultGeometry={item.coordinates}
@@ -47,10 +48,11 @@ export const MapComponent = ({ coordinates, center }: MapComponentProps) => {
                             properties={
                                 {
                                     iconContent: '', // пару символов помещается
-                                    hintContent: `<span> ${item.name} </span>`,
+                                    hintContent: `<span> "${item.name}", </span> <span> ${item.city} </span>`,
                                     // создаём пустой элемент с заданными размерами
                                     balloonContent: `<div id="driver-2" class="driver-card">
                                             <h3> ${item.name} </h3>
+                                            <p> ${item.city} </p>
                                             <p> ${item.address} </p>
                                             <p> ${item.time} </p>
                                         </div>`,

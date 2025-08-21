@@ -4,35 +4,40 @@ import React, { useEffect, useState } from 'react'
 import styles from "./style.module.css";
 import { MapComponent } from '../Map/MapComponent';
 
+import { useGetPartnersQuery } from "@/redux/api/pages.api";
+import { Loader } from '../../micro/Loader';
+
 interface ICoordinates {
     name: string;
     coordinates: [number, number];
     address: string;
+    city: string;
     time: string;
 }
 
-const coordinatesData: ICoordinates[] = [
-    {
-        name: "Магазин №1",
-        address: "г. Уссурийск ул. Володарского 9",
-        time: "Пн-Пт 09:00-18:00",
-        coordinates: [43.791280, 131.939303]
-    },
-    {
-        name: "Магазин №2",
-        address: "г. Уссурийск ул. Кирова 18",
-        time: "Пн-Пт 09:00-18:00",
-        coordinates: [43.811423, 131.950684]
-    },
-    {
-        name: "Магазин в Питере",
-        address: "г. Санкт-Петербург ул. Ленина 10",
-        time: "Пн-Пт 09:00-18:00",
-        coordinates: [60.000000, 30.000000]
-    }
-]
+// const coordinatesData: ICoordinates[] = [
+//     {
+//         name: "Магазин №1",
+//         address: "г. Уссурийск ул. Володарского 9",
+//         time: "Пн-Пт 09:00-18:00",
+//         coordinates: [43.791280, 131.939303]
+//     },
+//     {
+//         name: "Магазин №2",
+//         address: "г. Уссурийск ул. Кирова 18",
+//         time: "Пн-Пт 09:00-18:00",
+//         coordinates: [43.811423, 131.950684]
+//     },
+//     {
+//         name: "Магазин в Питере",
+//         address: "г. Санкт-Петербург ул. Ленина 10",
+//         time: "Пн-Пт 09:00-18:00",
+//         coordinates: [60.000000, 30.000000]
+//     }
+// ]
 
 // функция принимает координаты юзера и возвращает объект с адресом
+
 async function getUserLocation(lat: number, lon: number) {
     try {
         const response = await fetch(
@@ -82,8 +87,9 @@ function findNearestStore(userLat: number, userLon: number, stores: ICoordinates
     return nearestStore;
 }
 
-
 export const Partners = () => {
+    const { isLoading: isLoadingPartners, error: errorPartners, data: dataPartners } = useGetPartnersQuery();
+
     // состояние для хранения координат партнеров
     const [coordinates, setCoordinates] = useState<ICoordinates[]>([]);
 
@@ -115,7 +121,7 @@ export const Partners = () => {
         });
     }, []);
 
-    useEffect(() => { setCoordinates(coordinatesData) }, [coordinates]);
+    // useEffect(() => { setCoordinates(coordinatesData) }, [coordinates]);
 
     // функция обработчик нажатия на кнопку и получение координат пользователя
     const handleButtonClick = async () => {
@@ -155,42 +161,52 @@ export const Partners = () => {
         }
     };
 
+    useEffect(() => { setCoordinates(dataPartners?.data?.attributes?.partners_list?.stores) }, [dataPartners]);
+
     return (
         <section className={styles.section}>
             <h2 className={styles.title}>Наши партнеры</h2>
             <p>Ознакомьтесь с нашими партнерами и найдите ближайший к вам магазин</p>
 
-            <div className="flex items-center gap-4">
-                <button
-                    onClick={() => handleButtonClick()}
-                    className={styles.button}
-                >
-                    {location.loaded ? "Найти ближайший магазин" : "Геолокация не включена"}
-                </button>
 
-                {userLocation?.address && (
-                    <p>Определенна локация: {userLocation.state}, {userLocation.address}</p>
-                )}
-            </div>
-            <div className="flex items-center gap-4">
-                <select
-                    className={styles.button}
-                    onChange={handleStoreChange}
-                    defaultValue=""
-                >
-                    <option value="">Выбрать магазин вручную</option>
-                    {coordinates.map((item) => (
-                        <option
-                            key={item.name}
-                            value={item.name}
-                        >
-                            {item.name}
-                        </option>
-                    ))}
-                </select>
-            </div>
+            {errorPartners !== undefined ? (
+                <div className="error-massage"><h2>Ошибка при загрузке данных</h2><p>попробуйте позже или перезагрузите страницу</p></div>
+            ) :
+                isLoadingPartners ? (<Loader />) : (
+                    <>
+                        <div className="flex items-center gap-4">
+                            <button
+                                onClick={() => handleButtonClick()}
+                                className={styles.button}
+                            >
+                                {location.loaded ? "Найти ближайший магазин" : "Геолокация не включена"}
+                            </button>
 
-            <MapComponent coordinates={coordinates} center={center} />
+                            {userLocation?.address && (
+                                <p>Определенна локация: {userLocation.state}, {userLocation.address}</p>
+                            )}
+                        </div>
+                        <div className="flex items-center gap-4">
+                            <select
+                                className={styles.button}
+                                onChange={handleStoreChange}
+                                defaultValue=""
+                            >
+                                <option value="">Выбрать магазин вручную</option>
+                                {coordinates?.map((item) => (
+                                    <option
+                                        key={item.name}
+                                        value={item.name}
+                                    >
+                                        {item.name}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                        <MapComponent coordinates={coordinates} center={center} />
+                    </>
+                )
+            }
         </section>
     );
 };

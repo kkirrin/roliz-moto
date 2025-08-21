@@ -8,12 +8,8 @@ import { Partners } from "@/app/components/main/Partners/Partners";
 
 export default function Page({ }) {
   const { isLoading, error, data } = useGetOptPageQuery();
-  const { isLoading: isLoadingPartners, error: errorPartners, data: dataPartners } = useGetPartnersQuery();
 
   useEffect(() => { }, [data]);
-  useEffect(() => { }, [dataPartners]);
-
-  console.log('dataPartners', dataPartners);
 
   return (
     <main
@@ -67,9 +63,7 @@ export default function Page({ }) {
         )}
       </div>
 
-
       <Partners />
-
     </main>
   );
 }
