@@ -328,6 +328,7 @@ export const SideContent = ({ inBurger = false }) => {
   const [toOrder, setToOrder] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
+  
 
   // Убедитесь, что переменная `errorMessageInput` определена
   const errorMessageInput = "Ошибка ввода";
@@ -550,8 +551,18 @@ export const SideContent = ({ inBurger = false }) => {
           <h5>{totalSum} ₽</h5>
         </div>
         <p>
-          *Указана розничная цена, сумма может отличаться от итоговой. Конечную
-          стоимость уточняйте у менеджера.
+          {customer.type === "Оптовый покупатель" ? (
+             <>
+              *Указана оптовая цена, сумма может отличаться от итоговой. Конечную
+              стоимость уточняйте у менеджера.
+             </>
+          ): (
+            <>
+              *Указана розничная цена, сумма может отличаться от итоговой. Конечную
+              стоимость уточняйте у менеджера.
+            </>
+          )}
+         
         </p>
       </section>
 

@@ -424,9 +424,15 @@ const OrderForm = ({ place = "", setPlace = (f) => f, idItems = 0 }) => {
     formData.append("PriceDelivery", "Уточнить цену доставки");
     formData.append("OrderNumber", uuidv4());
 
+    if(customer.type === "Оптовый покупатель"){
+      formData.append("typeCustomer", true);
+    }
+
     const formJSON = Object.fromEntries(formData.entries());
     formJSON.OrderItems = { connect: tempItems };
     formJSON.Customers = { connect: [customer.id !== -1 ? customer.id : 3] };
+
+    console.log(formJSON)
 
     try {
       const response = await fetch(
