@@ -40,6 +40,10 @@ const Modals = ({}) => {
         </h3>
         {main.typeModal == "modals_auth" ? (
           <Forms place={"modals_auth"} />
+        ) : main.typeModal == "modals_reg" ? (
+          <Forms place={"modals_reg"} />
+        ) : main.typeModal == "recovery_pass" ? (
+          <Forms place={"recovery_pass"} />
         ) : (
           <Forms place={"callback"} />
         )}

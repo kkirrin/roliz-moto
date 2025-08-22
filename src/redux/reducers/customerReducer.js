@@ -35,8 +35,32 @@ const initialState = {
                 state.orders = []
                 state.saveCart = []
                 state.address = ''
+                
+                // Очищаем данные из localStorage
+                if (typeof window !== 'undefined') {
+                    localStorage.removeItem('userData');
+                }
         },
         auth: (state, action) => {
+            if(action.payload) {
+                state.authStatus = true;
+                state.id = (action.payload.id) ? action.payload.id : false,
+                state.type = (action.payload.typeCustomer) ? 'Оптовый покупатель' : 'Розничный покупатель';
+                state.tel = (action.payload.phone)? action.payload.phone : '';
+                state.fullname = (action.payload.fullname) ? action.payload.fullname : '';
+                state.name = (action.payload.name) ? action.payload.name : '';
+                state.address =  (action.payload.address) ? action.payload.address : '';
+                state.username = (action.payload.username) ? action.payload.username : '';
+                state.orders = (action.payload?.Ordres) ? [...action.payload.Ordres] : [];
+                state.jwt = action.payload.JWT;
+                
+                // Сохраняем данные в localStorage
+                if (typeof window !== 'undefined') {
+                    localStorage.setItem('userData', JSON.stringify(action.payload));
+                }
+            }
+        },
+        initializeFromStorage: (state, action) => {
             if(action.payload) {
                 state.authStatus = true;
                 state.id = (action.payload.id) ? action.payload.id : false,
