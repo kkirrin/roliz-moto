@@ -28,7 +28,7 @@ const IntoProductImages = ({ data, title }) => {
     }
   };
 
-  useEffect(() => {});
+  useEffect(() => { });
 
   useEffect(() => {
     const handleDocumentWheel = (evt) => {
@@ -47,7 +47,7 @@ const IntoProductImages = ({ data, title }) => {
     };
   }, []);
 
-  useEffect(() => {}, [selectedImages]);
+  useEffect(() => { }, [selectedImages]);
 
   const handleImageClick = () => {
     console.log("click");
@@ -62,7 +62,7 @@ const IntoProductImages = ({ data, title }) => {
     return (
       <article className={`${productStyles.imageBlock}`}>
         <div className={`${productStyles.singleProductImg}`}>
-          <Image unoptimized src={`/noImage.jpg`} alt={title} fill />
+          <Image unoptimized src={`/noImage.jpg`} alt={title} fill loading="lazy" />
         </div>
       </article>
     );
@@ -87,7 +87,7 @@ const IntoProductImages = ({ data, title }) => {
             }}
             className="absolute left-4 top-1/2 -translate-y-1/2 bg-[url('/icon/ArrowLeft.svg')] bg-no-repeat w-[25px] h-[25px] flex items-center justify-center z-10"
           >
-          
+
           </button>
 
           {/* Кнопка "Следующее" */}
@@ -100,7 +100,7 @@ const IntoProductImages = ({ data, title }) => {
             }}
             className="absolute right-4 top-1/2 -translate-y-1/2 bg-[url('/icon/Arrow.svg')] bg-no-repeat w-[25px] h-[25px] flex items-center justify-center z-10"
           >
-          
+
           </button>
           <Image
             unoptimized
@@ -111,7 +111,7 @@ const IntoProductImages = ({ data, title }) => {
         </div>
       ) : (
         <div className={`${productStyles.singleProductImg}`}>
-          <Image unoptimized src={`/noImage.jpg`} alt={title} fill />
+          <Image unoptimized src={`/noImage.jpg`} alt={title} fill loading="lazy" />
         </div>
       )}
 
@@ -148,27 +148,27 @@ const IntoProductImages = ({ data, title }) => {
       >
         {data && Array.isArray(data) && data[1]
           ? data.map((item, index) => {
-              return (
-                <div
-                  onClick={(evt) => {
-                    if (!mobile) {
-                      setSelectedImages(index);
-                    }
-                  }}
-                  onTouchStart={(evt) => {
+            return (
+              <div
+                onClick={(evt) => {
+                  if (!mobile) {
                     setSelectedImages(index);
-                  }}
-                  className={`${productStyles.singleProductImg}`}
-                >
-                  <Image
-                    unoptimized
-                    src={`${process.env.NEXT_PUBLIC_PROTOCOL}://${process.env.NEXT_PUBLIC_URL_API}${item.attributes.url}`}
-                    alt={item.attributes.alt}
-                    fill
-                  />
-                </div>
-              );
-            })
+                  }
+                }}
+                onTouchStart={(evt) => {
+                  setSelectedImages(index);
+                }}
+                className={`${productStyles.singleProductImg}`}
+              >
+                <Image
+                  unoptimized
+                  src={`${process.env.NEXT_PUBLIC_PROTOCOL}://${process.env.NEXT_PUBLIC_URL_API}${item.attributes.url}`}
+                  alt={item.attributes.alt}
+                  fill
+                />
+              </div>
+            );
+          })
           : null}
       </div>
     </article>

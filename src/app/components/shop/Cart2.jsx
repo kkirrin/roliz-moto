@@ -323,7 +323,6 @@ export const SideContent = ({ inBurger = false }) => {
   const [totalWeight, setTotalWeight] = useState(tempTotalWeight);
   const [totalSum, setTotalSum] = useState(tempTotalSum);
   const [totalProducts, setTotalProducts] = useState(tempTotalProducts);
-  console.log("totalProducts", totalProducts);
   const [forDelete, setForDelete] = useState([]);
 
   const [toOrder, setToOrder] = useState(false);
