@@ -8,19 +8,17 @@ import Link from "next/link";
 import { useGetMainCategoriesQuery } from "@/redux/api/main-categories.api";
 import NavCategories from "./NavCategories";
 
-const CatalogButton = ({}) => {
+const CatalogButton = ({ }) => {
   const [status, setStatus] = useState(false);
   const { mobile } = useStater("main");
 
   const { isLoading, error, data } = useGetMainCategoriesQuery();
 
-  // console.log("data cat", data);
-
   useEffect(() => {
     window.addEventListener("scroll", (evt) => {
       if (status) setStatus(!status);
     });
-    return window.removeEventListener("scroll", () => {});
+    return window.removeEventListener("scroll", () => { });
   }, [status]);
 
   return (
@@ -34,17 +32,15 @@ const CatalogButton = ({}) => {
           if (!mobile) return;
           setStatus(!status);
         }}
-        className={`${styles.containerCatalog} ${
-          status ? styles.activeCatalog : styles.nonActiveCatalog
-        }`}
+        className={`${styles.containerCatalog} ${status ? styles.activeCatalog : styles.nonActiveCatalog
+          }`}
       >
         <Button />
       </div>
 
       <div
-        className={`absolute bg-white-default z-10 rounded-xl transition-all md:w-[300px] ${
-          status ? 'top-20 left-0' : 'hidden'
-        }`}
+        className={`absolute bg-white-default z-10 rounded-xl transition-all md:w-[300px] ${status ? 'top-20 left-0' : 'hidden'
+          }`}
       >
 
         <NavCategories data={data} isLoading={isLoading} burgerSetter={setStatus} />
@@ -82,9 +78,9 @@ const CatalogButton = ({}) => {
   );
 };
 
-const Button = ({}) => {
+const Button = ({ }) => {
   return (
-    <div className="flex gap-3 bg-yellow-default p-[13px] rounded-[10px] lg:px-7 lg:py-3 lg:rounded-xl">
+    <div className="flex gap-3 bg-yellow-default p-[13px] rounded-[10px] lg:px-7 lg:py-3 lg:rounded-xl cursor-pointer">
       <div className={`${styles.buttonCatalogIcon}`}>
         <p></p>
         <p></p>

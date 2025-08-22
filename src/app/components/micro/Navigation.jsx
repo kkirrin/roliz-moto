@@ -38,7 +38,7 @@ export const NavigationBar = ({ place = "header", burgerSetter = null }) => {
               }
               href={item.href}
               key={`navmenu_${index}`}
-              className={pathname === item.href ? styles.active_link : ""}
+              className={`${pathname === item.href ? styles.active_link : ""} hover:text-yellow-default transition-all`}
             >
               {item.name}
             </Link>

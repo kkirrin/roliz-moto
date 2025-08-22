@@ -201,20 +201,21 @@
     }
 
     .searchContainer {
-        position: relative;
-        margin-left: 9px;
-        height: max-content;
+        /* position: relative; */
+        /* margin-left: 9px; */
+        /* height: max-content; */
         display: flex;
         justify-content: flex-start;
         align-items: center;
-        width: 45px;
-        height: 45px;
-        min-width: 32px;
+        /* width: 45px; */
+        /* height: 45px; */
+        /* min-width: 32px; */
         margin-right: 0;
         cursor: pointer;
         background-color: #fff;
-        border-radius: 27%;
-        padding: 6px;
+        /* border-radius: 27%; */
+        padding: 0;
+        min-width: auto;
     }
 
     .searchForm input {
@@ -242,7 +243,7 @@
     }
 
     .searchResultsContainer {
-        position: relative;
+        /* position: relative;
         animation: opacity 1s 1;
         top: -10px;
         padding: 5vw;
@@ -253,7 +254,7 @@
         left: 0;
         margin: auto;
         max-height: 67svh;
-        overflow: scroll;
+        overflow: scroll; */
     }
 
     .resultItem h3 {
