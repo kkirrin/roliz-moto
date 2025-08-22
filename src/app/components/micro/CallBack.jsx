@@ -6,7 +6,7 @@ import { useGetContactsQuery } from "@/redux/api/contacts.api";
 import { useMain } from "@/hooks/useStater";
 import { useActions } from "@/hooks/useActions";
 
-export const CallBack = ({}) => {
+export const CallBack = ({ }) => {
   const { isLoading, error, data } = useGetContactsQuery();
 
   const { mobile, showModal } = useMain();
@@ -23,8 +23,8 @@ export const CallBack = ({}) => {
   if (isLoading) return `Загрузка...`;
 
   return (
-    <button >
-        <a href={`tel:${phoneNumber}`}>{displayText}</a>
+    <div className="mr-2">
+      <a className="link_hover" href={`tel:${phoneNumber}`}>{displayText}</a>
       {/* <a
         onClick={(evt) => {
           if (!mobile) openCallButton(evt);
@@ -36,6 +36,6 @@ export const CallBack = ({}) => {
       >
         Заказать звонок
       </a> */}
-    </button>
+    </div>
   );
 };
