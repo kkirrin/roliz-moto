@@ -34,6 +34,13 @@ const cartSlice = createSlice({
     removeAll: (state, action) => {
       state.length = 0;
     },
+    updateQuantity: (state, action) => {
+      const { id, quantity } = action.payload;
+      const item = state.find(item => item.id === id);
+      if (item) {
+        item.quantityForBuy = quantity;
+      }
+    },
   },
 });
 

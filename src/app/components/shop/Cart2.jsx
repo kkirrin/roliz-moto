@@ -313,6 +313,8 @@ export const SideContent = ({ inBurger = false }) => {
   const mobile = useStater("main");
   const customer = useCustomers();
 
+  // console.log("cart", cart);
+
   const { removeAll, removeItems } = useActions();
   const formRef = useRef(null);
 
@@ -526,6 +528,7 @@ export const SideContent = ({ inBurger = false }) => {
 
       <div className="h-1/2 overflow-y-auto scroll-smooth overflow-hidden scrollbar-thin">
         {cart.map((item, index) => {
+
           return (
             <SingleItem
               key={`keyProductInCart_${index}_${item.id}`}
@@ -540,6 +543,7 @@ export const SideContent = ({ inBurger = false }) => {
               setSelecteAll={setSelectAll}
               product={item}
               index={index}
+              quantity={item.quantityForBuy}
             />
           );
         })}
@@ -672,7 +676,7 @@ const SingleItem = ({
 }) => {
   //product.attributes.weight
   const [quantity, setQuantity] = useState(product.quantityForBuy);
-  const { removeAll, removeItems } = useActions();
+  const { removeAll, removeItems, updateQuantity } = useActions();
   const customer = useCustomers();
 
   const minus = (e) => {
@@ -685,8 +689,11 @@ const SingleItem = ({
         ? product.priceOpt || product.price
         : product.price;
 
+    const newQuantity = quantity - 1;
+
     // Уменьшаем количество только если оно больше 1
-    setQuantity(quantity - 1);
+    setQuantity(newQuantity);
+    updateQuantity({ id: product.id, quantity: newQuantity });
     setTotalSum(Number.parseFloat(totalSum) - Number.parseFloat(price));
     setTotalWeight(Number.parseFloat(totalWeight) - Number.parseFloat(weight));
     setTotalProducts(totalProducts - 1);
@@ -704,7 +711,9 @@ const SingleItem = ({
 
     // Увеличиваем количество только если оно меньше запаса
     if (quantity < product.stock) {
-      setQuantity(quantity + 1);
+      const newQuantity = quantity + 1;
+      setQuantity(newQuantity);
+      updateQuantity({ id: product.id, quantity: newQuantity });
       setTotalSum(Number.parseFloat(totalSum) + Number.parseFloat(price));
       setTotalWeight(
         Number.parseFloat(totalWeight) + Number.parseFloat(weight)
@@ -713,11 +722,15 @@ const SingleItem = ({
     }
   };
 
-  if (!product) return null;
-
   useEffect(() => { }, [quantity]);
-
   useEffect(() => { }, [selectAll]);
+
+  // Синхронизируем локальное состояние с Redux store
+  useEffect(() => {
+    setQuantity(product.quantityForBuy);
+  }, [product.quantityForBuy]);
+
+  if (!product) return null;
 
   return (
     <article
@@ -754,6 +767,7 @@ const SingleItem = ({
               fill
             />
           </button>
+          {/* ============================================== */}
           <p className="text-sm">{quantity}</p>
           <button onClick={plus} className={`${styles.productCardButton}`}>
             <Image

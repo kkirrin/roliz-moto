@@ -65,7 +65,7 @@ export const SearchForm = ({ }) => {
         let tempText = text
         let tempLetter = `${tempText[0]}`.toUpperCase()
         tempText = tempLetter + tempText.slice(1)
-        console.log("tempText", tempText)
+        // console.log("tempText", tempText)
 
         setLoading(true);
         debounceTimeout.current = setTimeout(async () => {

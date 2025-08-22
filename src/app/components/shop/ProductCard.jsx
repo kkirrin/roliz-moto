@@ -23,25 +23,25 @@ export const ProductCard = ({ item, viewMode, forPartners }) => {
 
   const product = item?.attributes?.id1c
     ? {
-        id: item.id,
-        id1c: item.attributes?.id1c || "",
-        category: item.attributes?.categories?.data?.map((cat) => cat.id) || [],
-        image:
-          item.attributes?.imgs?.data?.[0]?.attributes?.url || "/noImage.jpg",
-        title: item.attributes?.title || "Название продукта",
-        description: item.attributes?.description || "",
-        stock: Number.parseInt(item.attributes?.stock || 0),
-        storeplace: item.attributes?.storeplace,
-        attributes:
-          item.attributes?.Attributes?.attributes?.map((attr) =>
-            attr.type === "Number"
-              ? { ...attr, value: Number.parseInt(attr.value || 0) }
-              : attr
-          ) || [],
-        quantitySales: Number.parseInt(item.attributes?.quantitySales || 0),
-        price: Math.round(item.attributes?.price || 0) || 1,
-        priceOpt: Math.round(item.attributes?.priceOpt || 0) || 0,
-      }
+      id: item.id,
+      id1c: item.attributes?.id1c || "",
+      category: item.attributes?.categories?.data?.map((cat) => cat.id) || [],
+      image:
+        item.attributes?.imgs?.data?.[0]?.attributes?.url || "/noImage.jpg",
+      title: item.attributes?.title || "Название продукта",
+      description: item.attributes?.description || "",
+      stock: Number.parseInt(item.attributes?.stock || 0),
+      storeplace: item.attributes?.storeplace,
+      attributes:
+        item.attributes?.Attributes?.attributes?.map((attr) =>
+          attr.type === "Number"
+            ? { ...attr, value: Number.parseInt(attr.value || 0) }
+            : attr
+        ) || [],
+      quantitySales: Number.parseInt(item.attributes?.quantitySales || 0),
+      price: Math.round(item.attributes?.price || 0) || 1,
+      priceOpt: Math.round(item.attributes?.priceOpt || 0) || 0,
+    }
     : null;
 
   const [quantity, setQuantity] = useState(1);
@@ -55,17 +55,20 @@ export const ProductCard = ({ item, viewMode, forPartners }) => {
   const { addToCart } = useActions();
   const customer = useCustomers();
 
-  // console.log(customer);
-
   const handleAddToCart = (productToAdd) => {
     if (!productToAdd) return;
-      const makeMutableProduct = { ...productToAdd };
-      makeMutableProduct.quantityForBuy = quantity;
-      addToCart(makeMutableProduct);
-      setTextToCart("Добавлено!");
-      setTimeout(() => {
-        setTextToCart("Добавить еще?");
-      }, 1000);
+    const makeMutableProduct = { ...productToAdd };
+    makeMutableProduct.quantityForBuy = quantity;
+
+    addToCart(makeMutableProduct);
+
+    // Сбрасываем количество к 1 после добавления
+    setQuantity(1);
+
+    setTextToCart("Добавлено!");
+    setTimeout(() => {
+      setTextToCart("Добавить еще?");
+    }, 1000);
   };
 
   const renderImage = (src, alt) => (
@@ -79,11 +82,9 @@ export const ProductCard = ({ item, viewMode, forPartners }) => {
     />
   );
 
-
-
   const handleQuantityChange = (e) => {
     const value = parseInt(e.target.value) || 1;
-    
+
     // Ограничиваем количество товара
     if (value < 1) {
       setQuantity(1);
@@ -101,7 +102,6 @@ export const ProductCard = ({ item, viewMode, forPartners }) => {
     }
   };
 
-
   return (
     <Suspense fallback={<div>Загрузка...</div>}>
       {/* GRID VIEW */}
@@ -115,23 +115,22 @@ export const ProductCard = ({ item, viewMode, forPartners }) => {
               {renderImage(
                 product.image && Array.isArray(product.image)
                   ? `${process.env.NEXT_PUBLIC_PROTOCOL}://${process.env.NEXT_PUBLIC_URL_API}${product.image[0]}`
-                  : `${process.env.NEXT_PUBLIC_PROTOCOL}://${
-                      process.env.NEXT_PUBLIC_URL_FRONT
-                    }${product.image || "/noImage.jpg"}`,
+                  : `${process.env.NEXT_PUBLIC_PROTOCOL}://${process.env.NEXT_PUBLIC_URL_FRONT
+                  }${product.image || "/noImage.jpg"}`,
                 product.title
               )}
             </div>
 
-         
+
             <h3 className={`${styles.productCardTitle}`}>{product.title}</h3>
             <p className={styles.price}>
               {product.priceOpt &&
-              customer.authStatus &&
+                customer.authStatus &&
                 customer.type === "Оптовый покупатель" && forPartners
                 ? Number(roundPrice(product.priceOpt)).toLocaleString("ru-RU")
                 : Number(roundPrice(product.price)).toLocaleString(
-                    "ru-RU"
-                  )}{" "}
+                  "ru-RU"
+                )}{" "}
               ₽
             </p>
           </Link>
@@ -165,9 +164,8 @@ export const ProductCard = ({ item, viewMode, forPartners }) => {
                 {renderImage(
                   product.image && Array.isArray(product.image)
                     ? `${process.env.NEXT_PUBLIC_PROTOCOL}://${process.env.NEXT_PUBLIC_URL_API}${product.image[0]}`
-                    : `${process.env.NEXT_PUBLIC_PROTOCOL}://${
-                        process.env.NEXT_PUBLIC_URL_FRONT
-                      }${product.image || "/noImage.jpg"}`,
+                    : `${process.env.NEXT_PUBLIC_PROTOCOL}://${process.env.NEXT_PUBLIC_URL_FRONT
+                    }${product.image || "/noImage.jpg"}`,
                   product.title
                 )}
               </Link>
@@ -186,9 +184,9 @@ export const ProductCard = ({ item, viewMode, forPartners }) => {
                       {showFullDescription
                         ? product.description
                         : `${product.description.substring(
-                            0,
-                            Math.min(product.description.length, 200)
-                          )}...`}
+                          0,
+                          Math.min(product.description.length, 200)
+                        )}...`}
                     </p>
                     {product.description.length > 200 && (
                       <button
@@ -260,9 +258,8 @@ export const ProductCard = ({ item, viewMode, forPartners }) => {
                   {renderImage(
                     product.image && Array.isArray(product.image)
                       ? `${process.env.NEXT_PUBLIC_PROTOCOL}://${process.env.NEXT_PUBLIC_URL_API}${product.image[0]}`
-                      : `${process.env.NEXT_PUBLIC_PROTOCOL}://${
-                          process.env.NEXT_PUBLIC_URL_FRONT
-                        }${product.image || "/noImage.jpg"}`,
+                      : `${process.env.NEXT_PUBLIC_PROTOCOL}://${process.env.NEXT_PUBLIC_URL_FRONT
+                      }${product.image || "/noImage.jpg"}`,
                     product.title
                   )}
                 </Link>
@@ -282,9 +279,9 @@ export const ProductCard = ({ item, viewMode, forPartners }) => {
                         {showFullDescription
                           ? product.description
                           : `${product.description.substring(
-                              0,
-                              Math.min(product.description.length, 200)
-                            )}...`}
+                            0,
+                            Math.min(product.description.length, 200)
+                          )}...`}
                       </p>
                       {product.description.length > 200 && (
                         <button
@@ -342,7 +339,7 @@ export const ProductCard = ({ item, viewMode, forPartners }) => {
           </article>
         </>
       )}
-      
+
       {/* MINI-TABLE VIEW */}
       {effectiveViewMode === "mini-table" && product && (
         <>
@@ -358,10 +355,9 @@ export const ProductCard = ({ item, viewMode, forPartners }) => {
 
                     {renderImage(
                       product.image && Array.isArray(product.image)
-                      ? `${process.env.NEXT_PUBLIC_PROTOCOL}://${process.env.NEXT_PUBLIC_URL_API}${product.image[0]}`
-                      : `${process.env.NEXT_PUBLIC_PROTOCOL}://${
-                        process.env.NEXT_PUBLIC_URL_FRONT
-                      }${product.image || "/noImage.jpg"}`,
+                        ? `${process.env.NEXT_PUBLIC_PROTOCOL}://${process.env.NEXT_PUBLIC_URL_API}${product.image[0]}`
+                        : `${process.env.NEXT_PUBLIC_PROTOCOL}://${process.env.NEXT_PUBLIC_URL_FRONT
+                        }${product.image || "/noImage.jpg"}`,
                       product.title
                     )}
                   </div>
@@ -383,9 +379,9 @@ export const ProductCard = ({ item, viewMode, forPartners }) => {
                         {showFullDescription
                           ? product.description
                           : `${product.description.substring(
-                              0,
-                              Math.min(product.description.length, 200)
-                            )}...`}
+                            0,
+                            Math.min(product.description.length, 200)
+                          )}...`}
                       </p>
                       {product.description.length > 200 && (
                         <button
@@ -420,10 +416,10 @@ export const ProductCard = ({ item, viewMode, forPartners }) => {
                   value={quantity}
                   onChange={handleQuantityChange}
                   onBlur={handleQuantityBlur}
-                  style={{ backgroundColor : 'inherit'}}
+                  style={{ backgroundColor: 'inherit' }}
                   className=" w-12 h-6 text-center border-none bg-transparent focus:outline-none text-sm font-medium"
                 />
-          
+
               </div>
               {/* add to cart */}
               <button
