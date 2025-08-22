@@ -73,7 +73,6 @@ export const ProductCard = ({ item, viewMode, forPartners }) => {
 
   const renderImage = (src, alt) => (
     <Image
-      unoptimized
       width={500}
       height={500}
       className="rounded-lg transform hover:scale-110 transition-all"
@@ -112,11 +111,17 @@ export const ProductCard = ({ item, viewMode, forPartners }) => {
             href={product ? `/routes/shop/products/${product.id}` : "#"}
           >
             <div className={`${styles.productCardImage} bg-white-default`}>
-              {renderImage(
+              {/* {renderImage(
                 product.image && Array.isArray(product.image)
                   ? `${process.env.NEXT_PUBLIC_PROTOCOL}://${process.env.NEXT_PUBLIC_URL_API}${product.image[0]}`
                   : `${process.env.NEXT_PUBLIC_PROTOCOL}://${process.env.NEXT_PUBLIC_URL_FRONT
                   }${product.image || "/noImage.jpg"}`,
+                product.title
+              )} */}
+              {renderImage(
+                product.image && Array.isArray(product.image)
+                  ? `/api/proxy-image?url=${encodeURIComponent(`http://${process.env.NEXT_PUBLIC_URL_API}${product.image[0]}`)}`
+                  : `/api/proxy-image?url=${encodeURIComponent(`http://${process.env.NEXT_PUBLIC_URL_FRONT}${product.image || "/noImage.jpg"}`)}`,
                 product.title
               )}
             </div>
@@ -163,9 +168,8 @@ export const ProductCard = ({ item, viewMode, forPartners }) => {
               >
                 {renderImage(
                   product.image && Array.isArray(product.image)
-                    ? `${process.env.NEXT_PUBLIC_PROTOCOL}://${process.env.NEXT_PUBLIC_URL_API}${product.image[0]}`
-                    : `${process.env.NEXT_PUBLIC_PROTOCOL}://${process.env.NEXT_PUBLIC_URL_FRONT
-                    }${product.image || "/noImage.jpg"}`,
+                    ? `/api/proxy-image?url=${encodeURIComponent(`http://${process.env.NEXT_PUBLIC_URL_API}${product.image[0]}`)}`
+                    : `/api/proxy-image?url=${encodeURIComponent(`http://${process.env.NEXT_PUBLIC_URL_FRONT}${product.image || "/noImage.jpg"}`)}`,
                   product.title
                 )}
               </Link>
@@ -257,9 +261,8 @@ export const ProductCard = ({ item, viewMode, forPartners }) => {
                 >
                   {renderImage(
                     product.image && Array.isArray(product.image)
-                      ? `${process.env.NEXT_PUBLIC_PROTOCOL}://${process.env.NEXT_PUBLIC_URL_API}${product.image[0]}`
-                      : `${process.env.NEXT_PUBLIC_PROTOCOL}://${process.env.NEXT_PUBLIC_URL_FRONT
-                      }${product.image || "/noImage.jpg"}`,
+                      ? `/api/proxy-image?url=${encodeURIComponent(`http://${process.env.NEXT_PUBLIC_URL_API}${product.image[0]}`)}`
+                      : `/api/proxy-image?url=${encodeURIComponent(`http://${process.env.NEXT_PUBLIC_URL_FRONT}${product.image || "/noImage.jpg"}`)}`,
                     product.title
                   )}
                 </Link>

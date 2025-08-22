@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useGetNewsQuery } from "@/redux/api/news.api";
 import formatDate from "../utils/formatDate";
 import styles from "@/app/css/news.module.css";
+import Image from "next/image";
 
 function NewsBlock() {
   const { data, isLoading } = useGetNewsQuery();
@@ -117,9 +118,11 @@ function NewsBlock() {
           >
             <article className={`${styles.newsItem} overflow-hidden flex flex-col h-full rounded-xl`}>
               <div className="relative w-full">
-                <img
-                  src={`${process.env.NEXT_PUBLIC_PROTOCOL}://${process.env.NEXT_PUBLIC_URL_FRONT}${newsItem.attributes.image.data.attributes.url}`}
+                <Image
+                  src={`/api/proxy-image?url=${encodeURIComponent(`http://${process.env.NEXT_PUBLIC_URL_API}${newsItem.attributes.image.data.attributes.url}`)}`}
                   alt={newsItem.attributes.title}
+                  width={300}
+                  height={200}
                   className={`${styles.newsItemImg} object-cover transition-transform duration-300 hover:scale-105 w-full h-auto rounded-xl`}
                 />
               </div>
@@ -155,27 +158,27 @@ function NewsBlock() {
       {/* Стрелки для всех экранов */}
       <div className="flex justify-center mt-8 space-x-4">
         {/* Кнопка Назад */}
-          <button
-            onClick={handlePrev}
-            className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center hover:bg-gray-300 transition-colors disabled:opacity-50"
-            disabled={!showPrevButton}
-          >
-             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M15 5L9 12L15 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </button>
+        <button
+          onClick={handlePrev}
+          className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center hover:bg-gray-300 transition-colors disabled:opacity-50"
+          disabled={!showPrevButton}
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15 5L9 12L15 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
 
         {/* Кнопка Вперед */}
         {/* Убираем условный рендеринг */}
-          <button
-            onClick={handleNext}
-            className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center hover:bg-gray-300 transition-colors disabled:opacity-50"
-            disabled={!showNextButton} // Кнопка будет задизейблена, когда showNextButton ложно
-          >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M9 5L15 12L9 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </button>
+        <button
+          onClick={handleNext}
+          className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center hover:bg-gray-300 transition-colors disabled:opacity-50"
+          disabled={!showNextButton} // Кнопка будет задизейблена, когда showNextButton ложно
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 5L15 12L9 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
       </div>
     </section>
   );

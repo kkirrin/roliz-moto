@@ -56,10 +56,10 @@ function SingleNewsPage({ params }) {
       {/* Main Image */}
       <div className="relative w-full h-96 rounded-lg overflow-hidden mb-8">
         {newsData.image?.data?.attributes?.url ? (
-          <img
-            src={`${process.env.NEXT_PUBLIC_PROTOCOL}://${process.env.NEXT_PUBLIC_URL_FRONT}${newsData.image.data.attributes.url}`}
-            // src={newsData.image.data.attributes.url}
+          <Image
+            src={`/api/proxy-image?url=${encodeURIComponent(`http://${process.env.NEXT_PUBLIC_URL_API}${newsData.image.data.attributes.url}`)}`}
             alt={newsData.title}
+            fill
             className={`object-cover w-full h-full`}
           />
         ) : (

@@ -86,12 +86,12 @@ export const Slider = ({ }) => {
 
                 <div className={`${styles.sliderBg}`}>
                   <Image
-                    unoptimized alt="image"
-                    src={`${process.env.NEXT_PUBLIC_PROTOCOL}://${process.env.NEXT_PUBLIC_URL_API}${slide.attributes.src.data.attributes.url}`}
-                    blurDataURL={`${process.env.NEXT_PUBLIC_PROTOCOL}://${process.env.NEXT_PUBLIC_URL_API}${slide.attributes.src.data.attributes.url}`}
+                    src={`/api/proxy-image?url=${encodeURIComponent(`http://${process.env.NEXT_PUBLIC_URL_API}${slide.attributes.src.data.attributes.url}`)}`}
+                    blurDataURL={`/api/proxy-image?url=${encodeURIComponent(`http://${process.env.NEXT_PUBLIC_URL_API}${slide.attributes.src.data.attributes.url}`)}`}
                     placeholder="blur"
                     quality={75}
                     priority
+                    alt="image"
                     fill />
                 </div>
               </article>

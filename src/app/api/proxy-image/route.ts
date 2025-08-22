@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+// проксирование осуществляется через http://${process.env.NEXT_PUBLIC_URL_API}
+//src={`/api/proxy-image?url=${encodeURIComponent(`http://${process.env.NEXT_PUBLIC_URL_API}${data.data.attributes.MainImage.data.attributes.url}`)}`}
+
 export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const imageUrl = searchParams.get('url');
