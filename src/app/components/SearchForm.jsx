@@ -65,11 +65,12 @@ export const SearchForm = ({ }) => {
         let tempText = text
         let tempLetter = `${tempText[0]}`.toUpperCase()
         tempText = tempLetter + tempText.slice(1)
+        console.log("tempText", tempText)
 
         setLoading(true);
         debounceTimeout.current = setTimeout(async () => {
             try {
-                const fetchSearch = await fetch(`${process.env.NEXT_PUBLIC_PROTOCOL}://${process.env.NEXT_PUBLIC_SEARCH}?filters[$and][0][stock][$gte]=1&filters[$and][1][title][$startsWith]=${tempText.replaceAll(" ", "")}&sort[0]=title:asc`, {
+                const fetchSearch = await fetch(`${process.env.NEXT_PUBLIC_PROTOCOL}://${process.env.NEXT_PUBLIC_SEARCH}?filters[$and][0][stock][$gte]=1&filters[$and][1][title][$startsWith]=${tempText}&sort[0]=title:asc`, {
                     headers: {
                         "Authorization": `Bearer ${process.env.NEXT_PUBLIC_JWT_KEY}`
                     }
