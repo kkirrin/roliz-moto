@@ -40,7 +40,7 @@ export const Footer = ({ }) => {
                 <a href={`mailto:${contactsData.data[0].attributes.MainEmail}`}>
                   {contactsData.data[0].attributes.MainEmail}
                 </a>
-                <a href={`mailto:${contactsData.data[0].attributes.MainEmail}`}>
+                <a className="link_hover" href={`mailto:${contactsData.data[0].attributes.MainEmail}`}>
                   Написать нам
                 </a>
               </div>
@@ -89,25 +89,25 @@ export const Footer = ({ }) => {
             <h5>Клиентам</h5>
             <Link
               href={`${"/routes/pages/delivery"}`}
-              className="!text-gray-light font-light"
+              className="!text-gray-light font-light link_hover"
             >
               Доставка и оплата
             </Link>
             <Link
               href={`${"/routes/pages/about"}`}
-              className="!text-gray-light font-light"
+              className="!text-gray-light font-light link_hover"
             >
               О компании
             </Link>
             <Link
               href={`${"/routes/pages/opt"}`}
-              className="!text-gray-light font-light"
+              className="!text-gray-light font-light link_hover"
             >
               Оптовым покупателям
             </Link>
             <Link
               href={`${"/routes/pages/contacts"}`}
-              className="!text-gray-light font-light"
+              className="!text-gray-light font-light link_hover"
             >
               Контакты
             </Link>
@@ -125,7 +125,7 @@ export const Footer = ({ }) => {
                           <Link
                             href={`/routes/shop/${item.id}`}
                             className="!text-gray-light font-light cursor-pointer hover:transition-all 
-                              group"
+                              group link_hover"
                           >
                             {item.attributes.name}
                           </Link>
@@ -147,7 +147,7 @@ export const Footer = ({ }) => {
             все права защищены
           </p>
         </div>
-        <Link href="/routes/political">Политика конфиденциальности</Link>
+        <Link className="link_hover" href="/routes/political">Политика конфиденциальности</Link>
         <Link href="https://inside360.ru/" target="_blank" className="inside_link" >Разработки сайта <span>INSIDE360</span></Link>
       </div>
       <Cookies />

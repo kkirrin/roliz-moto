@@ -91,7 +91,9 @@ export const Header = ({ }) => {
             <CatalogButton />
             <NavigationBar place={"header"} />
 
-            <Link href={"/routes/pages/delivery"}>
+            <Link
+              className="link_hover"
+              href={"/routes/pages/delivery"}>
               <div className={`${styles.headerDeliverBlock}`}>
                 <Image
                   unoptimized
@@ -99,7 +101,7 @@ export const Header = ({ }) => {
                   alt="Серая иконка"
                   fill
                 />
-                <p>Оплата и доставка</p>
+                <p className="link_hover">Оплата и доставка</p>
               </div>
             </Link>
           </div>

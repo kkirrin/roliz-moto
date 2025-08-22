@@ -273,3 +273,11 @@ input[type="number"] {
 .inside_link:hover span {
   color: red !important;
 }
+
+.link_hover {
+  transition: color 0.3s !important;
+}
+
+.link_hover:hover {
+  color: #fecc00 !important;
+}
