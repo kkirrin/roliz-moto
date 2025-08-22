@@ -313,8 +313,6 @@ export const SideContent = ({ inBurger = false }) => {
   const mobile = useStater("main");
   const customer = useCustomers();
 
-  // console.log("cart", cart);
-
   const { removeAll, removeItems } = useActions();
   const formRef = useRef(null);
 
@@ -325,6 +323,7 @@ export const SideContent = ({ inBurger = false }) => {
   const [totalWeight, setTotalWeight] = useState(tempTotalWeight);
   const [totalSum, setTotalSum] = useState(tempTotalSum);
   const [totalProducts, setTotalProducts] = useState(tempTotalProducts);
+  console.log("totalProducts", totalProducts);
   const [forDelete, setForDelete] = useState([]);
 
   const [toOrder, setToOrder] = useState(false);
@@ -452,6 +451,11 @@ export const SideContent = ({ inBurger = false }) => {
   }, [selectAll]);
 
   useEffect(() => {
+    // Сбрасываем переменные перед вычислением
+    let tempTotalSum = 0;
+    let tempTotalWeight = 0;
+    let tempTotalProducts = 0;
+
     cart.forEach((item) => {
       const price =
         customer.type === "Оптовый покупатель"
@@ -469,7 +473,7 @@ export const SideContent = ({ inBurger = false }) => {
     setTotalWeight(tempTotalWeight);
     setTotalProducts(tempTotalProducts);
     setTotalSum(tempTotalSum);
-  }, [cart.length]);
+  }, [cart, customer.type]);
 
   const dispatch = useDispatch();
   const sideCart = useSelector((state) => state.side.sideCart);
@@ -819,6 +823,11 @@ const PriceCard = ({ }) => {
   useEffect(() => { }, [totalSum, totalProducts]);
 
   useEffect(() => {
+    // Сбрасываем переменные перед вычислением
+    let tempTotalSum = 0;
+    let tempTotalWeight = 0;
+    let tempTotalProducts = 0;
+
     cart.forEach((item, index) => {
       tempTotalSum +=
         customer.type == "Оптовый покупатель"
@@ -834,7 +843,7 @@ const PriceCard = ({ }) => {
     setTotalWeight(tempTotalWeight);
     setTotalProducts(tempTotalProducts);
     setTotalSum(tempTotalSum);
-  }, [cart.length]);
+  }, [cart, customer.type]);
 
   return (
     <>
