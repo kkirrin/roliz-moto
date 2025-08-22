@@ -78,15 +78,15 @@ export default function Home({ params }) {
       storeplace: item.attributes.storeplace,
       attributes: item.attributes.Attributes?.attributes
         ? item.attributes.Attributes.attributes.map((item) => {
-            if (item.type === "Number") {
-              return {
-                name: item.name,
-                type: item.type,
-                value: Number.parseInt(item.value),
-              };
-            }
-            return item;
-          })
+          if (item.type === "Number") {
+            return {
+              name: item.name,
+              type: item.type,
+              value: Number.parseInt(item.value),
+            };
+          }
+          return item;
+        })
         : [],
       quantitySales: Number.parseInt(item.attributes.quantitySales),
       price: !isNaN(Number.parseInt(item.attributes.price))
@@ -106,7 +106,7 @@ export default function Home({ params }) {
     }, 1000);
   };
 
-  useEffect(() => {}, [customer]);
+  useEffect(() => { }, [customer]);
 
   if (isLoading) return <Loader />;
 
@@ -128,8 +128,8 @@ export default function Home({ params }) {
               <path
                 d="M6 1.5L1 6.5L6 11.5"
                 stroke="#ACACAC"
-                stroke-width="1.5"
-                stroke-linecap="round"
+                strokeWidth="1.5"
+                strokeLinecap="round"
               ></path>
             </svg>
             Назад
@@ -143,6 +143,7 @@ export default function Home({ params }) {
               </h1>
 
               <IntoProductImages
+                key={`key_images_${data.data.id}`}
                 data={
                   data.data.attributes.imgs
                     ? data.data.attributes.imgs.data
@@ -190,21 +191,20 @@ export default function Home({ params }) {
                   {data.data.attributes.stock ? (
                     <>
                       <div>
-                        <h2 className="text-xl lg:text-3xl font-bold">{` ${
-                          customer.authStatus &&
+                        <h2 className="text-xl lg:text-3xl font-bold">{` ${customer.authStatus &&
                           customer.type == "Оптовый покупатель"
-                            ? data.data?.attributes.priceOpt
-                              ? "Оптовая цена: " +
-                                Number(
-                                  roundPrice(data.data?.attributes.priceOpt)
-                                ).toLocaleString("ru-RU")
-                              : Number(
-                                  roundPrice(data.data?.attributes.price)
-                                ).toLocaleString("ru-RU")
+                          ? data.data?.attributes.priceOpt
+                            ? "Оптовая цена: " +
+                            Number(
+                              roundPrice(data.data?.attributes.priceOpt)
+                            ).toLocaleString("ru-RU")
                             : Number(
-                                roundPrice(data.data?.attributes.price)
-                              ).toLocaleString("ru-RU")
-                        } ₽`}</h2>
+                              roundPrice(data.data?.attributes.price)
+                            ).toLocaleString("ru-RU")
+                          : Number(
+                            roundPrice(data.data?.attributes.price)
+                          ).toLocaleString("ru-RU")
+                          } ₽`}</h2>
                       </div>
                       <div className="flex justify-around items-center border rounded-lg">
                         <button
@@ -348,9 +348,8 @@ export default function Home({ params }) {
                     }}
                     onClick={() => setSelectTab(0)}
                     onTouchStart={() => setSelectTab(0)}
-                    className={`${
-                      selectTab == 0 ? productStyles.activeButton : null
-                    }`}
+                    className={`${selectTab == 0 ? productStyles.activeButton : null
+                      }`}
                   >
                     Описание
                   </button>
@@ -361,9 +360,8 @@ export default function Home({ params }) {
                     }}
                     onClick={() => setSelectTab(1)}
                     onTouchStart={() => setSelectTab(1)}
-                    className={`${
-                      selectTab == 0 ? productStyles.activeButton : null
-                    }`}
+                    className={`${selectTab == 0 ? productStyles.activeButton : null
+                      }`}
                   >
                     Отзывы (
                     {data.data &&
@@ -377,9 +375,8 @@ export default function Home({ params }) {
                     }}
                     onClick={() => setSelectTab(2)}
                     onTouchStart={() => setSelectTab(2)}
-                    className={`${
-                      selectTab == 0 ? productStyles.activeButton : null
-                    }`}
+                    className={`${selectTab == 0 ? productStyles.activeButton : null
+                      }`}
                   >
                     Задать вопрос
                   </button>
@@ -406,11 +403,11 @@ export default function Home({ params }) {
                     <p>Отзывы о товаре</p>
                     {!isLoading ? (
                       data.data &&
-                      data.data?.attributes?.otzyvy_tovaries?.data ? (
+                        data.data?.attributes?.otzyvy_tovaries?.data ? (
                         data.data?.attributes?.otzyvy_tovaries?.data.map(
                           (item) => {
                             return (
-                              <div className={`${productStyles.oneReview}`}>
+                              <div key={`key_review_${item.id}`} className={`${productStyles.oneReview}`}>
                                 <div className={`${productStyles.userBlock}`}>
                                   <div
                                     className={`${productStyles.userAvatarReview}`}
@@ -464,7 +461,7 @@ export default function Home({ params }) {
 const Stars = ({ count = 0 }) => {
   const [stars, setStars] = useState(["0", "0", "0", "0", "0"]);
 
-  useEffect(() => {}, [count]);
+  useEffect(() => { }, [count]);
   return (
     <div>
       {stars.map((item, index) => {

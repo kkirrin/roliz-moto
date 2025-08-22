@@ -31,10 +31,10 @@ export default function Page({ }) {
               key={`keyImage_${data.id}`}
             >
               <Image
-                unoptimized
-                src={`${process.env.NEXT_PUBLIC_PROTOCOL}://${process.env.NEXT_PUBLIC_URL_API}${data.data.attributes.MainImage.data.attributes.url}`}
+                src={`/api/proxy-image?url=${encodeURIComponent(`http://roliz-moto.ru${data.data.attributes.MainImage.data.attributes.url}`)}`}
                 alt={`altImage_${data.id}`}
                 fill
+                priority
               />
             </article>
           ) : (

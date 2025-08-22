@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { useStater } from "@/hooks/useStater";
 import { useCustomers } from "@/hooks/useStater";
 import styles from "@/app/css/cart.module.css"
@@ -18,6 +18,11 @@ const QuantityCard = ({ quantityItems = [] }) => {
   const customer = useCustomers();
 
   useEffect(() => {
+    // Сбрасываем переменные перед вычислением
+    let tempTotalSum = 0;
+    let tempTotalWeight = 0;
+    let tempTotalProducts = 0;
+
     cart.forEach((item, index) => {
       tempTotalSum +=
         customer.type == "Оптовый покупатель"
@@ -34,9 +39,9 @@ const QuantityCard = ({ quantityItems = [] }) => {
     setTotalWeight(tempTotalWeight);
     setTotalProducts(tempTotalProducts);
     setTotalSum(tempTotalSum);
-  }, [cart.length]);
+  }, [cart, customer.type]);
 
-  useEffect(() => {}, [quantityItems]);
+  useEffect(() => { }, [quantityItems]);
   return (
     <>
       <p

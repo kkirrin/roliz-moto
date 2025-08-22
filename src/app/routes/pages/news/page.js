@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useGetNewsQuery } from "@/redux/api/news.api";
 import formatDate from "@/app/utils/formatDate";
 import styles from "@/app/css/news.module.css";
+import Image from "next/image";
 
 function NewsListPage() {
   const { data, isLoading } = useGetNewsQuery();
@@ -77,9 +78,11 @@ function NewsListPage() {
             <article className={`${styles.newsItem} overflow-hidden flex flex-col h-full rounded-xl`}>
               {/* Image */}
               <div className="relative w-full">
-                <img
-                  src={`${process.env.NEXT_PUBLIC_PROTOCOL}://${process.env.NEXT_PUBLIC_URL_FRONT}${newsItem.attributes.image.data.attributes.url}`}
+                <Image
+                  src={`/api/proxy-image?url=${encodeURIComponent(`http://${process.env.NEXT_PUBLIC_URL_API}${newsItem.attributes.image.data.attributes.url}`)}`}
                   alt={newsItem.attributes.title}
+                  width={300}
+                  height={200}
                   className={`${styles.newsItemImg} object-cover transition-transform duration-300 hover:scale-105 w-full h-auto rounded-xl`}
                 />
               </div>
