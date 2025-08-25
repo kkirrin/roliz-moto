@@ -671,6 +671,7 @@ const RegForm = ({ place = "", setPlace = (f) => f }) => {
        formData.companyName = formRef.current.querySelector('[name="companyName"]')?.value || '';
        formData.inn = formRef.current.querySelector('[name="inn"]')?.value || '';
        formData.website = formRef.current.querySelector('[name="website"]')?.value || '';
+       formData.confirm = false;
      }
  
      console.log("Отправляемые данные:", formData);
@@ -781,7 +782,7 @@ const RegForm = ({ place = "", setPlace = (f) => f }) => {
           }} 
         />
         <label htmlFor="forPartners">
-          {typeCustomer ? "✓ " : ""}Оптовый покупатель
+          Оптовый покупатель
         </label>
                  {!typeCustomer && (
            <small style={{ color: '#ACACAC', fontSize: '12px', marginTop: '5px', display: 'block' }}>
