@@ -33,6 +33,13 @@ export default function Page({}) {
   const customer = useCustomers();
   const isAuthenticated = useSelector((state) => state.customer?.isAuthenticated);
 
+  // Автоматически включаем оптовый режим для оптовых покупателей
+  useEffect(() => {
+    if (customer?.type === "Оптовый покупатель") {
+      setForPartners(true);
+    }
+  }, [customer?.type]);
+
   useEffect(() => {
     if (!isLoading) {
       if (data) {
@@ -54,20 +61,11 @@ export default function Page({}) {
 
 
   useEffect(() => {
-    if (forPartners) {
-      // Если пользователь не авторизован
-      if (customer.type !== "Оптовый покупатель") {
-        toggleModal("modals_auth");
-        setForPartners(false); // Возвращаем в обычный режим
-        return;
-      }
-
-      // Если пользователь не имеет статус "Оптовый покупатель"
-      if (customer.type !== "Оптовый покупатель") {
-        toggleModal("modals_auth");
-        setForPartners(false); // Возвращаем в обычный режим
-        return;
-      }
+    // Проверяем доступ к оптовому режиму
+    if (forPartners && customer?.type !== "Оптовый покупатель") {
+      toggleModal("modals_auth");
+      setForPartners(false); // Возвращаем в обычный режим
+      return;
     }
   }, [forPartners, customer, toggleModal]);
 
@@ -83,31 +81,30 @@ export default function Page({}) {
             {categoryPath.breadcrumbs[categoryPath.breadcrumbs.length - 1]}
           </h1>
 
-           {/* Кнопка переключения режима */}
-          <div className="flex items-center gap-4">
-            {forPartners && (
-              <div className="flex items-center gap-2 px-3 py-2 bg-blue-100 text-blue-800 rounded-lg">
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                </svg>
-                <span className="text-sm font-medium">Режим для партнеров</span>
-              </div>
-            )}
-            
-            <button 
-              onClick={() => {
-                setForPartners(!forPartners);
-                console.log(forPartners);
-              }}
-              className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 flex gap-3 bg-yellow-default p-[13px] rounded-[10px] lg:px-7 lg:py-3 lg:rounded-xl ${
-                forPartners 
-                  ? 'bg-gray-600 text-white hover:bg-gray-700' 
-                  : 'bg-blue-600 text-white hover:bg-blue-700'
-              }`}
-            >
-            {forPartners ? 'Обычный режим' : 'Оптовым покупателям'}
-          </button>
-          </div>
+           {/* Кнопка переключения режима - показываем только для оптовых покупателей */}
+          {customer?.type === "Оптовый покупатель" && (
+            <div className="flex items-center gap-4">
+              {forPartners && (
+                <div className="flex items-center gap-2 px-3 py-2 bg-blue-100 text-blue-800 rounded-lg">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  <span className="text-sm font-medium">Режим для партнеров</span>
+                </div>
+              )}
+              
+              <button 
+                onClick={() => setForPartners(!forPartners)}
+                className={`px-4 py-2 font-medium transition-all duration-200 flex gap-3 p-[13px] rounded-[10px] lg:px-7 lg:py-3 lg:rounded-xl ${
+                  forPartners 
+                    ? 'bg-gray-600 text-white hover:bg-gray-700' 
+                    : 'bg-blue-600 text-white hover:bg-blue-700'
+                }`}
+              >
+                {forPartners ? 'Обычный режим' : 'Оптовым покупателям'}
+              </button>
+            </div>
+          )}
         </div>
 
         <section
