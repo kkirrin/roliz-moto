@@ -723,10 +723,14 @@ const RegForm = ({ place = "", setPlace = (f) => f }) => {
           result.data?.message ? result.data?.message : "Неизвестная ошибка"
         );
       } else if (result.data.status == "success") {
-        setInfoMessage("Регистрация успешна!");
+        if (typeCustomer) {
+          setInfoMessage("Регистрация успешна! Ждите, когда модератор проверит вашу заявку.");
+        } else {
+          setInfoMessage("Регистрация успешна!");
+        }
         setTimeout(() => {
           toggleModal();
-        }, 2000);
+        }, typeCustomer ? 4000 : 2000); // Увеличиваем время показа сообщения для оптовых покупателей
         auth(result.data.userdata[0]);
       }
     } else {
@@ -796,9 +800,12 @@ const RegForm = ({ place = "", setPlace = (f) => f }) => {
         <>
         
         
-          <small style={{ color: '#ACACAC', fontSize: '12px', marginBottom: '10px', display: 'block' }}>
-            * - обязательные поля для оптовых покупателей
-          </small>
+                     <small style={{ color: '#ACACAC', fontSize: '12px', marginBottom: '10px', display: 'block' }}>
+             * - обязательные поля для оптовых покупателей
+           </small>
+           <small style={{ color: '#FFCA18', fontSize: '11px', marginBottom: '15px', display: 'block', textAlign: 'center' }}>
+             ⚠️ Оптовые заявки требуют проверки модератора
+           </small>
                      <label htmlFor="companyName">Название компании * <span style={{ color: '#FFCA18', fontSize: '11px' }}></span></label>
            <input 
              type="text" 
