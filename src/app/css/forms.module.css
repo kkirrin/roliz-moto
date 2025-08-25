@@ -67,9 +67,20 @@
 }
 .checkbox_partner input:checked {
     background-color: #FFCA18;
+    border-color: #FFCA18;
+    transform: scale(1.1);
+    transition: all 0.2s ease;
 }
 .checkbox_partner input:checked + label {
     color: #000;
+}
+
+.checkbox_partner small {
+    color: #ACACAC;
+    font-size: 12px;
+    margin-top: 5px;
+    display: block;
+    transition: opacity 0.3s ease;
 }
 .formOrder input:nth-child(2){
     margin-top: 10px !important;
@@ -181,6 +192,37 @@
 }
 .formRegistration button {
     margin-top: 20px;
+}
+
+/* Добавляем скролл для формы регистрации */
+.formRegistration {
+    max-height: 80vh;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.formRegistration::-webkit-scrollbar {
+    width: 6px;
+}
+
+.formRegistration::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+.formRegistration::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+}
+
+.formRegistration::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+/* Стили для Firefox */
+.formRegistration {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) rgba(255, 255, 255, 0.1);
 }
 .recoveryEnd {
     width: 90%;
@@ -320,5 +362,53 @@
     }
     .mainContainerForm form button {
         font-size: 20px;
+    }
+}
+
+/* Стили для полей оптовых покупателей */
+.partnerFields {
+    margin-top: 20px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.partnerFields label {
+    color: #fff;
+    font-weight: 600;
+    margin-top: 15px;
+}
+
+.partnerFields input {
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.partnerFields input:focus {
+    border-color: #fff;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+}
+
+/* Анимация появления полей */
+.partnerFields {
+    animation: slideDown 0.3s ease-out;
+    transition: all 0.3s ease-out;
+    overflow: hidden;
+}
+
+/* Анимация для поля ФИО */
+.formRegistration .conditional-field {
+    transition: all 0.3s ease-out;
+    overflow: hidden;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
