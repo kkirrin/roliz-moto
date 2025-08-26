@@ -104,7 +104,22 @@ export default function CartPage() {
       }
     });
 
-    allData.Items = cart;
+    // Создаем массив товаров с полной информацией (включая количество)
+    allData.Items = cart.map((item) => ({
+      id: item.id,
+      title: item.title,
+      price: customer.type === "Оптовый покупатель" ? (item.priceOpt || item.price) : item.price,
+      quantitySales: item.quantityForBuy,
+      totalPrice: (customer.type === "Оптовый покупатель" ? (item.priceOpt || item.price) : item.price) * item.quantityForBuy
+    }));
+    
+    // Добавляем общую информацию о заказе
+    allData.TotalItems = cart.reduce((sum, item) => sum + item.quantityForBuy, 0);
+    allData.TotalPrice = cart.reduce((sum, item) => {
+      const price = customer.type === "Оптовый покупатель" ? (item.priceOpt || item.price) : item.price;
+      return sum + (price * item.quantityForBuy);
+    }, 0);
+    
     if (!allData.Delivery) allData.Delivery = "Не указан";
     if (!allData.PaymentMethod) allData.Delivery = "Не указан";
     if (canSend) {
@@ -405,7 +420,7 @@ const SingleItem = ({
 
     // Уменьшаем количество только если оно больше 1
     setQuantity(newQuantity);
-    updateQuantity({ id: product.id, quantity: newQuantity });
+    updateQuantity({ id: product.id, quantitySales: newQuantity });
     setTotalSum(Number.parseFloat(totalSum) - Number.parseFloat(price));
     setTotalWeight(Number.parseFloat(totalWeight) - Number.parseFloat(weight));
     setTotalProducts(totalProducts - 1);
@@ -425,7 +440,7 @@ const SingleItem = ({
     if (quantity < product.stock) {
       const newQuantity = quantity + 1;
       setQuantity(newQuantity);
-      updateQuantity({ id: product.id, quantity: newQuantity });
+      updateQuantity({ id: product.id, quantitySales: newQuantity });
       setTotalSum(Number.parseFloat(totalSum) + Number.parseFloat(price));
       setTotalWeight(
         Number.parseFloat(totalWeight) + Number.parseFloat(weight)

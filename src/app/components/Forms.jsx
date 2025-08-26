@@ -415,8 +415,17 @@ const OrderForm = ({ place = "", setPlace = (f) => f, idItems = 0 }) => {
     const validateResult = validateForms(formData, formRef);
     if (!validateResult) return;
 
-    const tempItems = cart.map((item) => item.id);
-    if (tempItems.length === 0) return;
+    // Создаем массив товаров с полной информацией (включая количество)
+    const orderItems = cart.map((item) => ({
+      id: item.id,
+      title: item.title,
+      price: customer.type === "Оптовый покупатель" ? (item.priceOpt || item.price) : item.price,
+      quantitySales: item.quantityForBuy,
+      totalPrice: (customer.type === "Оптовый покупатель" ? (item.priceOpt || item.price) : item.price) * item.quantityForBuy
+    }));
+    
+    console.log("Order items with quantities:", orderItems);
+    if (orderItems.length === 0) return;
 
     formData.append("to", process.env.NEXT_PUBLIC_MAIL_FOR_ORDERS);
     formData.append("OrderStatus", "Необработаный");
@@ -429,8 +438,12 @@ const OrderForm = ({ place = "", setPlace = (f) => f, idItems = 0 }) => {
     }
 
     const formJSON = Object.fromEntries(formData.entries());
-    formJSON.OrderItems = { connect: tempItems };
+    formJSON.OrderItems = orderItems; // Передаем полную информацию о товарах
     formJSON.Customers = { connect: [customer.id !== -1 ? customer.id : 3] };
+    
+    // Добавляем общую информацию о заказе
+    formJSON.TotalItems = orderItems.reduce((sum, item) => sum + item.quantitySales, 0);
+    formJSON.TotalPrice = orderItems.reduce((sum, item) => sum + item.totalPrice, 0);
 
     console.log(formJSON)
 
