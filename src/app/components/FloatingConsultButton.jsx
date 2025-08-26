@@ -26,7 +26,7 @@ function FloatingConsultButton({ onOpenConsultForm }) {
       className={`fixed bottom-6 right-6 lg:bottom-12 lg:right-12 w-14 h-14 rounded-full shadow-lg cursor-pointer transition-opacity duration-300 z-50
         ${isVisible ? "opacity-100" : "opacity-0 pointer-events-none"}`}
       onClick={onOpenConsultForm}
-      aria-label="Получить консультацию"
+              aria-label="Отправить сообщение"
     >
       <img src="/icon/GetConsult.svg" alt="иконка кнопки заявки на консультацию" className="" />
 

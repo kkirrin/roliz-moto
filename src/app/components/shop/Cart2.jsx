@@ -10,6 +10,7 @@ import { Forms } from "@/app/components/Forms";
 import { useSelector, useDispatch } from "react-redux";
 import { setSideCart } from "@/redux/reducers/sideReducer";
 import QuantityCard from "../micro/QuantityCard";
+import Link from "next/link";
 
 export const Cart = ({ inBurger = false }) => {
   const data = useStater("cart");
@@ -483,11 +484,19 @@ export const SideContent = ({ inBurger = false }) => {
 
   return (
     <section className="p-10 h-full flex flex-col justify-between">
-      <div className={`${styles.upSideCart}`}>
-        <div>
-          <p>Корзина</p>
-          <p>({totalProducts ? totalProducts : 0})</p>
-        </div>
+              <div className={`${styles.upSideCart}`}>
+          <div>
+            <p>Корзина</p>
+            <p>({totalProducts ? totalProducts : 0})</p>
+          </div>
+          
+          {/* Ссылка на отдельную страницу корзины */}
+          <Link 
+            href="/routes/shop/cart" 
+            className="text-blue-600 hover:text-blue-800 underline text-sm"
+          >
+            Полная версия →
+          </Link>
 
         <div
           onClick={() => {

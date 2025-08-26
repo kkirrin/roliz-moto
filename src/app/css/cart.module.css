@@ -244,6 +244,9 @@
   border-radius: 5px;
   border: 1px solid #262626;
 }
+.productCardQuntityPage {
+  width: 40%;
+}
 .contentSideCart * {
   position: relative;
   z-index: 9999999999 !important;

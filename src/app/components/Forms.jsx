@@ -1085,7 +1085,7 @@ export const ConsultForm = ({ place = "", setPlace = (f) => f }) => {
                 className="p-3 md:p-4 rounded-lg bg-yellow-default text-black font-semibold text-sm md:text-xl xl:text-base cursor-pointer disabled:bg-gray-medium disabled:text-gray-dark disabled:cursor-not-allowed transition-colors"
                 disabled={!isConsentChecked}
               >
-                Получить консультацию
+                Отправить сообщение
               </button>
 
               <div className="flex items-start mt-2">
