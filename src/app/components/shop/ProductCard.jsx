@@ -85,10 +85,8 @@ export const ProductCard = ({ item, viewMode, forPartners }) => {
     const value = parseInt(e.target.value) || 1;
 
     // Ограничиваем количество товара
-    if (value < 1) {
-      setQuantity(1);
-    } else if (value > 1000) {
-      setQuantity(1000);
+    if (value > 9999) {
+      setQuantity(9999);
     } else {
       setQuantity(value);
     }
@@ -414,13 +412,11 @@ export const ProductCard = ({ item, viewMode, forPartners }) => {
 
                 <input
                   type="number"
-                  min="0"
                   max={1000}
                   value={quantity}
                   onChange={handleQuantityChange}
-                  onBlur={handleQuantityBlur}
                   style={{ backgroundColor: 'inherit' }}
-                  className=" w-12 h-6 text-center border-none bg-transparent focus:outline-none text-sm font-medium"
+                  className=" w-full h-6 text-center border-none bg-transparent focus:outline-none text-sm font-medium"
                 />
 
               </div>
