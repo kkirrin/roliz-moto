@@ -11,10 +11,16 @@
     flex-direction: row;
     flex-wrap: nowrap;
     margin-top: 100px;
+    margin-bottom: 100px; 
+    gap: 40px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 20px;
 }
 .listOfOrders {
     display: grid;
-    grid-template-columns: 40% 40%;
+    grid-template-columns: repeat(3, 1fr);
     gap: 3%;
     margin-top: 20px;
 }
@@ -34,8 +40,35 @@
 .listOfOrders > * > *:nth-child(2){
     height: max-content;
 }
+
 .oneOrder {
     min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.oneOrder > button {
+    height: 40px;
+    margin-top: auto;
+    border-radius: 5px;
+    background: #FECC00;
+    border: none;
+    color: #262626;
+    text-align: center;
+    font-family: Geologica;
+    font-size: clamp(12px, 1vw, 16px);
+    font-style: normal;
+    font-weight: 600;
+    line-height: 21px;
+    cursor: pointer;
+    transition: all .3s;
+    align-self: flex-end;
+    width: fit-content;
+}
+
+.oneOrder > button:hover {
+    scale: 1.05;
 }
 .rowButtons {
     margin-top: 20px;
@@ -60,7 +93,7 @@
 }
 .oneOrder > button {
     height: 40px;
-    margin-bottom: -20px !important;
+    /* margin-bottom: -20px !important; */
     border-radius: 5px;
     background: #FECC00;
     border: none;
@@ -96,6 +129,25 @@
     font-weight: 300;
     line-height: 24px; /* 150% */
 }
+
+.blockContent {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+
+.rowContent {
+    position: relative;
+    display: grid;
+    grid-template-columns: 26% 26% 26%;
+    gap: 4%;
+    width: 100%;
+    margin-top: 20px;
+}
+
 .row p:nth-child(odd) {
     color: #ACACAC;
 }
@@ -151,20 +203,26 @@
     opacity: 0.6;
 }
 .rBlockCabinet {
-    width: clamp(250px, 71vw, 1358px);
+    width: 100%;
 }
 .upEditableElement {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
-.rowContent {
+
+
+
+.oneEditebleElement {
+    background: rgba(255,255,255,0.9);
+    border-radius: 12px;
+    padding: 10px;
+    border: 1px solid rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
     position: relative;
-    display: grid;
-    grid-template-columns: 26% 26% 26%;
-    gap: 4%;
-    width: 100%;
+    overflow: hidden;
 }
+
 .upEditableElement {
     color: #626262;
     font-family: Geologica;

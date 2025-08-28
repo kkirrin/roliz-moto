@@ -123,8 +123,6 @@ const SelectebleContent = ({ select }) => {
 const OrdersCustomer = ({}) => {
   const customer = useCustomers();
   const [typeOrders, setTypeOrders] = useState(true);
-  //console.log(customer)
-
   return (
     <>
       <div className={intostyles.rowButtons}>
@@ -159,36 +157,36 @@ const OrdersCustomer = ({}) => {
           customer.orders.map((item, index) => {
             if (item.OrderStatus != "Выполнен" && typeOrders) {
               return (
-                <div className={intostyles.oneOrder}>
+                <div className={intostyles.oneOrder} key={index}>
                   <div className={styles.row0}>
-                    <h2>Заказ №{item.id}</h2>
-                    <p>
+                    <h2 className="text-[16px]">Заказ №{item.id}</h2>
+                    <p className="text-[12px]">
                       <span>Дата:</span> {item.createdAt.split("T")[0]}
                     </p>
                   </div>
 
-                  <p>
+                  <p className="text-[10px]">
                     Извещение не понадобится. <br />А вот паспорт могут
                     попросить, прежде чем вручить заказ
                   </p>
                   <div className={intostyles.infoDeliveryBlock}>
-                    <h2>Способ получения</h2>
+                    <h2 className="text-[14px]">Способ получения</h2>
                     <div className={intostyles.row}>
-                      <p>Адрес отделения:</p>
-                      <p>{item.Address ? item.Address : "Адрес неизвестен"}</p>
-                      <p>Получатель:</p>
+                      <p className="text-[10px]">Адрес отделения:</p>
+                      <p className="text-[10px]">{item.Address ? item.Address : "Адрес неизвестен"}</p>
+                      <p className="text-[10px]">Получатель:</p>
                       <p>
                         {item.Name && item.Phone
                           ? item.Name + "\n" + item.Phone
                           : "Получатель неизвестен"}
                       </p>
-                      <p>Статус:</p>
+                      <p className="text-[10px]">Статус:</p>
                       <p>
                         {item.OrderStatus
                           ? item.OrderStatus
                           : "Статус неизвестен"}
                       </p>
-                      <p>Стоимость доставки:</p>
+                      <p className="text-[10px]">Стоимость доставки:</p>
                       <p>
                         {Number.parseInt(item.PriceDelivery)
                           ? item.PriceDelivery + " ₽"
@@ -201,7 +199,7 @@ const OrdersCustomer = ({}) => {
               );
             } else if (item.OrderStatus == "Выполнен" && !typeOrders) {
               return (
-                <div className={intostyles.oneOrder}>
+                <div className={intostyles.oneOrder} key={index}>
                   <div className={styles.row0}>
                     <h2>Заказ №{item.id}</h2>
                     <p>
@@ -209,29 +207,29 @@ const OrdersCustomer = ({}) => {
                     </p>
                   </div>
 
-                  <p>
+                  <p className="text-[10px]">
                     Извещение не понадобится. <br />А вот паспорт могут
                     попросить, прежде чем вручить заказ
                   </p>
 
                   <div className={intostyles.infoDeliveryBlock}>
-                    <h2>Способ получения</h2>
+                    <h2 className="text-[14px]">Способ получения</h2>
                     <div className={intostyles.row}>
-                      <p>Адрес отделения:</p>
-                      <p>{item.Address ? item.Address : "Адрес неизвестен"}</p>
-                      <p>Получатель:</p>
+                      <p className="text-[12px]">Адрес отделения:</p>
+                      <p className="text-[12px]">{item.Address ? item.Address : "Адрес неизвестен"}</p>
+                      <p className="text-[12px]">Получатель:</p>
                       <p>
                         {item.Name && item.Phone
                           ? item.Name + "\n" + item.Phone
                           : "Получатель неизвестен"}
                       </p>
-                      <p>Статус:</p>
+                      <p className="text-[12px]">Статус:</p>
                       <p>
                         {item.OrderStatus
                           ? item.OrderStatus
                           : "Статус неизвестен"}
                       </p>
-                      <p>Стоимость доставки:</p>
+                      <p className="text-[10px]">Стоимость доставки:</p>
                       <p>
                         {Number.parseInt(item.PriceDelivery)
                           ? item.PriceDelivery + " ₽"
