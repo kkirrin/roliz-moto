@@ -1,4 +1,4 @@
-import React, { useState, Suspense, useEffect } from "react";
+import React, { useState, Suspense, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useActions } from "@/hooks/useActions";
 import Image from "next/image";
@@ -44,7 +44,8 @@ export const ProductCard = ({ item, viewMode, forPartners }) => {
     }
     : null;
 
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(0);
+  const previousQuantity = useRef(quantity);
   const [textToCart, setTextToCart] = useState("В корзину");
 
   const plus = () =>
@@ -71,6 +72,12 @@ export const ProductCard = ({ item, viewMode, forPartners }) => {
     }, 1000);
   };
 
+  const handleQuantityFocus = () => {
+    previousQuantity.current = quantity; // Сохраняем предыдущее значение
+    setQuantity('');
+  };
+
+
   const renderImage = (src, alt) => (
     <Image
       width={500}
@@ -85,7 +92,10 @@ export const ProductCard = ({ item, viewMode, forPartners }) => {
     const value = parseInt(e.target.value) || 1;
 
     // Ограничиваем количество товара
-    if (value > 9999) {
+
+    if (value < 1) {
+      setQuantity(1);
+    } else if(value > 9999) {
       setQuantity(9999);
     } else {
       setQuantity(value);
@@ -415,6 +425,8 @@ export const ProductCard = ({ item, viewMode, forPartners }) => {
                   max={1000}
                   value={quantity}
                   onChange={handleQuantityChange}
+                  onFocus={handleQuantityFocus}
+                  onBlur={handleQuantityBlur}
                   style={{ backgroundColor: 'inherit' }}
                   className=" w-full h-6 text-center border-none bg-transparent focus:outline-none text-sm font-medium"
                 />
