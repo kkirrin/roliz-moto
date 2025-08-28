@@ -104,8 +104,8 @@ export const ProductCard = ({ item, viewMode, forPartners }) => {
 
   // Функция для обработки потери фокуса (валидация)
   const handleQuantityBlur = () => {
-    if (quantity < 1) {
-      setQuantity(1);
+    if (quantity === '' || quantity < 1) {
+      setQuantity(previousQuantity.current);
     }
   };
 
